@@ -560,7 +560,6 @@ enum item_t : uint16_t
 	ITEM_LOCKER = 2589,
 	ITEM_INBOX = 14404,
 	ITEM_MARKET = 14405,
-	ITEM_STORE_INBOX = 26052,
 
 	// move to separate enum class?
 	ITEM_DEPOT_BOX_I = 25453,

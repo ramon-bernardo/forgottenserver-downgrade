@@ -1105,48 +1105,16 @@ void ProtocolGame::parseSetOutfit(NetworkMessage& msg)
 
 	// Set outfit window
 	if (outfitType == 0) {
-		newOutfit.lookMount = msg.get<uint16_t>();
-		if (newOutfit.lookMount != 0) {
-			newOutfit.lookMountHead = msg.getByte();
-			newOutfit.lookMountBody = msg.getByte();
-			newOutfit.lookMountLegs = msg.getByte();
-			newOutfit.lookMountFeet = msg.getByte();
-		} else {
-			msg.skipBytes(4);
-
-			// prevent mount color settings from resetting
-			const Outfit_t& currentOutfit = player->getCurrentOutfit();
-			newOutfit.lookMountHead = currentOutfit.lookMountHead;
-			newOutfit.lookMountBody = currentOutfit.lookMountBody;
-			newOutfit.lookMountLegs = currentOutfit.lookMountLegs;
-			newOutfit.lookMountFeet = currentOutfit.lookMountFeet;
-		}
-
 		msg.get<uint16_t>(); // familiar looktype
 		bool randomizeMount = msg.getByte() == 0x01;
 		g_dispatcher.addTask(
 		    [=, playerID = player->getID()]() { g_game.playerChangeOutfit(playerID, newOutfit, randomizeMount); });
-
-		// Store "try outfit" window
-	} else if (outfitType == 1) {
-		newOutfit.lookMount = 0;
-		// mount colors or store offerId (needs testing)
-		newOutfit.lookMountHead = msg.getByte();
-		newOutfit.lookMountBody = msg.getByte();
-		newOutfit.lookMountLegs = msg.getByte();
-		newOutfit.lookMountFeet = msg.getByte();
-		// player->? (open store?)
 
 		// Podium interaction
 	} else if (outfitType == 2) {
 		Position pos = msg.getPosition();
 		uint16_t spriteId = msg.get<uint16_t>();
 		uint8_t stackpos = msg.getByte();
-		newOutfit.lookMount = msg.get<uint16_t>();
-		newOutfit.lookMountHead = msg.getByte();
-		newOutfit.lookMountBody = msg.getByte();
-		newOutfit.lookMountLegs = msg.getByte();
-		newOutfit.lookMountFeet = msg.getByte();
 		Direction direction = static_cast<Direction>(msg.getByte());
 		bool podiumVisible = msg.getByte() == 1;
 
@@ -3102,34 +3070,13 @@ void ProtocolGame::sendOutfitWindow()
 	msg.addByte(0xC8);
 
 	Outfit_t currentOutfit = player->getDefaultOutfit();
-
 	if (currentOutfit.lookType == 0) {
 		Outfit_t newOutfit;
 		newOutfit.lookType = outfits.front().lookType;
 		currentOutfit = newOutfit;
 	}
 
-	Mount* currentMount = g_game.mounts.getMountByID(player->getCurrentMount());
-	if (currentMount) {
-		currentOutfit.lookMount = currentMount->clientId;
-	}
-
-	bool mounted;
-	if (player->wasMounted) {
-		mounted = currentOutfit.lookMount != 0;
-	} else {
-		mounted = player->isMounted();
-	}
-
 	AddOutfit(msg, currentOutfit);
-
-	// mount color bytes are required here regardless of having one
-	if (currentOutfit.lookMount == 0) {
-		msg.addByte(currentOutfit.lookMountHead);
-		msg.addByte(currentOutfit.lookMountBody);
-		msg.addByte(currentOutfit.lookMountLegs);
-		msg.addByte(currentOutfit.lookMountFeet);
-	}
 
 	msg.add<uint16_t>(0); // current familiar looktype
 
@@ -3156,20 +3103,6 @@ void ProtocolGame::sendOutfitWindow()
 		                   // tooltip (hardcoded)
 	}
 
-	std::vector<const Mount*> mounts;
-	for (const Mount& mount : g_game.mounts.getMounts()) {
-		if (player->hasMount(&mount)) {
-			mounts.push_back(&mount);
-		}
-	}
-
-	msg.add<uint16_t>(mounts.size());
-	for (const Mount* mount : mounts) {
-		msg.add<uint16_t>(mount->clientId);
-		msg.addString(mount->name);
-		msg.addByte(0x00); // mode: 0x00 - available, 0x01 store (requires U32 store offerId)
-	}
-
 	msg.add<uint16_t>(0x00); // familiars.size()
 	// size > 0
 	// U16 looktype
@@ -3177,8 +3110,6 @@ void ProtocolGame::sendOutfitWindow()
 	// 0x00 // mode: 0x00 - available, 0x01 store (requires U32 store offerId)
 
 	msg.addByte(0x00); // Try outfit mode (?)
-	msg.addByte(mounted ? 0x01 : 0x00);
-	msg.addByte(player->randomizeMount ? 0x01 : 0x00);
 	writeToOutputBuffer(msg);
 }
 
@@ -3203,7 +3134,7 @@ void ProtocolGame::sendPodiumWindow(const Item* item)
 	// read podium outfit
 	Outfit_t podiumOutfit = podium->getOutfit();
 	Outfit_t playerOutfit = player->getDefaultOutfit();
-	bool isEmpty = podiumOutfit.lookType == 0 && podiumOutfit.lookMount == 0;
+	bool isEmpty = podiumOutfit.lookType == 0;
 
 	if (podiumOutfit.lookType == 0) {
 		// copy player outfit
@@ -3213,15 +3144,6 @@ void ProtocolGame::sendPodiumWindow(const Item* item)
 		podiumOutfit.lookLegs = playerOutfit.lookLegs;
 		podiumOutfit.lookFeet = playerOutfit.lookFeet;
 		podiumOutfit.lookAddons = playerOutfit.lookAddons;
-	}
-
-	if (podiumOutfit.lookMount == 0) {
-		// copy player mount
-		podiumOutfit.lookMount = playerOutfit.lookMount;
-		podiumOutfit.lookMountHead = playerOutfit.lookMountHead;
-		podiumOutfit.lookMountBody = playerOutfit.lookMountBody;
-		podiumOutfit.lookMountLegs = playerOutfit.lookMountLegs;
-		podiumOutfit.lookMountFeet = playerOutfit.lookMountFeet;
 	}
 
 	// fetch player outfits
@@ -3252,14 +3174,6 @@ void ProtocolGame::sendPodiumWindow(const Item* item)
 		podiumOutfit.lookType = outfits.front().lookType;
 	}
 
-	// fetch player mounts
-	std::vector<const Mount*> mounts;
-	for (const Mount& mount : g_game.mounts.getMounts()) {
-		if (player->hasMount(&mount)) {
-			mounts.push_back(&mount);
-		}
-	}
-
 	// packet header
 	NetworkMessage msg;
 	msg.addByte(0xC8);
@@ -3271,13 +3185,6 @@ void ProtocolGame::sendPodiumWindow(const Item* item)
 	msg.addByte(podiumOutfit.lookLegs);
 	msg.addByte(podiumOutfit.lookFeet);
 	msg.addByte(podiumOutfit.lookAddons);
-
-	// current mount
-	msg.add<uint16_t>(podiumOutfit.lookMount);
-	msg.addByte(podiumOutfit.lookMountHead);
-	msg.addByte(podiumOutfit.lookMountBody);
-	msg.addByte(podiumOutfit.lookMountLegs);
-	msg.addByte(podiumOutfit.lookMountFeet);
 
 	// current familiar (not used in podium mode)
 	msg.add<uint16_t>(0);
@@ -3292,21 +3199,11 @@ void ProtocolGame::sendPodiumWindow(const Item* item)
 		                   // tooltip (hardcoded)
 	}
 
-	// available mounts
-	msg.add<uint16_t>(mounts.size());
-	for (const Mount* mount : mounts) {
-		msg.add<uint16_t>(mount->clientId);
-		msg.addString(mount->name);
-		msg.addByte(0x00); // mode: 0x00 - available, 0x01 store (requires U32 store offerId)
-	}
-
 	// available familiars (not used in podium mode)
 	msg.add<uint16_t>(0);
 
 	msg.addByte(0x05); // "set outfit" window mode (5 = podium)
-	msg.addByte((isEmpty && playerOutfit.lookMount != 0) || podium->hasFlag(PODIUM_SHOW_MOUNT)
-	                ? 0x01
-	                : 0x00); // "mount" checkbox
+	msg.addByte(isEmpty ? 0x01 : 0x00);
 	msg.add<uint16_t>(0);    // unknown
 	msg.addPosition(item->getPosition());
 	msg.add<uint16_t>(item->getClientID());
@@ -3643,15 +3540,6 @@ void ProtocolGame::AddOutfit(NetworkMessage& msg, const Outfit_t& outfit)
 		msg.addByte(outfit.lookAddons);
 	} else {
 		msg.addItemId(outfit.lookTypeEx);
-	}
-
-	// mount
-	msg.add<uint16_t>(outfit.lookMount);
-	if (outfit.lookMount != 0) {
-		msg.addByte(outfit.lookMountHead);
-		msg.addByte(outfit.lookMountBody);
-		msg.addByte(outfit.lookMountLegs);
-		msg.addByte(outfit.lookMountFeet);
 	}
 }
 

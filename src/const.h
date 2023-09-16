@@ -654,8 +654,7 @@ enum PlayerFlags : uint64_t
 enum PodiumFlags : uint8_t
 {
 	PODIUM_SHOW_PLATFORM = 0, // show the platform below the outfit
-	PODIUM_SHOW_OUTFIT = 1,   // show outfit
-	PODIUM_SHOW_MOUNT = 2     // show mount
+	PODIUM_SHOW_OUTFIT = 1   // show outfit
 };
 
 enum ReloadTypes_t : uint8_t
@@ -670,7 +669,6 @@ enum ReloadTypes_t : uint8_t
 	RELOAD_TYPE_GLOBALEVENTS,
 	RELOAD_TYPE_ITEMS,
 	RELOAD_TYPE_MONSTERS,
-	RELOAD_TYPE_MOUNTS,
 	RELOAD_TYPE_MOVEMENTS,
 	RELOAD_TYPE_NPCS,
 	RELOAD_TYPE_QUESTS,

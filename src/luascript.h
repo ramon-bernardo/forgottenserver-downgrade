@@ -32,7 +32,6 @@ class Player;
 class Thing;
 struct BestiaryInfo;
 struct LootBlock;
-struct Mount;
 struct Outfit;
 
 using Combat_ptr = std::shared_ptr<Combat>;
@@ -357,7 +356,6 @@ public:
 	static void pushPosition(lua_State* L, const Position& position, int32_t stackpos = 0);
 	static void pushOutfit(lua_State* L, const Outfit_t& outfit);
 	static void pushOutfit(lua_State* L, const Outfit* outfit);
-	static void pushMount(lua_State* L, const Mount* mount);
 	static void pushLoot(lua_State* L, const std::vector<LootBlock>& lootList);
 	static void pushReflect(lua_State* L, const Reflect& reflect);
 	static void pushBestiaryInfo(lua_State* L, const BestiaryInfo& info);
@@ -518,12 +516,10 @@ private:
 	static int luaGameGetBestiary(lua_State* L);
 	static int luaGameGetCurrencyItems(lua_State* L);
 	static int luaGameGetItemTypeByClientId(lua_State* L);
-	static int luaGameGetMountIdByLookType(lua_State* L);
 
 	static int luaGameGetTowns(lua_State* L);
 	static int luaGameGetHouses(lua_State* L);
 	static int luaGameGetOutfits(lua_State* L);
-	static int luaGameGetMounts(lua_State* L);
 	static int luaGameGetVocations(lua_State* L);
 
 	static int luaGameGetGameState(lua_State* L);
@@ -971,11 +967,6 @@ private:
 	static int luaPlayerSendOutfitWindow(lua_State* L);
 
 	static int luaPlayerSendEditPodium(lua_State* L);
-
-	static int luaPlayerAddMount(lua_State* L);
-	static int luaPlayerRemoveMount(lua_State* L);
-	static int luaPlayerHasMount(lua_State* L);
-	static int luaPlayerToggleMount(lua_State* L);
 
 	static int luaPlayerGetPremiumEndsAt(lua_State* L);
 	static int luaPlayerSetPremiumEndsAt(lua_State* L);

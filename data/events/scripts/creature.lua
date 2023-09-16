@@ -1,10 +1,4 @@
 function Creature:onChangeOutfit(outfit)
-	local onChangeMount = EventCallback.onChangeMount
-	if onChangeMount then
-		if not onChangeMount(self, outfit.lookMount) then
-			return false
-		end
-	end
 	local onChangeOutfit = EventCallback.onChangeOutfit
 	if onChangeOutfit then
 		return onChangeOutfit(self, outfit)

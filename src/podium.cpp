@@ -32,11 +32,6 @@ Attr_ReadValue Podium::readAttr(AttrTypes_t attr, PropStream& propStream)
 			propStream.read<uint8_t>(newOutfit.lookLegs);
 			propStream.read<uint8_t>(newOutfit.lookFeet);
 			propStream.read<uint8_t>(newOutfit.lookAddons);
-			propStream.read<uint16_t>(newOutfit.lookMount);
-			propStream.read<uint8_t>(newOutfit.lookMountHead);
-			propStream.read<uint8_t>(newOutfit.lookMountBody);
-			propStream.read<uint8_t>(newOutfit.lookMountLegs);
-			propStream.read<uint8_t>(newOutfit.lookMountFeet);
 			setOutfit(newOutfit);
 
 			g_game.updatePodium(this);
@@ -61,10 +56,5 @@ void Podium::serializeAttr(PropWriteStream& propWriteStream) const
 		propWriteStream.write<uint8_t>(outfit.lookLegs);
 		propWriteStream.write<uint8_t>(outfit.lookFeet);
 		propWriteStream.write<uint8_t>(outfit.lookAddons);
-		propWriteStream.write<uint16_t>(outfit.lookMount);
-		propWriteStream.write<uint8_t>(outfit.lookMountHead);
-		propWriteStream.write<uint8_t>(outfit.lookMountBody);
-		propWriteStream.write<uint8_t>(outfit.lookMountLegs);
-		propWriteStream.write<uint8_t>(outfit.lookMountFeet);
 	}
 }

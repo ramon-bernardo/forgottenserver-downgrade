@@ -150,18 +150,7 @@ void NetworkMessage::addItem(const Item* item)
 			add<uint16_t>(0);
 		}
 
-		// add mount
-		if (podium->hasFlag(PODIUM_SHOW_MOUNT)) {
-			add<uint16_t>(outfit.lookMount);
-			if (outfit.lookMount != 0) {
-				addByte(outfit.lookMountHead);
-				addByte(outfit.lookMountBody);
-				addByte(outfit.lookMountLegs);
-				addByte(outfit.lookMountFeet);
-			}
-		} else {
-			add<uint16_t>(0);
-		}
+		add<uint16_t>(0);
 
 		addByte(podium->getDirection());
 		addByte(podium->hasFlag(PODIUM_SHOW_PLATFORM) ? 0x01 : 0x00);

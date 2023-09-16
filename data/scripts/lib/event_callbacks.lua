@@ -24,7 +24,6 @@ end})
 --@ The fields within the assigned table, allow to save arbitrary information
 -- Creature
 ec.onChangeOutfit = {}
-ec.onChangeMount = {}
 ec.onAreaCombat = {returnValue=true}
 ec.onTargetCombat = {returnValue=true}
 ec.onHear = {}

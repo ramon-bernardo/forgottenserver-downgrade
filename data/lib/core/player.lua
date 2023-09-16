@@ -365,13 +365,6 @@ function Player.addAddonToAllOutfits(self, addon)
 	end
 end
 
-function Player.addAllMounts(self)
-	local mounts = Game.getMounts()
-	for mount = 1, #mounts do
-		self:addMount(mounts[mount].id)
-	end
-end
-
 function Player.setSpecialContainersAvailable(self, available)
 	local msg = NetworkMessage()
 	msg:addByte(0x2A)

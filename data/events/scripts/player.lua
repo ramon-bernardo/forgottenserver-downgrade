@@ -156,12 +156,6 @@ function Player:onPodiumEdit(item, outfit, direction, isVisible)
 		if not self:canWearOutfit(outfit.lookType, outfit.lookAddons) then
 			outfit.lookType = 0
 		end
-
-		-- reset mount if unable to ride
-		local mount = Game.getMountIdByLookType(outfit.lookMount)
-		if not (mount and self:hasMount(mount)) then
-			outfit.lookMount = 0
-		end
 	end
 
 	local podiumOutfit = item:getOutfit()
@@ -177,15 +171,6 @@ function Player:onPodiumEdit(item, outfit, direction, isVisible)
 		podiumOutfit.lookAddons = playerOutfit.lookAddons
 	end
 
-	-- set player mount colors podium is empty
-	if podiumOutfit.lookMount == 0 then
-		podiumOutfit.lookMount = playerOutfit.lookMount
-		podiumOutfit.lookMountHead = playerOutfit.lookMountHead
-		podiumOutfit.lookMountBody = playerOutfit.lookMountBody
-		podiumOutfit.lookMountLegs = playerOutfit.lookMountLegs
-		podiumOutfit.lookMountFeet = playerOutfit.lookMountFeet
-	end
-
 	-- "outfit" box checked
 	if outfit.lookType ~= 0 then
 		podiumOutfit.lookType = outfit.lookType
@@ -196,24 +181,14 @@ function Player:onPodiumEdit(item, outfit, direction, isVisible)
 		podiumOutfit.lookAddons = outfit.lookAddons
 	end
 
-	-- "mount" box checked
-	if outfit.lookMount ~= 0 then
-		podiumOutfit.lookMount = outfit.lookMount
-		podiumOutfit.lookMountHead = outfit.lookMountHead
-		podiumOutfit.lookMountBody = outfit.lookMountBody
-		podiumOutfit.lookMountLegs = outfit.lookMountLegs
-		podiumOutfit.lookMountFeet = outfit.lookMountFeet
-	end
-
 	-- prevent invisible podium state
-	if outfit.lookType == 0 and outfit.lookMount == 0 then
+	if outfit.lookType == 0 then
 		isVisible = true
 	end
 
 	-- save player choices
 	item:setFlag(PODIUM_SHOW_PLATFORM, isVisible)
 	item:setFlag(PODIUM_SHOW_OUTFIT, outfit.lookType ~= 0)
-	item:setFlag(PODIUM_SHOW_MOUNT, outfit.lookMount ~= 0)
 	item:setDirection(direction < DIRECTION_NORTHEAST and direction or DIRECTION_SOUTH)
 	item:setOutfit(podiumOutfit)
 end

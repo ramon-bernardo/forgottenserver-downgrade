@@ -6,7 +6,6 @@
 
 #include "groups.h"
 #include "map.h"
-#include "mounts.h"
 #include "player.h"
 #include "position.h"
 #include "raids.h"
@@ -395,7 +394,6 @@ public:
 	void playerPassPartyLeadership(uint32_t playerId, uint32_t newLeaderId);
 	void playerLeaveParty(uint32_t playerId);
 	void playerEnableSharedPartyExperience(uint32_t playerId, bool sharedExpActive);
-	void playerToggleMount(uint32_t playerId, bool mount);
 	void playerLeaveMarket(uint32_t playerId);
 	void playerBrowseMarket(uint32_t playerId, uint16_t spriteId);
 	void playerBrowseMarketOwnOffers(uint32_t playerId);
@@ -505,7 +503,6 @@ public:
 
 	Groups groups;
 	Map map;
-	Mounts mounts;
 	Raids raids;
 
 	std::forward_list<Item*> toDecayItems;

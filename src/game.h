@@ -381,10 +381,6 @@ public:
 	                          bool notify);
 	void playerTurn(uint32_t playerId, Direction dir);
 	void playerRequestOutfit(uint32_t playerId);
-	void playerRequestEditPodium(uint32_t playerId, const Position& position, uint8_t stackPos,
-	                             const uint16_t spriteId);
-	void playerEditPodium(uint32_t playerId, Outfit_t outfit, const Position& position, uint8_t stackPos,
-	                      const uint16_t spriteId, bool podiumVisible, Direction direction);
 	void playerSay(uint32_t playerId, uint16_t channelId, SpeakClasses type, const std::string& receiver,
 	               const std::string& text);
 	void playerChangeOutfit(uint32_t playerId, Outfit_t outfit, bool randomizeMount = false);
@@ -492,8 +488,6 @@ public:
 	BedItem* getBedBySleeper(uint32_t guid) const;
 	void setBedSleeper(BedItem* bed, uint32_t guid);
 	void removeBedSleeper(uint32_t guid);
-
-	void updatePodium(Item* item);
 
 	Item* getUniqueItem(uint16_t uniqueId);
 	bool addUniqueItem(uint16_t uniqueId, Item* item);

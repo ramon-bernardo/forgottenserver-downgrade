@@ -11,7 +11,6 @@
 #include "game.h"
 #include "house.h"
 #include "mailbox.h"
-#include "podium.h"
 #include "teleport.h"
 #include "trashholder.h"
 
@@ -53,8 +52,6 @@ Item* Item::CreateItem(const uint16_t type, uint16_t count /*= 0*/)
 			newItem = new Mailbox(type);
 		} else if (it.isBed()) {
 			newItem = new BedItem(type);
-		} else if (it.isPodium()) {
-			newItem = new Podium(type);
 		} else {
 			newItem = new Item(type, count);
 		}
@@ -664,14 +661,6 @@ Attr_ReadValue Item::readAttr(AttrTypes_t attr, PropStream& propStream)
 
 		case ATTR_SLEEPSTART: {
 			if (!propStream.skip(4)) {
-				return ATTR_READ_ERROR;
-			}
-			break;
-		}
-
-		// Podium class
-		case ATTR_PODIUMOUTFIT: {
-			if (!propStream.skip(15)) {
 				return ATTR_READ_ERROR;
 			}
 			break;

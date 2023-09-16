@@ -17,7 +17,6 @@
 #include "outfit.h"
 #include "outputmessage.h"
 #include "player.h"
-#include "podium.h"
 #include "scheduler.h"
 #include "storeinbox.h"
 
@@ -653,9 +652,6 @@ void ProtocolGame::parsePacket(NetworkMessage& msg)
 		case 0x85:
 			parseRotateItem(msg);
 			break;
-		case 0x86:
-			parseEditPodiumRequest(msg);
-			break;
 		case 0x87:
 			parseCloseContainer(msg);
 			break;
@@ -1109,30 +1105,7 @@ void ProtocolGame::parseSetOutfit(NetworkMessage& msg)
 		bool randomizeMount = msg.getByte() == 0x01;
 		g_dispatcher.addTask(
 		    [=, playerID = player->getID()]() { g_game.playerChangeOutfit(playerID, newOutfit, randomizeMount); });
-
-		// Podium interaction
-	} else if (outfitType == 2) {
-		Position pos = msg.getPosition();
-		uint16_t spriteId = msg.get<uint16_t>();
-		uint8_t stackpos = msg.getByte();
-		Direction direction = static_cast<Direction>(msg.getByte());
-		bool podiumVisible = msg.getByte() == 1;
-
-		// apply to podium
-		g_dispatcher.addTask(DISPATCHER_TASK_EXPIRATION, [=, playerID = player->getID()]() {
-			g_game.playerEditPodium(playerID, newOutfit, pos, stackpos, spriteId, podiumVisible, direction);
-		});
 	}
-}
-
-void ProtocolGame::parseEditPodiumRequest(NetworkMessage& msg)
-{
-	Position pos = msg.getPosition();
-	uint16_t spriteId = msg.get<uint16_t>();
-	uint8_t stackpos = msg.getByte();
-	g_dispatcher.addTask(DISPATCHER_TASK_EXPIRATION, [=, playerID = player->getID()]() {
-		g_game.playerRequestEditPodium(playerID, pos, stackpos, spriteId);
-	});
 }
 
 void ProtocolGame::parseUseItem(NetworkMessage& msg)
@@ -3110,108 +3083,6 @@ void ProtocolGame::sendOutfitWindow()
 	// 0x00 // mode: 0x00 - available, 0x01 store (requires U32 store offerId)
 
 	msg.addByte(0x00); // Try outfit mode (?)
-	writeToOutputBuffer(msg);
-}
-
-void ProtocolGame::sendPodiumWindow(const Item* item)
-{
-	if (!item) {
-		return;
-	}
-
-	const Podium* podium = item->getPodium();
-	if (!podium) {
-		return;
-	}
-
-	const Tile* tile = item->getTile();
-	if (!tile) {
-		return;
-	}
-
-	int32_t stackpos = tile->getThingIndex(item);
-
-	// read podium outfit
-	Outfit_t podiumOutfit = podium->getOutfit();
-	Outfit_t playerOutfit = player->getDefaultOutfit();
-	bool isEmpty = podiumOutfit.lookType == 0;
-
-	if (podiumOutfit.lookType == 0) {
-		// copy player outfit
-		podiumOutfit.lookType = playerOutfit.lookType;
-		podiumOutfit.lookHead = playerOutfit.lookHead;
-		podiumOutfit.lookBody = playerOutfit.lookBody;
-		podiumOutfit.lookLegs = playerOutfit.lookLegs;
-		podiumOutfit.lookFeet = playerOutfit.lookFeet;
-		podiumOutfit.lookAddons = playerOutfit.lookAddons;
-	}
-
-	// fetch player outfits
-	const auto& outfits = Outfits::getInstance().getOutfits(player->getSex());
-	if (outfits.size() == 0) {
-		player->sendCancelMessage(RETURNVALUE_NOTPOSSIBLE);
-		return;
-	}
-
-	// add GM outfit for staff members
-	std::vector<ProtocolOutfit> protocolOutfits;
-	if (player->isAccessPlayer()) {
-		protocolOutfits.emplace_back("Gamemaster", 75, 0);
-	}
-
-	// fetch player addons info
-	for (const Outfit& outfit : outfits) {
-		uint8_t addons;
-		if (!player->getOutfitAddons(outfit, addons)) {
-			continue;
-		}
-
-		protocolOutfits.emplace_back(outfit.name, outfit.lookType, addons);
-	}
-
-	// select first outfit available when the one from podium is not unlocked
-	if (!player->canWear(podiumOutfit.lookType, 0)) {
-		podiumOutfit.lookType = outfits.front().lookType;
-	}
-
-	// packet header
-	NetworkMessage msg;
-	msg.addByte(0xC8);
-
-	// current outfit
-	msg.add<uint16_t>(podiumOutfit.lookType);
-	msg.addByte(podiumOutfit.lookHead);
-	msg.addByte(podiumOutfit.lookBody);
-	msg.addByte(podiumOutfit.lookLegs);
-	msg.addByte(podiumOutfit.lookFeet);
-	msg.addByte(podiumOutfit.lookAddons);
-
-	// current familiar (not used in podium mode)
-	msg.add<uint16_t>(0);
-
-	// available outfits
-	msg.add<uint16_t>(protocolOutfits.size());
-	for (const ProtocolOutfit& outfit : protocolOutfits) {
-		msg.add<uint16_t>(outfit.lookType);
-		msg.addString(outfit.name);
-		msg.addByte(outfit.addons);
-		msg.addByte(0x00); // mode: 0x00 - available, 0x01 store (requires U32 store offerId), 0x02 golden outfit
-		                   // tooltip (hardcoded)
-	}
-
-	// available familiars (not used in podium mode)
-	msg.add<uint16_t>(0);
-
-	msg.addByte(0x05); // "set outfit" window mode (5 = podium)
-	msg.addByte(isEmpty ? 0x01 : 0x00);
-	msg.add<uint16_t>(0);    // unknown
-	msg.addPosition(item->getPosition());
-	msg.add<uint16_t>(item->getClientID());
-	msg.addByte(stackpos);
-
-	msg.addByte(podium->hasFlag(PODIUM_SHOW_PLATFORM) ? 0x01 : 0x00); // is platform visible
-	msg.addByte(0x01);                                                // "outfit" checkbox, ignored by the client
-	msg.addByte(podium->getDirection());                              // outfit direction
 	writeToOutputBuffer(msg);
 }
 

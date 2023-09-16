@@ -42,7 +42,6 @@ enum ItemTypes_t
 	ITEM_TYPE_BED,
 	ITEM_TYPE_KEY,
 	ITEM_TYPE_RUNE,
-	ITEM_TYPE_PODIUM,
 	ITEM_TYPE_LAST
 };
 
@@ -282,7 +281,6 @@ public:
 	bool isTrashHolder() const { return (type == ITEM_TYPE_TRASHHOLDER); }
 	bool isBed() const { return (type == ITEM_TYPE_BED); }
 	bool isRune() const { return (type == ITEM_TYPE_RUNE); }
-	bool isPodium() const { return (type == ITEM_TYPE_PODIUM); }
 	bool isPickupable() const { return (allowPickupable || pickupable); }
 	bool isUseable() const { return (useable); }
 	bool hasSubType() const { return (isFluidContainer() || isSplash() || stackable || charges != 0); }

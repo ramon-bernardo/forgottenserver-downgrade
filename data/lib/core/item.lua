@@ -30,10 +30,6 @@ function Item.isTeleport(self)
 	return false
 end
 
-function Item.isPodium(self)
-	return false
-end
-
 function Item.isTile(self)
 	return false
 end
@@ -473,25 +469,6 @@ do
 		-- primary attributes parenthesis
 		if #descriptions > 0 then
 			response[#response + 1] = string.format(" (%s)", table.concat(descriptions, ", "))
-		end
-
-		-- podium description
-		if not isVirtual and itemType:isPodium() then
-			local outfit = item:getOutfit()
-			local hasOutfit = item:hasFlag(PODIUM_SHOW_OUTFIT)
-			if outfit then
-				local podiumParts = {}
-				local outfitType = Outfit(outfit.lookType)
-				if outfitType then
-					if hasOutfit then
-						podiumParts[#podiumParts + 1] = string.format("%s outfit", outfitType.name)
-					end
-				end
-
-				if #podiumParts > 0 then
-					response[#response + 1] = string.format(" displaying the %s", table.concat(podiumParts, " on the "))
-				end
-			end
 		end
 
 		-- charges and duration

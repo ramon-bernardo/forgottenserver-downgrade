@@ -6,7 +6,6 @@
 #include "networkmessage.h"
 
 #include "container.h"
-#include "podium.h"
 
 std::string_view NetworkMessage::getString(uint16_t stringLen /* = 0*/)
 {
@@ -96,13 +95,6 @@ void NetworkMessage::addItem(uint16_t id, uint8_t count)
 	} else if (it.classification > 0) {
 		addByte(0x00); // item tier (0-10)
 	}
-
-	if (it.isPodium()) {
-		add<uint16_t>(0); // looktype
-		add<uint16_t>(0); // lookmount
-		addByte(2);       // direction
-		addByte(0x01);    // is visible (bool)
-	}
 }
 
 void NetworkMessage::addItem(const Item* item)
@@ -129,32 +121,6 @@ void NetworkMessage::addItem(const Item* item)
 		} else {
 			addByte(0x00);
 		}
-	}
-
-	// display outfit on the podium
-	if (it.isPodium()) {
-		const Podium* podium = item->getPodium();
-		const Outfit_t& outfit = podium->getOutfit();
-
-		// add outfit
-		if (podium->hasFlag(PODIUM_SHOW_OUTFIT)) {
-			add<uint16_t>(outfit.lookType);
-			if (outfit.lookType != 0) {
-				addByte(outfit.lookHead);
-				addByte(outfit.lookBody);
-				addByte(outfit.lookLegs);
-				addByte(outfit.lookFeet);
-				addByte(outfit.lookAddons);
-			}
-		} else {
-			add<uint16_t>(0);
-		}
-
-		add<uint16_t>(0);
-
-		addByte(podium->getDirection());
-		addByte(podium->hasFlag(PODIUM_SHOW_PLATFORM) ? 0x01 : 0x00);
-		return;
 	}
 }
 

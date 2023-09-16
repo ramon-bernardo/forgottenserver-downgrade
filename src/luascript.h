@@ -49,7 +49,6 @@ enum LuaDataType
 	LuaData_Item,
 	LuaData_Container,
 	LuaData_Teleport,
-	LuaData_Podium,
 	LuaData_Player,
 	LuaData_Monster,
 	LuaData_Npc,
@@ -744,16 +743,6 @@ private:
 	static int luaTeleportGetDestination(lua_State* L);
 	static int luaTeleportSetDestination(lua_State* L);
 
-	// Podium
-	static int luaPodiumCreate(lua_State* L);
-
-	static int luaPodiumGetOutfit(lua_State* L);
-	static int luaPodiumSetOutfit(lua_State* L);
-	static int luaPodiumHasFlag(lua_State* L);
-	static int luaPodiumSetFlag(lua_State* L);
-	static int luaPodiumGetDirection(lua_State* L);
-	static int luaPodiumSetDirection(lua_State* L);
-
 	// Creature
 	static int luaCreatureCreate(lua_State* L);
 
@@ -965,8 +954,6 @@ private:
 	static int luaPlayerHasOutfit(lua_State* L);
 	static int luaPlayerCanWearOutfit(lua_State* L);
 	static int luaPlayerSendOutfitWindow(lua_State* L);
-
-	static int luaPlayerSendEditPodium(lua_State* L);
 
 	static int luaPlayerGetPremiumEndsAt(lua_State* L);
 	static int luaPlayerSetPremiumEndsAt(lua_State* L);

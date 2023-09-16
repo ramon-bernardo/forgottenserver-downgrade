@@ -18,7 +18,6 @@
 #include "outputmessage.h"
 #include "player.h"
 #include "scheduler.h"
-#include "storeinbox.h"
 
 extern ConfigManager g_config;
 extern CreatureEvents* g_creatureEvents;
@@ -2780,9 +2779,6 @@ void ProtocolGame::sendAddCreature(const Creature* creature, const Position& pos
 	for (int i = CONST_SLOT_FIRST; i <= CONST_SLOT_LAST; ++i) {
 		sendInventoryItem(static_cast<slots_t>(i), player->getInventoryItem(static_cast<slots_t>(i)));
 	}
-
-	// send store inbox
-	sendInventoryItem(CONST_SLOT_STORE_INBOX, player->getStoreInbox()->getItem());
 
 	// gameworld time of the day
 	sendWorldLight(g_game.getWorldLightInfo());

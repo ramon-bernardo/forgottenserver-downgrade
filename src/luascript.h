@@ -712,9 +712,6 @@ private:
 	static int luaItemHasProperty(lua_State* L);
 	static int luaItemIsLoadedFromMap(lua_State* L);
 
-	static int luaItemSetStoreItem(lua_State* L);
-	static int luaItemIsStoreItem(lua_State* L);
-
 	static int luaItemSetReflect(lua_State* L);
 	static int luaItemGetReflect(lua_State* L);
 
@@ -994,8 +991,6 @@ private:
 	static int luaPlayerHasSecureMode(lua_State* L);
 	static int luaPlayerGetFightMode(lua_State* L);
 
-	static int luaPlayerGetStoreInbox(lua_State* L);
-
 	static int luaPlayerIsNearDepotBox(lua_State* L);
 
 	static int luaPlayerGetIdleTime(lua_State* L);
@@ -1236,8 +1231,6 @@ private:
 	static int luaItemTypeGetMarketSellStatistics(lua_State* L);
 
 	static int luaItemTypeHasSubType(lua_State* L);
-
-	static int luaItemTypeIsStoreItem(lua_State* L);
 
 	// Combat
 	static int luaCombatCreate(lua_State* L);

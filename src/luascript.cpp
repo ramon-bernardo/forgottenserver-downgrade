@@ -32,7 +32,6 @@
 #include "script.h"
 #include "spectators.h"
 #include "spells.h"
-#include "storeinbox.h"
 #include "teleport.h"
 #include "weapons.h"
 
@@ -1628,7 +1627,6 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(ITEM_ATTRIBUTE_DOORID);
 	registerEnum(ITEM_ATTRIBUTE_DECAYTO);
 	registerEnum(ITEM_ATTRIBUTE_WRAPID);
-	registerEnum(ITEM_ATTRIBUTE_STOREITEM);
 	registerEnum(ITEM_ATTRIBUTE_ATTACK_SPEED);
 	registerEnum(ITEM_ATTRIBUTE_OPENCONTAINER);
 
@@ -2399,9 +2397,6 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Item", "hasProperty", LuaScriptInterface::luaItemHasProperty);
 	registerMethod("Item", "isLoadedFromMap", LuaScriptInterface::luaItemIsLoadedFromMap);
 
-	registerMethod("Item", "setStoreItem", LuaScriptInterface::luaItemSetStoreItem);
-	registerMethod("Item", "isStoreItem", LuaScriptInterface::luaItemIsStoreItem);
-
 	registerMethod("Item", "setReflect", LuaScriptInterface::luaItemSetReflect);
 	registerMethod("Item", "getReflect", LuaScriptInterface::luaItemGetReflect);
 
@@ -2684,8 +2679,6 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Player", "hasSecureMode", LuaScriptInterface::luaPlayerHasSecureMode);
 	registerMethod("Player", "getFightMode", LuaScriptInterface::luaPlayerGetFightMode);
 
-	registerMethod("Player", "getStoreInbox", LuaScriptInterface::luaPlayerGetStoreInbox);
-
 	registerMethod("Player", "isNearDepotBox", LuaScriptInterface::luaPlayerIsNearDepotBox);
 
 	registerMethod("Player", "getIdleTime", LuaScriptInterface::luaPlayerGetIdleTime);
@@ -2938,8 +2931,6 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("ItemType", "getMarketSellStatistics", LuaScriptInterface::luaItemTypeGetMarketSellStatistics);
 
 	registerMethod("ItemType", "hasSubType", LuaScriptInterface::luaItemTypeHasSubType);
-
-	registerMethod("ItemType", "isStoreItem", LuaScriptInterface::luaItemTypeIsStoreItem);
 
 	// Combat
 	registerClass("Combat", "", LuaScriptInterface::luaCombatCreate);
@@ -7072,31 +7063,6 @@ int LuaScriptInterface::luaItemIsLoadedFromMap(lua_State* L)
 	return 1;
 }
 
-int LuaScriptInterface::luaItemSetStoreItem(lua_State* L)
-{
-	// item:setStoreItem(storeItem)
-	Item* item = getUserdata<Item>(L, 1);
-	if (!item) {
-		lua_pushnil(L);
-		return 1;
-	}
-
-	item->setStoreItem(getBoolean(L, 2, false));
-	return 1;
-}
-
-int LuaScriptInterface::luaItemIsStoreItem(lua_State* L)
-{
-	// item:isStoreItem()
-	Item* item = getUserdata<Item>(L, 1);
-	if (item) {
-		pushBoolean(L, item->isStoreItem());
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
 int LuaScriptInterface::luaItemSetReflect(lua_State* L)
 {
 	// item:setReflect(combatType, reflect)
@@ -10556,26 +10522,6 @@ int LuaScriptInterface::luaPlayerGetFightMode(lua_State* L)
 	return 1;
 }
 
-int LuaScriptInterface::luaPlayerGetStoreInbox(lua_State* L)
-{
-	// player:getStoreInbox()
-	Player* player = getUserdata<Player>(L, 1);
-	if (!player) {
-		lua_pushnil(L);
-		return 1;
-	}
-
-	Container* storeInbox = player->getStoreInbox();
-	if (!storeInbox) {
-		lua_pushnil(L);
-		return 1;
-	}
-
-	pushUserdata<Container>(L, storeInbox);
-	setMetatable(L, -1, "Container");
-	return 1;
-}
-
 int LuaScriptInterface::luaPlayerIsNearDepotBox(lua_State* L)
 {
 	// player:isNearDepotBox()
@@ -13143,18 +13089,6 @@ int LuaScriptInterface::luaItemTypeHasSubType(lua_State* L)
 	const ItemType* itemType = getUserdata<const ItemType>(L, 1);
 	if (itemType) {
 		pushBoolean(L, itemType->hasSubType());
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaItemTypeIsStoreItem(lua_State* L)
-{
-	// itemType:isStoreItem()
-	const ItemType* itemType = getUserdata<const ItemType>(L, 1);
-	if (itemType) {
-		pushBoolean(L, itemType->storeItem);
 	} else {
 		lua_pushnil(L);
 	}

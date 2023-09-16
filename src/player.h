@@ -180,8 +180,6 @@ public:
 
 	Inbox* getInbox() const { return inbox; }
 
-	StoreInbox* getStoreInbox() const { return storeInbox; }
-
 	uint32_t getClientIcons() const;
 
 	const GuildWarVector& getGuildWarVector() const { return guildWarVector; }
@@ -1208,7 +1206,6 @@ private:
 	SchedulerTask* walkTask = nullptr;
 	Town* town = nullptr;
 	Vocation* vocation = nullptr;
-	StoreInbox* storeInbox = nullptr;
 	DepotLocker_ptr depotLocker = nullptr;
 
 	uint32_t inventoryWeight = 0;

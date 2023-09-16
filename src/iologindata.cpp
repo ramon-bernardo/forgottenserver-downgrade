@@ -10,7 +10,6 @@
 #include "depotchest.h"
 #include "game.h"
 #include "inbox.h"
-#include "storeinbox.h"
 
 extern ConfigManager g_config;
 extern Game g_game;
@@ -565,36 +564,6 @@ bool IOLoginData::loadPlayer(Player* player, DBResult_ptr result)
 		}
 	}
 
-	// load store inbox items
-	itemMap.clear();
-
-	if ((result = db.storeQuery(fmt::format(
-	         "SELECT `pid`, `sid`, `itemtype`, `count`, `attributes` FROM `player_storeinboxitems` WHERE `player_id` = {:d} ORDER BY `sid` DESC",
-	         player->getGUID())))) {
-		loadItems(itemMap, result);
-
-		for (ItemMap::const_reverse_iterator it = itemMap.rbegin(), end = itemMap.rend(); it != end; ++it) {
-			const std::pair<Item*, int32_t>& pair = it->second;
-			Item* item = pair.first;
-			int32_t pid = pair.second;
-
-			if (pid >= 0 && pid < 100) {
-				player->getStoreInbox()->internalAddThing(item);
-			} else {
-				ItemMap::const_iterator it2 = itemMap.find(pid);
-
-				if (it2 == itemMap.end()) {
-					continue;
-				}
-
-				Container* container = it2->second.first->getContainer();
-				if (container) {
-					container->internalAddThing(item);
-				}
-			}
-		}
-	}
-
 	// load storage map
 	if ((result = db.storeQuery(
 	         fmt::format("SELECT `key`, `value` FROM `player_storage` WHERE `player_id` = {:d}", player->getGUID())))) {
@@ -900,24 +869,7 @@ bool IOLoginData::savePlayer(Player* player)
 		return false;
 	}
 
-	// save store inbox items
-	if (!db.executeQuery(
-	        fmt::format("DELETE FROM `player_storeinboxitems` WHERE `player_id` = {:d}", player->getGUID()))) {
-		return false;
-	}
-
-	DBInsert storeInboxQuery(
-	    "INSERT INTO `player_storeinboxitems` (`player_id`, `pid`, `sid`, `itemtype`, `count`, `attributes`) VALUES ");
-	itemList.clear();
-
-	for (Item* item : player->getStoreInbox()->getItemList()) {
-		itemList.emplace_back(0, item);
-	}
-
-	if (!saveItems(player, itemList, storeInboxQuery, propWriteStream)) {
-		return false;
-	}
-
+	// save player storage
 	if (!db.executeQuery(fmt::format("DELETE FROM `player_storage` WHERE `player_id` = {:d}", player->getGUID()))) {
 		return false;
 	}

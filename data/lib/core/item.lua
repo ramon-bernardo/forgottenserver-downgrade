@@ -721,7 +721,7 @@ do
 		end
 
 		-- pickupable items with store flag
-		if not isVirtual and isPickupable and item:isStoreItem() then
+		if not isVirtual and isPickupable then
 			response[#response + 1] = "\nThis item cannot be traded."
 		end
 

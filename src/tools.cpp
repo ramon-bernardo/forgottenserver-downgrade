@@ -993,8 +993,6 @@ itemAttrTypes stringToItemAttribute(const std::string& str)
 		return ITEM_ATTRIBUTE_DECAYTO;
 	} else if (str == "wrapid") {
 		return ITEM_ATTRIBUTE_WRAPID;
-	} else if (str == "storeitem") {
-		return ITEM_ATTRIBUTE_STOREITEM;
 	} else if (str == "attackspeed") {
 		return ITEM_ATTRIBUTE_ATTACK_SPEED;
 	}
@@ -1215,9 +1213,6 @@ const char* getReturnMessage(ReturnValue value)
 
 		case RETURNVALUE_YOUDONTHAVEREQUIREDPROFESSION:
 			return "You don't have the required profession.";
-
-		case RETURNVALUE_CANNOTMOVEITEMISNOTSTOREITEM:
-			return "You cannot move this item into your Store inbox as it was not bought in the Store.";
 
 		case RETURNVALUE_ITEMCANNOTBEMOVEDTHERE:
 			return "This item cannot be moved there.";

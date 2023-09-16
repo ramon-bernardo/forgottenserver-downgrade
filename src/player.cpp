@@ -22,7 +22,6 @@
 #include "party.h"
 #include "scheduler.h"
 #include "spectators.h"
-#include "storeinbox.h"
 #include "tools.h"
 #include "weapons.h"
 
@@ -45,13 +44,9 @@ Player::Player(ProtocolGame_ptr p) :
     lastPing(OTSYS_TIME()),
     lastPong(lastPing),
     client(std::move(p)),
-    inbox(new Inbox(ITEM_INBOX)),
-    storeInbox(new StoreInbox(ITEM_STORE_INBOX))
+    inbox(new Inbox(ITEM_INBOX))
 {
 	inbox->incrementReferenceCounter();
-
-	storeInbox->setParent(this);
-	storeInbox->incrementReferenceCounter();
 }
 
 Player::~Player()
@@ -68,9 +63,6 @@ Player::~Player()
 	}
 
 	inbox->decrementReferenceCounter();
-
-	storeInbox->setParent(nullptr);
-	storeInbox->decrementReferenceCounter();
 
 	setWriteItem(nullptr);
 	setEditHouse(nullptr);
@@ -469,10 +461,6 @@ void Player::updateInventoryWeight()
 		if (item) {
 			inventoryWeight += item->getWeight();
 		}
-	}
-
-	if (StoreInbox* storeInbox = getStoreInbox()) {
-		inventoryWeight += storeInbox->getWeight();
 	}
 }
 
@@ -2398,10 +2386,6 @@ ReturnValue Player::queryAdd(int32_t index, const Thing& thing, uint32_t count, 
 
 	if (!item->isPickupable()) {
 		return RETURNVALUE_CANNOTPICKUP;
-	}
-
-	if (item->isStoreItem()) {
-		return RETURNVALUE_ITEMCANNOTBEMOVEDTHERE;
 	}
 
 	ReturnValue ret = RETURNVALUE_NOTPOSSIBLE;

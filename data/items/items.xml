@@ -36753,9 +36753,6 @@
 		<attribute key="decayTo" value="0" />
 		<attribute key="duration" value="300" />
 	</item>
-	<item id="26052" name="your store inbox">
-		<attribute key="containerSize" value="20" />
-	</item>
 	<item id="26054" article="a" name="decoration kit">
 		<attribute key="description" value="You bought this item in the Store or gained it as a daily reward. This item cannot be traded." />
 	</item>

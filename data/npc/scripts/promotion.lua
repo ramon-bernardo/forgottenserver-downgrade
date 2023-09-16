@@ -34,24 +34,7 @@ local function creatureSayCallback(cid, type, msg)
 		elseif npcHandler.topic[cid] == 3 then
 			if player:getStorageValue(PlayerStorageKeys.goldenOutfit) < 1 then
 				if player:getTotalMoney() >= 500000000 then
-					local storeInbox = player:getStoreInbox()
-					if storeInbox then
-						local item = Game.createItem(ITEM_DECORATION_KIT, 1)
-						if item then
-							item:setStoreItem(true)
-							item:setAttribute("wrapid", 34156)
-							item:setAttribute(ITEM_ATTRIBUTE_DESCRIPTION, "Unwrap it in your own house to create a " .. ItemType(34156):getName() .. ".")
-							storeInbox:addItemEx(item)
-						end
-
-						npcHandler:say("Take this armor as a token of great gratitude. Let us forever remember this day, my friend!", cid)
-						player:removeTotalMoney(500000000)
-						player:addOutfit(1211)
-						player:addOutfit(1210)
-						player:getPosition():sendMagicEffect(CONST_ME_EARLY_THUNDER)
-						player:setStorageValue(PlayerStorageKeys.goldenOutfit, 1)
-						npcHandler.topic[cid] = 2
-					end
+                    -- removed
 				else
 					npcHandler:say("You do not have enough money to donate that amount.", cid)
 					npcHandler.topic[cid] = 2

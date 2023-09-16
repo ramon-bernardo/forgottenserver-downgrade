@@ -10,7 +10,6 @@
 
 class Container;
 class DepotLocker;
-class StoreInbox;
 
 class ContainerIterator
 {
@@ -46,9 +45,6 @@ public:
 
 	virtual DepotLocker* getDepotLocker() { return nullptr; }
 	virtual const DepotLocker* getDepotLocker() const { return nullptr; }
-
-	virtual StoreInbox* getStoreInbox() { return nullptr; }
-	virtual const StoreInbox* getStoreInbox() const { return nullptr; }
 
 	Attr_ReadValue readAttr(AttrTypes_t attr, PropStream& propStream) override;
 	bool unserializeItemNode(OTB::Loader& loader, const OTB::Node& node, PropStream& propStream) override;

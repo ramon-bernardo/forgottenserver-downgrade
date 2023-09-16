@@ -169,7 +169,6 @@ enum ItemParseAttributes_t
 	ITEM_PARSE_WALKSTACK,
 	ITEM_PARSE_BLOCKING,
 	ITEM_PARSE_ALLOWDISTREAD,
-	ITEM_PARSE_STOREITEM,
 	ITEM_PARSE_WORTH,
 	ITEM_PARSE_REFLECTPERCENTALL,
 	ITEM_PARSE_REFLECTPERCENTELEMENTS,
@@ -381,7 +380,6 @@ public:
 	uint8_t classification = 0;
 	int8_t hitChance = 0;
 
-	bool storeItem = false;
 	bool forceUse = false;
 	bool forceSerialize = false;
 	bool hasHeight = false;

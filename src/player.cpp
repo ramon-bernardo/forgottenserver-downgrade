@@ -838,7 +838,6 @@ DepotLocker& Player::getDepotLocker()
 {
 	if (!depotLocker) {
 		depotLocker = std::make_shared<DepotLocker>(ITEM_LOCKER);
-		depotLocker->internalAddThing(Item::CreateItem(ITEM_MARKET));
 		depotLocker->internalAddThing(inbox);
 
 		DepotChest* depotChest = new DepotChest(ITEM_DEPOT, false);
@@ -1325,11 +1324,6 @@ void Player::onCreatureMove(Creature* creature, const Tile* newTile, const Posit
 		if (tradePartner && !Position::areInRange<2, 2, 0>(tradePartner->getPosition(), getPosition())) {
 			g_game.internalCloseTrade(this);
 		}
-	}
-
-	// leave market
-	if (inMarket) {
-		inMarket = false;
 	}
 
 	if (party) {

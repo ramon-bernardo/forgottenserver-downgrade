@@ -60,12 +60,6 @@ timeBetweenExActions = 1000
 mapName = "forgotten"
 mapAuthor = "Komic"
 
--- Market
-marketOfferDuration = 30 * 24 * 60 * 60
-premiumToCreateMarketOffer = true
-checkExpiredMarketOffersEachMinutes = 60
-maxMarketOffersAtATimePerPlayer = 100
-
 -- Misc.
 -- NOTE: classicAttackSpeed set to true makes players constantly attack at regular
 -- intervals regardless of other actions such as item (potion) use. This setting

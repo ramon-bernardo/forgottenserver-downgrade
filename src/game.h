@@ -389,19 +389,9 @@ public:
 	void playerPassPartyLeadership(uint32_t playerId, uint32_t newLeaderId);
 	void playerLeaveParty(uint32_t playerId);
 	void playerEnableSharedPartyExperience(uint32_t playerId, bool sharedExpActive);
-	void playerLeaveMarket(uint32_t playerId);
-	void playerBrowseMarket(uint32_t playerId, uint16_t spriteId);
-	void playerBrowseMarketOwnOffers(uint32_t playerId);
-	void playerBrowseMarketOwnHistory(uint32_t playerId);
-	void playerCreateMarketOffer(uint32_t playerId, uint8_t type, uint16_t spriteId, uint16_t amount, uint64_t price,
-	                             bool anonymous);
-	void playerCancelMarketOffer(uint32_t playerId, uint32_t timestamp, uint16_t counter);
-	void playerAcceptMarketOffer(uint32_t playerId, uint32_t timestamp, uint16_t counter, uint16_t amount);
 
 	void parsePlayerExtendedOpcode(uint32_t playerId, uint8_t opcode, const std::string& buffer);
 	void parsePlayerNetworkMessage(uint32_t playerId, uint8_t recvByte, NetworkMessage* msg);
-
-	std::vector<Item*> getMarketItemList(uint16_t wareId, uint16_t sufficientCount, const Player& player);
 
 	void cleanup();
 	void shutdown();

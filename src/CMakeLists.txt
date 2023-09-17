@@ -30,7 +30,6 @@ set(tfs_SRC
 	${CMAKE_CURRENT_LIST_DIR}/iologindata.cpp
 	${CMAKE_CURRENT_LIST_DIR}/iomap.cpp
 	${CMAKE_CURRENT_LIST_DIR}/iomapserialize.cpp
-	${CMAKE_CURRENT_LIST_DIR}/iomarket.cpp
 	${CMAKE_CURRENT_LIST_DIR}/item.cpp
 	${CMAKE_CURRENT_LIST_DIR}/items.cpp
 	${CMAKE_CURRENT_LIST_DIR}/luascript.cpp
@@ -110,7 +109,6 @@ set(tfs_HDR
 	${CMAKE_CURRENT_LIST_DIR}/iologindata.h
 	${CMAKE_CURRENT_LIST_DIR}/iomap.h
 	${CMAKE_CURRENT_LIST_DIR}/iomapserialize.h
-	${CMAKE_CURRENT_LIST_DIR}/iomarket.h
 	${CMAKE_CURRENT_LIST_DIR}/item.h
 	${CMAKE_CURRENT_LIST_DIR}/itemloader.h
 	${CMAKE_CURRENT_LIST_DIR}/items.h

@@ -23915,7 +23915,6 @@
 	<item id="14404" name="your inbox">
 		<attribute key="containerSize" value="30" />
 	</item>
-	<item id="14405" article="the" name="market" />
 	<item fromid="14406" toid="14407" article="an" name="insectoid hive" />
 	<item fromid="14408" toid="14412" article="a" name="hive wall" />
 	<item fromid="14413" toid="14419" article="a" name="hive structure" />
@@ -37835,7 +37834,6 @@
 	<item id="27095" article="a" name="shell" />
 	<item fromid="27098" toid="27105" name="colourful bunting" />
 	<item fromid="27106" toid="27113" article="an" name="emblem" />
-	<item fromid="27114" toid="27131" article="a" name="market stand" />
 	<item id="27132" name="ten cans" />
 	<item id="27133" name="nine cans" />
 	<item id="27134" name="eight cans" />

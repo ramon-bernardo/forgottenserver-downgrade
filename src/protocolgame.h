@@ -131,13 +131,6 @@ private:
 	void parseRequestTrade(NetworkMessage& msg);
 	void parseLookInTrade(NetworkMessage& msg);
 
-	// market methods
-	void parseMarketLeave();
-	void parseMarketBrowse(NetworkMessage& msg);
-	void parseMarketCreateOffer(NetworkMessage& msg);
-	void parseMarketCancelOffer(NetworkMessage& msg);
-	void parseMarketAcceptOffer(NetworkMessage& msg);
-
 	// VIP methods
 	void parseAddVip(NetworkMessage& msg);
 	void parseRemoveVip(NetworkMessage& msg);
@@ -199,13 +192,6 @@ private:
 	void sendSaleItemList(const std::list<ShopInfo>& shop);
 	void sendResourceBalance(const ResourceTypes_t resourceType, uint64_t amount);
 	void sendStoreBalance();
-	void sendMarketEnter();
-	void sendMarketLeave();
-	void sendMarketBrowseItem(uint16_t itemId, const MarketOfferList& buyOffers, const MarketOfferList& sellOffers);
-	void sendMarketAcceptOffer(const MarketOfferEx& offer);
-	void sendMarketBrowseOwnOffers(const MarketOfferList& buyOffers, const MarketOfferList& sellOffers);
-	void sendMarketCancelOffer(const MarketOfferEx& offer);
-	void sendMarketBrowseOwnHistory(const HistoryMarketOfferList& buyOffers, const HistoryMarketOfferList& sellOffers);
 	void sendTradeItemRequest(const std::string& traderName, const Item* item, bool ack);
 	void sendCloseTrade();
 

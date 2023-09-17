@@ -1188,9 +1188,6 @@ private:
 	static int luaItemTypeGetMinReqLevel(lua_State* L);
 	static int luaItemTypeGetMinReqMagicLevel(lua_State* L);
 
-	static int luaItemTypeGetMarketBuyStatistics(lua_State* L);
-	static int luaItemTypeGetMarketSellStatistics(lua_State* L);
-
 	static int luaItemTypeHasSubType(lua_State* L);
 
 	// Combat

@@ -508,31 +508,13 @@ bool Action::configureEvent(const pugi::xml_node& node)
 	return true;
 }
 
-namespace {
-
-bool enterMarket(Player* player, Item*, const Position&, Thing*, const Position&, bool)
-{
-	player->sendMarketEnter();
-	return true;
-}
-
-} // namespace
-
 bool Action::loadFunction(const pugi::xml_attribute& attr, bool isScripted)
 {
-	const char* functionName = attr.as_string();
-	if (caseInsensitiveEqual(functionName, "market")) {
-		function = enterMarket;
-	} else {
-		if (!isScripted) {
-			std::cout << "[Warning - Action::loadFunction] Function \"" << functionName << "\" does not exist."
-			          << std::endl;
-			return false;
-		}
-	}
-
 	if (!isScripted) {
 		scripted = false;
+		std::cout << "[Warning - Action::loadFunction] Function \"" << attr.as_string() << "\" does not exist."
+			        << std::endl;
+		return false;
 	}
 	return true;
 }

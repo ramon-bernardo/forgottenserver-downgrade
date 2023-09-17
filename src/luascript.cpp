@@ -18,7 +18,6 @@
 #include "inbox.h"
 #include "iologindata.h"
 #include "iomapserialize.h"
-#include "iomarket.h"
 #include "luavariant.h"
 #include "matrixarea.h"
 #include "monster.h"
@@ -1569,7 +1568,6 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(MESSAGE_PARTY);
 	registerEnum(MESSAGE_REPORT);
 	registerEnum(MESSAGE_HOTKEY_PRESSED);
-	registerEnum(MESSAGE_MARKET);
 	registerEnum(MESSAGE_BEYOND_LAST);
 	registerEnum(MESSAGE_TOURNAMENT_INFO);
 	registerEnum(MESSAGE_ATTENTION);
@@ -2079,7 +2077,6 @@ void LuaScriptInterface::registerFunctions()
 	registerEnumIn("configKeys", ConfigManager::ALLOW_CLONES);
 	registerEnumIn("configKeys", ConfigManager::BIND_ONLY_GLOBAL_ADDRESS);
 	registerEnumIn("configKeys", ConfigManager::OPTIMIZE_DATABASE);
-	registerEnumIn("configKeys", ConfigManager::MARKET_PREMIUM);
 	registerEnumIn("configKeys", ConfigManager::EMOTE_SPELLS);
 	registerEnumIn("configKeys", ConfigManager::STAMINA_SYSTEM);
 	registerEnumIn("configKeys", ConfigManager::WARN_UNSAFE_SCRIPTS);
@@ -2139,9 +2136,6 @@ void LuaScriptInterface::registerFunctions()
 	registerEnumIn("configKeys", ConfigManager::LOGIN_PORT);
 	registerEnumIn("configKeys", ConfigManager::STATUS_PORT);
 	registerEnumIn("configKeys", ConfigManager::STAIRHOP_DELAY);
-	registerEnumIn("configKeys", ConfigManager::MARKET_OFFER_DURATION);
-	registerEnumIn("configKeys", ConfigManager::CHECK_EXPIRED_MARKET_OFFERS_EACH_MINUTES);
-	registerEnumIn("configKeys", ConfigManager::MAX_MARKET_OFFERS_AT_A_TIME_PER_PLAYER);
 	registerEnumIn("configKeys", ConfigManager::EXP_FROM_PLAYERS_LEVEL_RANGE);
 	registerEnumIn("configKeys", ConfigManager::MAX_PACKETS_PER_SECOND);
 	registerEnumIn("configKeys", ConfigManager::TWO_FACTOR_AUTH);
@@ -2871,8 +2865,6 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("ItemType", "getVocationString", LuaScriptInterface::luaItemTypeGetVocationString);
 	registerMethod("ItemType", "getMinReqLevel", LuaScriptInterface::luaItemTypeGetMinReqLevel);
 	registerMethod("ItemType", "getMinReqMagicLevel", LuaScriptInterface::luaItemTypeGetMinReqMagicLevel);
-	registerMethod("ItemType", "getMarketBuyStatistics", LuaScriptInterface::luaItemTypeGetMarketBuyStatistics);
-	registerMethod("ItemType", "getMarketSellStatistics", LuaScriptInterface::luaItemTypeGetMarketSellStatistics);
 
 	registerMethod("ItemType", "hasSubType", LuaScriptInterface::luaItemTypeHasSubType);
 
@@ -12521,48 +12513,6 @@ int LuaScriptInterface::luaItemTypeGetMinReqMagicLevel(lua_State* L)
 	const ItemType* itemType = getUserdata<const ItemType>(L, 1);
 	if (itemType) {
 		lua_pushinteger(L, itemType->minReqMagicLevel);
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaItemTypeGetMarketBuyStatistics(lua_State* L)
-{
-	// itemType:getMarketBuyStatistics()
-	const ItemType* itemType = getUserdata<const ItemType>(L, 1);
-	if (itemType) {
-		MarketStatistics* statistics = IOMarket::getInstance().getPurchaseStatistics(itemType->id);
-		if (statistics) {
-			lua_createtable(L, 4, 0);
-			setField(L, "numTransactions", statistics->numTransactions);
-			setField(L, "totalPrice", statistics->totalPrice);
-			setField(L, "highestPrice", statistics->highestPrice);
-			setField(L, "lowestPrice", statistics->lowestPrice);
-		} else {
-			lua_pushnil(L);
-		}
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaItemTypeGetMarketSellStatistics(lua_State* L)
-{
-	// itemType:getMarketSellStatistics()
-	const ItemType* itemType = getUserdata<const ItemType>(L, 1);
-	if (itemType) {
-		MarketStatistics* statistics = IOMarket::getInstance().getSaleStatistics(itemType->id);
-		if (statistics) {
-			lua_createtable(L, 4, 0);
-			setField(L, "numTransactions", statistics->numTransactions);
-			setField(L, "totalPrice", statistics->totalPrice);
-			setField(L, "highestPrice", statistics->highestPrice);
-			setField(L, "lowestPrice", statistics->lowestPrice);
-		} else {
-			lua_pushnil(L);
-		}
 	} else {
 		lua_pushnil(L);
 	}

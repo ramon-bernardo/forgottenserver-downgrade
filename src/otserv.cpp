@@ -7,7 +7,6 @@
 #include "databasemanager.h"
 #include "databasetasks.h"
 #include "game.h"
-#include "iomarket.h"
 #include "monsters.h"
 #include "outfit.h"
 #include "protocollogin.h"
@@ -318,9 +317,6 @@ void mainLoader(int, char*[], ServiceManager* services)
 	}
 
 	g_game.map.houses.payHouses(rentPeriod);
-
-	IOMarket::checkExpiredOffers();
-	IOMarket::getInstance().updateStatistics();
 
 	std::cout << ">> Loaded all modules, server starting up..." << std::endl;
 

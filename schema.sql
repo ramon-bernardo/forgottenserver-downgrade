@@ -225,36 +225,6 @@ CREATE TABLE IF NOT EXISTS `house_lists` (
   FOREIGN KEY (`house_id`) REFERENCES `houses` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
 
-CREATE TABLE IF NOT EXISTS `market_history` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `player_id` int NOT NULL,
-  `sale` tinyint NOT NULL DEFAULT '0',
-  `itemtype` smallint unsigned NOT NULL,
-  `amount` smallint unsigned NOT NULL,
-  `price` bigint unsigned NOT NULL DEFAULT '0',
-  `expires_at` bigint unsigned NOT NULL,
-  `inserted` bigint unsigned NOT NULL,
-  `state` tinyint unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `player_id` (`player_id`, `sale`),
-  FOREIGN KEY (`player_id`) REFERENCES `players`(`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
-
-CREATE TABLE IF NOT EXISTS `market_offers` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `player_id` int NOT NULL,
-  `sale` tinyint NOT NULL DEFAULT '0',
-  `itemtype` smallint unsigned NOT NULL,
-  `amount` smallint unsigned NOT NULL,
-  `created` bigint unsigned NOT NULL,
-  `anonymous` tinyint NOT NULL DEFAULT '0',
-  `price` bigint unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `sale` (`sale`,`itemtype`),
-  KEY `created` (`created`),
-  FOREIGN KEY (`player_id`) REFERENCES `players`(`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
-
 CREATE TABLE IF NOT EXISTS `players_online` (
   `player_id` int NOT NULL,
   PRIMARY KEY (`player_id`)

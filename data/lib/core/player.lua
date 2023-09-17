@@ -370,7 +370,6 @@ function Player.setSpecialContainersAvailable(self, available)
 	msg:addByte(0x2A)
 
 	msg:addByte(0x00) -- stash
-	msg:addByte(available and 0x01 or 0x00) -- market
 
 	msg:sendToPlayer(self)
 	msg:delete()

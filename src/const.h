@@ -303,7 +303,6 @@ enum MessageClasses : uint8_t
 	// unused 47?
 	MESSAGE_ATTENTION = 48,        // White, console only
 	MESSAGE_BOOSTED_CREATURE = 49, // White, console only
-	MESSAGE_OFFLINE_TRAINING = 50, // White, over player + console
 	MESSAGE_TRANSACTION = 51,      // White, console only
 };
 

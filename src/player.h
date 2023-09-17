@@ -143,21 +143,6 @@ public:
 
 	uint16_t getStaminaMinutes() const { return staminaMinutes; }
 
-	bool addOfflineTrainingTries(skills_t skill, uint64_t tries);
-
-	void addOfflineTrainingTime(int32_t addTime)
-	{
-		offlineTrainingTime = std::min<int32_t>(12 * 3600 * 1000, offlineTrainingTime + addTime);
-	}
-	void removeOfflineTrainingTime(int32_t removeTime)
-	{
-		offlineTrainingTime = std::max<int32_t>(0, offlineTrainingTime - removeTime);
-	}
-	int32_t getOfflineTrainingTime() const { return offlineTrainingTime; }
-
-	int32_t getOfflineTrainingSkill() const { return offlineTrainingSkill; }
-	void setOfflineTrainingSkill(int32_t skill) { offlineTrainingSkill = skill; }
-
 	uint64_t getBankBalance() const { return bankBalance; }
 	void setBankBalance(uint64_t balance) { bankBalance = balance; }
 
@@ -1230,11 +1215,8 @@ private:
 	int32_t MessageBufferCount = 0;
 	int32_t bloodHitCount = 0;
 	int32_t shieldBlockCount = 0;
-	int32_t offlineTrainingSkill = -1;
-	int32_t offlineTrainingTime = 0;
 	int32_t idleTime = 0;
 
-	uint16_t lastStatsTrainingTime = 0;
 	uint16_t staminaMinutes = 2520;
 	uint16_t maxWriteLen = 0;
 	uint16_t clientExpDisplay = 100;

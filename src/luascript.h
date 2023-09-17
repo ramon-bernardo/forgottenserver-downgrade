@@ -851,15 +851,6 @@ private:
 	static int luaPlayerGetSpecialSkill(lua_State* L);
 	static int luaPlayerAddSpecialSkill(lua_State* L);
 
-	static int luaPlayerAddOfflineTrainingTime(lua_State* L);
-	static int luaPlayerGetOfflineTrainingTime(lua_State* L);
-	static int luaPlayerRemoveOfflineTrainingTime(lua_State* L);
-
-	static int luaPlayerAddOfflineTrainingTries(lua_State* L);
-
-	static int luaPlayerGetOfflineTrainingSkill(lua_State* L);
-	static int luaPlayerSetOfflineTrainingSkill(lua_State* L);
-
 	static int luaPlayerGetItemCount(lua_State* L);
 	static int luaPlayerGetItemById(lua_State* L);
 

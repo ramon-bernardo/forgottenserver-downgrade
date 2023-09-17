@@ -70,7 +70,7 @@ static constexpr uint8_t ITEM_STACK_SIZE = 100;
 class Game
 {
 public:
-	Game();
+	Game() = default;
 	~Game();
 
 	// non-copyable
@@ -460,8 +460,6 @@ public:
 	int16_t getWorldTime() { return worldTime; }
 	void updateWorldTime();
 
-	void sendOfflineTrainingDialog(Player* player);
-
 	const std::unordered_map<uint32_t, Player*>& getPlayers() const { return players; }
 	const std::map<uint32_t, Npc*>& getNpcs() const { return npcs; }
 	const std::map<uint32_t, Monster*>& getMonsters() const { return monsters; }
@@ -543,8 +541,6 @@ private:
 	std::map<uint32_t, BedItem*> bedSleepersMap;
 
 	std::unordered_set<Tile*> tilesToClean;
-
-	ModalWindow offlineTrainingWindow{std::numeric_limits<uint32_t>::max(), "Choose a Skill", "Please choose a skill:"};
 
 	static constexpr uint8_t LIGHT_DAY = 250;
 	static constexpr uint8_t LIGHT_NIGHT = 40;

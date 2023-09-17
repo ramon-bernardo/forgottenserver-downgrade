@@ -90,8 +90,7 @@ enum VipStatus_t : uint8_t
 {
 	VIPSTATUS_OFFLINE = 0,
 	VIPSTATUS_ONLINE = 1,
-	VIPSTATUS_PENDING = 2,
-	VIPSTATUS_TRAINING = 3
+	VIPSTATUS_PENDING = 2
 };
 
 enum MarketAction_t

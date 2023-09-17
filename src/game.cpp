@@ -46,20 +46,6 @@ extern MoveEvents* g_moveEvents;
 extern Weapons* g_weapons;
 extern Scripts* g_scripts;
 
-Game::Game()
-{
-	offlineTrainingWindow.defaultEnterButton = 0;
-	offlineTrainingWindow.defaultEscapeButton = 1;
-	offlineTrainingWindow.choices.emplace_back("Sword Fighting and Shielding", SKILL_SWORD);
-	offlineTrainingWindow.choices.emplace_back("Axe Fighting and Shielding", SKILL_AXE);
-	offlineTrainingWindow.choices.emplace_back("Club Fighting and Shielding", SKILL_CLUB);
-	offlineTrainingWindow.choices.emplace_back("Distance Fighting and Shielding", SKILL_DISTANCE);
-	offlineTrainingWindow.choices.emplace_back("Magic Level and Shielding", SKILL_MAGLEVEL);
-	offlineTrainingWindow.buttons.emplace_back("Okay", offlineTrainingWindow.defaultEnterButton);
-	offlineTrainingWindow.buttons.emplace_back("Cancel", offlineTrainingWindow.defaultEscapeButton);
-	offlineTrainingWindow.priority = true;
-}
-
 Game::~Game()
 {
 	for (const auto& it : guilds) {
@@ -5624,13 +5610,6 @@ void Game::forceRemoveCondition(uint32_t creatureId, ConditionType_t type)
 	}
 
 	creature->removeCondition(type, true);
-}
-
-void Game::sendOfflineTrainingDialog(Player* player)
-{
-	if (!player) {
-		return;
-	}
 }
 
 void Game::addPlayer(Player* player)

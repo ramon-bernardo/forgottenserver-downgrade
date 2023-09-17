@@ -42,7 +42,6 @@ enum ConditionAttr_t
 	CONDITIONATTR_SUBID,
 	CONDITIONATTR_ISAGGRESSIVE,
 	CONDITIONATTR_DISABLEDEFENSE,
-	CONDITIONATTR_SPECIALSKILLS,
 	CONDITIONATTR_MANASHIELD_BREAKABLE_MANA,
 	CONDITIONATTR_MANASHIELD_BREAKABLE_MAXMANA,
 
@@ -159,11 +158,9 @@ public:
 private:
 	int32_t skills[SKILL_LAST + 1] = {};
 	int32_t skillsPercent[SKILL_LAST + 1] = {};
-	int32_t specialSkills[SPECIALSKILL_LAST + 1] = {};
 	int32_t stats[STAT_LAST + 1] = {};
 	int32_t statsPercent[STAT_LAST + 1] = {};
 	int32_t currentSkill = 0;
-	int32_t currentSpecialSkill = 0;
 	int32_t currentStat = 0;
 
 	bool disableDefense = false;

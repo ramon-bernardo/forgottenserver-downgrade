@@ -848,8 +848,6 @@ private:
 	static int luaPlayerGetSkillTries(lua_State* L);
 	static int luaPlayerAddSkillTries(lua_State* L);
 	static int luaPlayerRemoveSkillTries(lua_State* L);
-	static int luaPlayerGetSpecialSkill(lua_State* L);
-	static int luaPlayerAddSpecialSkill(lua_State* L);
 
 	static int luaPlayerGetItemCount(lua_State* L);
 	static int luaPlayerGetItemById(lua_State* L);

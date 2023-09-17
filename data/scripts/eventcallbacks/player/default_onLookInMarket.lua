@@ -232,13 +232,6 @@ ec.onLookInMarket = function(self, itemType)
 			end
 		end
 
-		-- special skills
-		for skill, value in pairs(abilities.specialSkills) do
-			if value ~= 0 then
-				skillBoosts[#skillBoosts + 1] = string.format("%s %+d", getSpecialSkillName[skill - 1], value)
-			end
-		end
-
 		-- add to response
 		if #skillBoosts > 0 then
 			response:addString(table.concat(skillBoosts, ", "))

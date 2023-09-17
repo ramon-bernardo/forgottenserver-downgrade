@@ -38458,8 +38458,6 @@
 		<attribute key="weight" value="3200" />
 		<attribute key="weapontype" value="wand" />
 		<attribute key="shoottype" value="death" />
-		<attribute key="criticalhitamount" value="35" />
-		<attribute key="criticalhitchance" value="10" />
 		<attribute key="magiclevelpoints" value="2" />
 		<attribute key="range" value="4" />
 		<attribute key="duration" value="900" />

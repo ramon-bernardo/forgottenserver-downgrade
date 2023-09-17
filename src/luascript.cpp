@@ -1299,12 +1299,6 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(CONDITION_PARAM_FIELD);
 	registerEnum(CONDITION_PARAM_DISABLE_DEFENSE);
 	registerEnum(CONDITION_PARAM_MANASHIELD_BREAKABLE);
-	registerEnum(CONDITION_PARAM_SPECIALSKILL_CRITICALHITCHANCE);
-	registerEnum(CONDITION_PARAM_SPECIALSKILL_CRITICALHITAMOUNT);
-	registerEnum(CONDITION_PARAM_SPECIALSKILL_LIFELEECHCHANCE);
-	registerEnum(CONDITION_PARAM_SPECIALSKILL_LIFELEECHAMOUNT);
-	registerEnum(CONDITION_PARAM_SPECIALSKILL_MANALEECHCHANCE);
-	registerEnum(CONDITION_PARAM_SPECIALSKILL_MANALEECHAMOUNT);
 	registerEnum(CONDITION_PARAM_AGGRESSIVE);
 
 	registerEnum(CONST_ME_NONE);
@@ -1771,13 +1765,6 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(SKILL_FISHING);
 	registerEnum(SKILL_MAGLEVEL);
 	registerEnum(SKILL_LEVEL);
-
-	registerEnum(SPECIALSKILL_CRITICALHITCHANCE);
-	registerEnum(SPECIALSKILL_CRITICALHITAMOUNT);
-	registerEnum(SPECIALSKILL_LIFELEECHCHANCE);
-	registerEnum(SPECIALSKILL_LIFELEECHAMOUNT);
-	registerEnum(SPECIALSKILL_MANALEECHCHANCE);
-	registerEnum(SPECIALSKILL_MANALEECHAMOUNT);
 
 	registerEnum(STAT_MAXHITPOINTS);
 	registerEnum(STAT_MAXMANAPOINTS);
@@ -2533,8 +2520,6 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Player", "getSkillTries", LuaScriptInterface::luaPlayerGetSkillTries);
 	registerMethod("Player", "addSkillTries", LuaScriptInterface::luaPlayerAddSkillTries);
 	registerMethod("Player", "removeSkillTries", LuaScriptInterface::luaPlayerRemoveSkillTries);
-	registerMethod("Player", "getSpecialSkill", LuaScriptInterface::luaPlayerGetSpecialSkill);
-	registerMethod("Player", "addSpecialSkill", LuaScriptInterface::luaPlayerAddSpecialSkill);
 
 	registerMethod("Player", "getItemCount", LuaScriptInterface::luaPlayerGetItemCount);
 	registerMethod("Player", "getItemById", LuaScriptInterface::luaPlayerGetItemById);
@@ -8735,40 +8720,6 @@ int LuaScriptInterface::luaPlayerRemoveSkillTries(lua_State* L)
 	return 1;
 }
 
-int LuaScriptInterface::luaPlayerGetSpecialSkill(lua_State* L)
-{
-	// player:getSpecialSkill(specialSkillType)
-	SpecialSkills_t specialSkillType = getNumber<SpecialSkills_t>(L, 2);
-	Player* player = getUserdata<Player>(L, 1);
-	if (player && specialSkillType <= SPECIALSKILL_LAST) {
-		lua_pushnumber(L, player->getSpecialSkill(specialSkillType));
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaPlayerAddSpecialSkill(lua_State* L)
-{
-	// player:addSpecialSkill(specialSkillType, value)
-	Player* player = getUserdata<Player>(L, 1);
-	if (!player) {
-		lua_pushnil(L);
-		return 1;
-	}
-
-	SpecialSkills_t specialSkillType = getNumber<SpecialSkills_t>(L, 2);
-	if (specialSkillType > SPECIALSKILL_LAST) {
-		lua_pushnil(L);
-		return 1;
-	}
-
-	player->setVarSpecialSkill(specialSkillType, getNumber<int32_t>(L, 3));
-	player->sendSkills();
-	pushBoolean(L, true);
-	return 1;
-}
-
 int LuaScriptInterface::luaPlayerGetItemCount(lua_State* L)
 {
 	// player:getItemCount(itemId[, subType = -1])
@@ -12380,14 +12331,6 @@ int LuaScriptInterface::luaItemTypeGetAbilities(lua_State* L)
 			lua_rawseti(L, -2, i + 1);
 		}
 		lua_setfield(L, -2, "skills");
-
-		// Special skills
-		lua_createtable(L, 0, SPECIALSKILL_LAST + 1);
-		for (int32_t i = SPECIALSKILL_FIRST; i <= SPECIALSKILL_LAST; i++) {
-			lua_pushnumber(L, abilities.specialSkills[i]);
-			lua_rawseti(L, -2, i + 1);
-		}
-		lua_setfield(L, -2, "specialSkills");
 
 		// Field absorb percent
 		lua_createtable(L, 0, COMBAT_COUNT);

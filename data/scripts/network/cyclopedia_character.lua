@@ -25,11 +25,6 @@ local function sendBasicInfo(self, msg)
 end
 
 local function sendCombatStats(self, msg)
-	for skillId = SPECIALSKILL_CRITICALHITCHANCE, SPECIALSKILL_MANALEECHAMOUNT do
-		msg:addU16(self:getSpecialSkill(skillId))
-		msg:addU16(0) -- base special skill
-	end
-
 	-- fatal, dodge, momentum
 	for i = 1, 3 do
 		msg:addU16(0)

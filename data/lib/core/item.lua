@@ -364,24 +364,6 @@ do
 			end
 		end
 
-		-- special skills
-		do
-			for skill, value in pairs(abilities.specialSkills) do
-				if value ~= 0 then
-					-- add + symbol to special skill "amount" fields
-					if skill-1 < 6 and skill % 2 == 1 then
-						value = string.format("%+d", value)
-					elseif skill-1 >= 6 then
-						-- fatal, dodge, momentum coming from the item natively
-						-- (stats coming from tier are near tier info)
-						value = string.format("%0.2f", value/100)
-					end
-
-					descriptions[#descriptions + 1] = string.format("%s %s%%", getSpecialSkillName(skill-1), value)
-				end
-			end
-		end
-
 		-- cleave
 		-- perfect shot
 		-- to do
@@ -544,7 +526,7 @@ do
 		-- \nImbuements: (Basic Strike 2:30h, Basic Void 2:30h, Empty Slot).
 
 		-- item class
-		-- Classification: x Tier: y (0.50% Onslaught).
+		-- Classification: x (0.50% Onslaught).
 		do
 			local classification = itemType:getClassification()
 			local tier = isVirtual and 0 or item:getTier() or 0
@@ -554,19 +536,7 @@ do
 					classification = "other"
 				end
 
-				local tierString = tier
-				if tier > 0 then
-					local bonusType, bonusValue = itemType:getTierBonus(tier)
-					if bonusType ~= -1 then
-						if bonusType > 5 then
-							tierString = string.format("%d (%0.2f%% %s)", tier, bonusValue, getSpecialSkillName(bonusType))
-						else
-							tierString = string.format("%d (%d%% %s)", tier, bonusValue, getSpecialSkillName(bonusType))
-						end
-					end
-				end
-
-				response[#response + 1] = string.format("\nClassification: %s Tier: %s.", classification, tierString)
+				response[#response + 1] = string.format("\nClassification: %s.", classification)
 			end
 		end
 

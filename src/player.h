@@ -318,8 +318,6 @@ public:
 
 	void setVarSkill(skills_t skill, int32_t modifier) { varSkills[skill] += modifier; }
 
-	void setVarSpecialSkill(SpecialSkills_t skill, int32_t modifier) { varSpecialSkills[skill] += modifier; }
-
 	void setSpecialMagicLevelSkill(CombatType_t type, int16_t modifier)
 	{
 		specialMagicLevelSkill[combatTypeToIndex(type)] += modifier;
@@ -421,7 +419,6 @@ public:
 	void doAttacking(uint32_t interval) override;
 	bool hasExtraSwing() override { return lastAttack > 0 && ((OTSYS_TIME() - lastAttack) >= getAttackSpeed()); }
 
-	uint16_t getSpecialSkill(uint8_t skill) const { return std::max<uint16_t>(0, varSpecialSkills[skill]); }
 	uint16_t getSkillLevel(uint8_t skill) const
 	{
 		return std::max<uint16_t>(0, skills[skill].level + varSkills[skill]);
@@ -1207,7 +1204,6 @@ private:
 	uint16_t manaShieldBar = 0;
 	uint16_t maxManaShieldBar = 0;
 	int32_t varSkills[SKILL_LAST + 1] = {};
-	int32_t varSpecialSkills[SPECIALSKILL_LAST + 1] = {};
 	int32_t varStats[STAT_LAST + 1] = {};
 	std::array<int16_t, COMBAT_COUNT> specialMagicLevelSkill = {0};
 	int32_t purchaseCallback = -1;

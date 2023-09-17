@@ -2744,7 +2744,7 @@ void ProtocolGame::sendAddCreature(const Creature* creature, const Position& pos
 
 	// send player stats
 	sendStats();         // hp, cap, level, xp rate, etc.
-	sendSkills();        // skills and special skills
+	sendSkills();        // skills
 	player->sendIcons(); // active conditions
 
 	// send client info
@@ -3328,11 +3328,6 @@ void ProtocolGame::AddPlayerSkills(NetworkMessage& msg)
 		msg.add<uint16_t>(player->getBaseSkill(i));
 		msg.add<uint16_t>(player->getBaseSkill(i)); // base + loyalty bonus(?)
 		msg.add<uint16_t>(player->getSkillPercent(i) * 100);
-	}
-
-	for (uint8_t i = SPECIALSKILL_FIRST; i <= SPECIALSKILL_LAST; ++i) {
-		msg.add<uint16_t>(std::min<int32_t>(100, player->varSpecialSkills[i])); // base + bonus special skill
-		msg.add<uint16_t>(0);                                                   // base special skill
 	}
 
 	// fatal, dodge, momentum

@@ -21,7 +21,6 @@ enum CreatureEventType_t
 	CREATURE_EVENT_DEATH,
 	CREATURE_EVENT_KILL,
 	CREATURE_EVENT_ADVANCE,
-	CREATURE_EVENT_MODALWINDOW,
 	CREATURE_EVENT_TEXTEDIT,
 	CREATURE_EVENT_HEALTHCHANGE,
 	CREATURE_EVENT_MANACHANGE,
@@ -54,7 +53,6 @@ public:
 	                    bool lastHitUnjustified, bool mostDamageUnjustified);
 	void executeOnKill(Creature* creature, Creature* target);
 	bool executeAdvance(Player* player, skills_t, uint32_t, uint32_t);
-	void executeModalWindow(Player* player, uint32_t modalWindowId, uint8_t buttonId, uint8_t choiceId);
 	bool executeTextEdit(Player* player, Item* item, std::string_view text, const uint32_t windowTextId);
 	void executeHealthChange(Creature* creature, Creature* attacker, CombatDamage& damage);
 	void executeManaChange(Creature* creature, Creature* attacker, CombatDamage& damage);

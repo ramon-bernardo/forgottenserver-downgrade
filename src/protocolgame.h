@@ -124,8 +124,6 @@ private:
 	void parsePassPartyLeadership(NetworkMessage& msg);
 	void parseEnableSharedPartyExperience(NetworkMessage& msg);
 
-	void parseModalWindowAnswer(NetworkMessage& msg);
-
 	void parseBrowseField(NetworkMessage& msg);
 	void parseSeekInContainer(NetworkMessage& msg);
 
@@ -268,9 +266,6 @@ private:
 	// inventory
 	void sendInventoryItem(slots_t slot, const Item* item);
 	void sendItems();
-
-	// messages
-	void sendModalWindow(const ModalWindow& modalWindow);
 
 	// session end
 	void sendSessionEnd(SessionEndTypes_t reason);

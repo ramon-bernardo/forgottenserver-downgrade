@@ -172,10 +172,6 @@ do
 			self:type("advance")
 			self:onAdvance(value)
 			return
-		elseif key == "onModalWindow" then
-			self:type("modalwindow")
-			self:onModalWindow(value)
-			return
 		elseif key == "onTextEdit" then
 			self:type("textedit")
 			self:onTextEdit(value)

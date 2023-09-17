@@ -279,7 +279,6 @@ void ProtocolGame::connect(uint32_t playerId, OperatingSystem_t operatingSystem)
 	player->incrementReferenceCounter();
 
 	g_chat->removeUserFromAllChannels(*player);
-	player->clearModalWindows();
 	player->setOperatingSystem(operatingSystem);
 	player->isConnecting = false;
 
@@ -799,9 +798,6 @@ void ProtocolGame::parsePacket(NetworkMessage& msg)
 			break;
 		case 0xF8:
 			parseMarketAcceptOffer(msg);
-			break;
-		case 0xF9:
-			parseModalWindowAnswer(msg);
 			break;
 			// case 0xFA: break; // store window open
 			// case 0xFB: break; // store window click
@@ -1521,15 +1517,6 @@ void ProtocolGame::parseMarketAcceptOffer(NetworkMessage& msg)
 	uint16_t amount = msg.get<uint16_t>();
 	g_dispatcher.addTask(
 	    [=, playerID = player->getID()]() { g_game.playerAcceptMarketOffer(playerID, timestamp, counter, amount); });
-}
-
-void ProtocolGame::parseModalWindowAnswer(NetworkMessage& msg)
-{
-	uint32_t id = msg.get<uint32_t>();
-	uint8_t button = msg.getByte();
-	uint8_t choice = msg.getByte();
-	g_dispatcher.addTask(
-	    [=, playerID = player->getID()]() { g_game.playerAnswerModalWindow(playerID, id, button, choice); });
 }
 
 void ProtocolGame::parseBrowseField(NetworkMessage& msg)
@@ -3183,34 +3170,6 @@ void ProtocolGame::sendSupplyUsed(const uint16_t clientId)
 	NetworkMessage msg;
 	msg.addByte(0xCE);
 	msg.add<uint16_t>(clientId);
-
-	writeToOutputBuffer(msg);
-}
-
-void ProtocolGame::sendModalWindow(const ModalWindow& modalWindow)
-{
-	NetworkMessage msg;
-	msg.addByte(0xFA);
-
-	msg.add<uint32_t>(modalWindow.id);
-	msg.addString(modalWindow.title);
-	msg.addString(modalWindow.message);
-
-	msg.addByte(modalWindow.buttons.size());
-	for (const auto& it : modalWindow.buttons) {
-		msg.addString(it.first);
-		msg.addByte(it.second);
-	}
-
-	msg.addByte(modalWindow.choices.size());
-	for (const auto& it : modalWindow.choices) {
-		msg.addString(it.first);
-		msg.addByte(it.second);
-	}
-
-	msg.addByte(modalWindow.defaultEscapeButton);
-	msg.addByte(modalWindow.defaultEnterButton);
-	msg.addByte(modalWindow.priority ? 0x01 : 0x00);
 
 	writeToOutputBuffer(msg);
 }

@@ -1328,18 +1328,6 @@ void Player::onCreatureMove(Creature* creature, const Tile* newTile, const Posit
 		}
 	}
 
-	// close modal windows
-	if (!modalWindows.empty()) {
-		// TODO: This shouldn't be hard-coded
-		for (uint32_t modalWindowId : modalWindows) {
-			if (modalWindowId == std::numeric_limits<uint32_t>::max()) {
-				sendTextMessage(MESSAGE_EVENT_ADVANCE, "Offline training aborted.");
-				break;
-			}
-		}
-		modalWindows.clear();
-	}
-
 	// leave market
 	if (inMarket) {
 		inMarket = false;
@@ -4368,25 +4356,6 @@ bool Player::addOfflineTrainingTries(skills_t skill, uint64_t tries)
 	        newPercentToNextLevel, (newSkillValue + 1)));
 	return sendUpdate;
 }
-
-bool Player::hasModalWindowOpen(uint32_t modalWindowId) const
-{
-	return find(modalWindows.begin(), modalWindows.end(), modalWindowId) != modalWindows.end();
-}
-
-void Player::onModalWindowHandled(uint32_t modalWindowId) { modalWindows.remove(modalWindowId); }
-
-void Player::sendModalWindow(const ModalWindow& modalWindow)
-{
-	if (!client) {
-		return;
-	}
-
-	modalWindows.push_front(modalWindow.id);
-	client->sendModalWindow(modalWindow);
-}
-
-void Player::clearModalWindows() { modalWindows.clear(); }
 
 void Player::sendClosePrivate(uint16_t channelId)
 {

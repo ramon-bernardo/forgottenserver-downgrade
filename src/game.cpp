@@ -46,6 +46,8 @@ extern MoveEvents* g_moveEvents;
 extern Weapons* g_weapons;
 extern Scripts* g_scripts;
 
+Game::Game() {}
+
 Game::~Game()
 {
 	for (const auto& it : guilds) {

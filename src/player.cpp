@@ -696,8 +696,6 @@ void Player::setStorageValue(uint32_t key, std::optional<int32_t> value, bool is
 		if (IS_IN_KEYRANGE(key, OUTFITS_RANGE)) {
 			outfits.emplace_back(value.value_or(0) >> 16, value.value_or(0) & 0xFF);
 			return;
-		} else if (IS_IN_KEYRANGE(key, MOUNTS_RANGE)) {
-			// do nothing
 		} else {
 			std::cout << "Warning: unknown reserved key: " << key << " player: " << getName() << std::endl;
 			return;

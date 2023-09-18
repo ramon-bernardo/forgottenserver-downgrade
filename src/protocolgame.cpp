@@ -740,9 +740,6 @@ void ProtocolGame::parsePacket(NetworkMessage& msg)
 		case 0xCA:
 			parseUpdateContainer(msg);
 			break;
-		case 0xCB:
-			parseBrowseField(msg);
-			break;
 		case 0xCC:
 			parseSeekInContainer(msg);
 			break;
@@ -1446,12 +1443,6 @@ void ProtocolGame::parseEnableSharedPartyExperience(NetworkMessage& msg)
 	    [=, playerID = player->getID()]() { g_game.playerEnableSharedPartyExperience(playerID, sharedExpActive); });
 }
 
-void ProtocolGame::parseBrowseField(NetworkMessage& msg)
-{
-	Position pos = msg.getPosition();
-	g_dispatcher.addTask([=, playerID = player->getID()]() { g_game.playerBrowseField(playerID, pos); });
-}
-
 void ProtocolGame::parseSeekInContainer(NetworkMessage& msg)
 {
 	uint8_t containerId = msg.getByte();
@@ -1803,19 +1794,12 @@ void ProtocolGame::sendContainer(uint8_t cid, const Container* container, bool h
 
 	msg.addByte(cid);
 
-	if (container->getID() == ITEM_BROWSEFIELD) {
-		msg.addItem(ITEM_BAG, 1);
-		msg.addString("Browse Field");
-	} else {
-		msg.addItem(container);
-		msg.addString(container->getName());
-	}
+	msg.addItem(container);
+	msg.addString(container->getName());
 
 	msg.addByte(container->capacity());
 	msg.addByte(hasParent ? 0x01 : 0x00);
 	msg.addByte(0x00);                                     // show search icon (boolean)
-	msg.addByte(container->isUnlocked() ? 0x01 : 0x00);    // Drag and drop
-	msg.addByte(container->hasPagination() ? 0x01 : 0x00); // Pagination
 
 	uint32_t containerSize = container->size();
 	msg.add<uint16_t>(containerSize);

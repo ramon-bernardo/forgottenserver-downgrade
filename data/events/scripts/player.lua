@@ -1,11 +1,3 @@
-function Player:onBrowseField(position)
-	local onBrowseField = EventCallback.onBrowseField
-	if onBrowseField then
-		return onBrowseField(self, position)
-	end
-	return true
-end
-
 function Player:onLook(thing, position, distance)
 	local description = ""
 	local onLook = EventCallback.onLook

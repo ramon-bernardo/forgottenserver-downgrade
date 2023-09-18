@@ -16,39 +16,15 @@ extern Game g_game;
 
 Container::Container(uint16_t type) : Container(type, items[type].maxItems) {}
 
-Container::Container(uint16_t type, uint16_t size, bool unlocked /*= true*/, bool pagination /*= false*/) :
-    Item(type), maxSize(size), unlocked(unlocked), pagination(pagination)
+Container::Container(uint16_t type, uint16_t size) :
+    Item(type), maxSize(size)
 {}
-
-Container::Container(Tile* tile) : Container(ITEM_BROWSEFIELD, 30, false, true)
-{
-	TileItemVector* itemVector = tile->getItemList();
-	if (itemVector) {
-		for (Item* item : *itemVector) {
-			if ((item->getContainer() || item->hasProperty(CONST_PROP_MOVEABLE)) &&
-			    !item->hasAttribute(ITEM_ATTRIBUTE_UNIQUEID)) {
-				itemlist.push_front(item);
-				item->setParent(this);
-			}
-		}
-	}
-
-	setParent(tile);
-}
 
 Container::~Container()
 {
-	if (getID() == ITEM_BROWSEFIELD) {
-		g_game.browseFields.erase(getTile());
-
-		for (Item* item : itemlist) {
-			item->setParent(parent);
-		}
-	} else {
-		for (Item* item : itemlist) {
-			item->setParent(nullptr);
-			item->decrementReferenceCounter();
-		}
+	for (Item* item : itemlist) {
+		item->setParent(nullptr);
+		item->decrementReferenceCounter();
 	}
 }
 
@@ -77,7 +53,7 @@ std::string Container::getName(bool addArticle /* = false*/) const
 	return getNameDescription(it, this, -1, addArticle);
 }
 
-bool Container::hasParent() const { return getID() != ITEM_BROWSEFIELD && !dynamic_cast<const Player*>(getParent()); }
+bool Container::hasParent() const { return !dynamic_cast<const Player*>(getParent()); }
 
 void Container::addItem(Item* item)
 {
@@ -231,10 +207,6 @@ ReturnValue Container::queryAdd(int32_t index, const Thing& thing, uint32_t coun
 		return RETURNVALUE_NOERROR;
 	}
 
-	if (!unlocked) {
-		return RETURNVALUE_NOTPOSSIBLE;
-	}
-
 	const Item* item = thing.getItem();
 	if (!item) {
 		return RETURNVALUE_NOTPOSSIBLE;
@@ -268,7 +240,7 @@ ReturnValue Container::queryAdd(int32_t index, const Thing& thing, uint32_t coun
 			cylinder = cylinder->getParent();
 		}
 
-		if (index == INDEX_WHEREEVER && size() >= capacity() && !hasPagination()) {
+		if (index == INDEX_WHEREEVER && size() >= capacity()) {
 			return RETURNVALUE_CONTAINERNOTENOUGHROOM;
 		}
 	} else {
@@ -305,7 +277,7 @@ ReturnValue Container::queryMaxCount(int32_t index, const Thing& thing, uint32_t
 		return RETURNVALUE_NOTPOSSIBLE;
 	}
 
-	if (hasBitSet(FLAG_NOLIMIT, flags) || hasPagination()) {
+	if (hasBitSet(FLAG_NOLIMIT, flags)) {
 		maxQueryCount = std::max<uint32_t>(1, count);
 		return RETURNVALUE_NOERROR;
 	}
@@ -383,11 +355,6 @@ ReturnValue Container::queryRemove(const Thing& thing, uint32_t count, uint32_t 
 
 Cylinder* Container::queryDestination(int32_t& index, const Thing& thing, Item** destItem, uint32_t& flags)
 {
-	if (!unlocked) {
-		*destItem = nullptr;
-		return this;
-	}
-
 	if (index == 254 /*move up*/) {
 		index = INDEX_WHEREEVER;
 		*destItem = nullptr;

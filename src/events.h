@@ -39,7 +39,6 @@ class Events
 		int32_t partyOnPassLeadership = -1;
 
 		// Player
-		int32_t playerOnBrowseField = -1;
 		int32_t playerOnLook = -1;
 		int32_t playerOnLookInBattleList = -1;
 		int32_t playerOnLookInTrade = -1;
@@ -88,7 +87,6 @@ public:
 	bool eventPartyOnPassLeadership(Party* party, Player* player);
 
 	// Player
-	bool eventPlayerOnBrowseField(Player* player, const Position& position);
 	void eventPlayerOnLook(Player* player, const Position& position, Thing* thing, uint8_t stackpos,
 	                       int32_t lookDistance);
 	void eventPlayerOnLookInBattleList(Player* player, Creature* creature, int32_t lookDistance);

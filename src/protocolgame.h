@@ -124,7 +124,6 @@ private:
 	void parsePassPartyLeadership(NetworkMessage& msg);
 	void parseEnableSharedPartyExperience(NetworkMessage& msg);
 
-	void parseBrowseField(NetworkMessage& msg);
 	void parseSeekInContainer(NetworkMessage& msg);
 
 	// trade methods

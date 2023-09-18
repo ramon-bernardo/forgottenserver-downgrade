@@ -598,18 +598,9 @@ void Player::addContainer(uint8_t cid, Container* container)
 		return;
 	}
 
-	if (container->getID() == ITEM_BROWSEFIELD) {
-		container->incrementReferenceCounter();
-	}
-
 	auto it = openContainers.find(cid);
 	if (it != openContainers.end()) {
 		OpenContainer& openContainer = it->second;
-		Container* oldContainer = openContainer.container;
-		if (oldContainer->getID() == ITEM_BROWSEFIELD) {
-			oldContainer->decrementReferenceCounter();
-		}
-
 		openContainer.container = container;
 		openContainer.index = 0;
 	} else {
@@ -630,10 +621,6 @@ void Player::closeContainer(uint8_t cid)
 	OpenContainer openContainer = it->second;
 	Container* container = openContainer.container;
 	openContainers.erase(it);
-
-	if (container && container->getID() == ITEM_BROWSEFIELD) {
-		container->decrementReferenceCounter();
-	}
 }
 
 void Player::setContainerIndex(uint8_t cid, uint16_t index)
@@ -834,7 +821,7 @@ DepotLocker& Player::getDepotLocker()
 		depotLocker = std::make_shared<DepotLocker>(ITEM_LOCKER);
 		depotLocker->internalAddThing(inbox);
 
-		DepotChest* depotChest = new DepotChest(ITEM_DEPOT, false);
+		DepotChest* depotChest = new DepotChest(ITEM_DEPOT);
 		// adding in reverse to align them from first to last
 		for (int16_t depotId = depotChest->capacity(); depotId >= 0; --depotId) {
 			if (DepotChest* box = getDepotChest(depotId, true)) {
@@ -962,17 +949,8 @@ void Player::sendAddContainerItem(const Container* container, const Item* item)
 		}
 
 		uint16_t slot = openContainer.index;
-		if (container->getID() == ITEM_BROWSEFIELD) {
-			uint16_t containerSize = container->size() - 1;
-			uint16_t pageEnd = openContainer.index + container->capacity() - 1;
-			if (containerSize > pageEnd) {
-				slot = pageEnd;
-				item = container->getItemByIndex(pageEnd);
-			} else {
-				slot = containerSize;
-			}
-		} else if (openContainer.index >= container->capacity()) {
-			item = container->getItemByIndex(openContainer.index);
+		if (slot >= container->capacity()) {
+			item = container->getItemByIndex(slot);
 		}
 
 		if (item) {

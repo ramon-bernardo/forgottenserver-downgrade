@@ -36,7 +36,6 @@ ec.onInvite = {}
 ec.onRevokeInvitation = {}
 ec.onPassLeadership = {}
 -- Player
-ec.onBrowseField = {}
 ec.onLook = {[5] = 1}
 ec.onLookInBattleList = {[4] = 1}
 ec.onLookInTrade = {[5] = 1}

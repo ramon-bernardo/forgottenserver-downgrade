@@ -261,21 +261,6 @@ Thing* Game::internalGetThing(Player* player, const Position& pos, int32_t index
 			return nullptr;
 		}
 
-		if (parentContainer->getID() == ITEM_BROWSEFIELD) {
-			Tile* tile = parentContainer->getTile();
-			if (tile && tile->hasFlag(TILESTATE_SUPPORTS_HANGABLE)) {
-				if (tile->hasProperty(CONST_PROP_ISVERTICAL)) {
-					if (player->getPosition().x + 1 == tile->getPosition().x) {
-						return nullptr;
-					}
-				} else { // horizontal
-					if (player->getPosition().y + 1 == tile->getPosition().y) {
-						return nullptr;
-					}
-				}
-			}
-		}
-
 		uint8_t slot = pos.z;
 		return parentContainer->getItemByIndex(player->getContainerIndex(fromCid) + slot);
 	} else if (pos.y == 0 && pos.z == 0) {
@@ -1074,14 +1059,6 @@ ReturnValue Game::internalMoveItem(Cylinder* fromCylinder, Cylinder* toCylinder,
 		}
 	}
 
-	Tile* fromTile = fromCylinder->getTile();
-	if (fromTile) {
-		auto it = browseFields.find(fromTile);
-		if (it != browseFields.end() && it->second == fromCylinder) {
-			fromCylinder = fromTile;
-		}
-	}
-
 	Item* toItem = nullptr;
 
 	Cylinder* subCylinder;
@@ -1382,14 +1359,6 @@ ReturnValue Game::internalRemoveItem(Item* item, int32_t count /*= -1*/, bool te
 		return RETURNVALUE_NOTPOSSIBLE;
 	}
 
-	Tile* fromTile = cylinder->getTile();
-	if (fromTile) {
-		auto it = browseFields.find(fromTile);
-		if (it != browseFields.end() && it->second == cylinder) {
-			cylinder = fromTile;
-		}
-	}
-
 	if (count == -1) {
 		count = item->getItemCount();
 	}
@@ -1611,14 +1580,6 @@ Item* Game::transformItem(Item* item, uint16_t newId, int32_t newCount /*= -1*/)
 	Cylinder* cylinder = item->getParent();
 	if (!cylinder) {
 		return nullptr;
-	}
-
-	Tile* fromTile = cylinder->getTile();
-	if (fromTile) {
-		auto it = browseFields.find(fromTile);
-		if (it != browseFields.end() && it->second == cylinder) {
-			cylinder = fromTile;
-		}
 	}
 
 	int32_t itemIndex = cylinder->getThingIndex(item);
@@ -2343,26 +2304,8 @@ void Game::playerMoveUpContainer(uint32_t playerId, uint8_t cid)
 	}
 
 	Container* parentContainer = dynamic_cast<Container*>(container->getRealParent());
-	if (!parentContainer) {
-		Tile* tile = container->getTile();
-		if (!tile) {
-			return;
-		}
-
-		if (!g_events->eventPlayerOnBrowseField(player, tile->getPosition())) {
-			return;
-		}
-
-		auto it = browseFields.find(tile);
-		if (it == browseFields.end()) {
-			parentContainer = new Container(tile);
-			parentContainer->incrementReferenceCounter();
-			browseFields[tile] = parentContainer;
-			g_scheduler.addEvent(createSchedulerTask(
-			    30000, [this, position = tile->getPosition()]() { decreaseBrowseFieldRef(position); }));
-		} else {
-			parentContainer = it->second;
-		}
+	if (!parentContainer || !container->getTile()) {
+		return;
 	}
 
 	player->addContainer(cid, parentContainer);
@@ -2484,67 +2427,6 @@ void Game::playerWriteItem(uint32_t playerId, uint32_t windowTextId, std::string
 	player->setWriteItem(nullptr);
 }
 
-void Game::playerBrowseField(uint32_t playerId, const Position& pos)
-{
-	Player* player = getPlayerByID(playerId);
-	if (!player) {
-		return;
-	}
-
-	const Position& playerPos = player->getPosition();
-	if (playerPos.z != pos.z) {
-		player->sendCancelMessage(playerPos.z > pos.z ? RETURNVALUE_FIRSTGOUPSTAIRS : RETURNVALUE_FIRSTGODOWNSTAIRS);
-		return;
-	}
-
-	if (!Position::areInRange<1, 1>(playerPos, pos)) {
-		std::vector<Direction> listDir;
-		if (player->getPathTo(pos, listDir, 0, 1, true, true)) {
-			g_dispatcher.addTask([this, playerID = player->getID(), listDir = std::move(listDir)]() {
-				playerAutoWalk(playerID, listDir);
-			});
-			SchedulerTask* task =
-			    createSchedulerTask(RANGE_BROWSE_FIELD_INTERVAL, [=, this]() { playerBrowseField(playerId, pos); });
-			player->setNextWalkActionTask(task);
-		} else {
-			player->sendCancelMessage(RETURNVALUE_THEREISNOWAY);
-		}
-		return;
-	}
-
-	Tile* tile = map.getTile(pos);
-	if (!tile) {
-		return;
-	}
-
-	if (!g_events->eventPlayerOnBrowseField(player, pos)) {
-		return;
-	}
-
-	Container* container;
-
-	auto it = browseFields.find(tile);
-	if (it == browseFields.end()) {
-		container = new Container(tile);
-		container->incrementReferenceCounter();
-		browseFields[tile] = container;
-		g_scheduler.addEvent(
-		    createSchedulerTask(30000, [this, position = tile->getPosition()]() { decreaseBrowseFieldRef(position); }));
-	} else {
-		container = it->second;
-	}
-
-	uint8_t dummyContainerId = 0xF - ((pos.x % 3) * 3 + (pos.y % 3));
-	Container* openContainer = player->getContainerByID(dummyContainerId);
-	if (openContainer) {
-		player->onCloseContainer(openContainer);
-		player->closeContainer(dummyContainerId);
-	} else {
-		player->addContainer(dummyContainerId, container);
-		player->sendContainer(dummyContainerId, container, false, 0);
-	}
-}
-
 void Game::playerSeekInContainer(uint32_t playerId, uint8_t containerId, uint16_t index)
 {
 	Player* player = getPlayerByID(playerId);
@@ -2553,7 +2435,7 @@ void Game::playerSeekInContainer(uint32_t playerId, uint8_t containerId, uint16_
 	}
 
 	Container* container = player->getContainerByID(containerId);
-	if (!container || !container->hasPagination()) {
+	if (!container) {
 		return;
 	}
 
@@ -5177,19 +5059,6 @@ Guild* Game::getGuild(uint32_t id) const
 void Game::addGuild(Guild* guild) { guilds[guild->getId()] = guild; }
 
 void Game::removeGuild(uint32_t guildId) { guilds.erase(guildId); }
-
-void Game::decreaseBrowseFieldRef(const Position& pos)
-{
-	Tile* tile = map.getTile(pos.x, pos.y, pos.z);
-	if (!tile) {
-		return;
-	}
-
-	auto it = browseFields.find(tile);
-	if (it != browseFields.end()) {
-		it->second->decrementReferenceCounter();
-	}
-}
 
 void Game::internalRemoveItems(std::vector<Item*> itemList, uint32_t amount, bool stackable)
 {

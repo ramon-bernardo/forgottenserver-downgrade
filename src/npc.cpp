@@ -68,7 +68,6 @@ void Npc::reset()
 	attackable = false;
 	ignoreHeight = false;
 	focusCreature = 0;
-	speechBubble = SPEECHBUBBLE_NONE;
 
 	npcEventHandler.reset();
 
@@ -142,10 +141,6 @@ bool Npc::loadFromXml()
 
 	if ((attr = npcNode.attribute("ignoreheight"))) {
 		ignoreHeight = attr.as_bool();
-	}
-
-	if ((attr = npcNode.attribute("speechbubble"))) {
-		speechBubble = pugi::cast<uint32_t>(attr.value());
 	}
 
 	if ((attr = npcNode.attribute("skull"))) {

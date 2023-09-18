@@ -123,9 +123,6 @@ public:
 
 	CreatureType_t getType() const override { return CREATURETYPE_NPC; }
 
-	uint8_t getSpeechBubble() const override { return speechBubble; }
-	void setSpeechBubble(const uint8_t bubble) { speechBubble = bubble; }
-
 	void doSay(const std::string& text);
 	void doSayToPlayer(Player* player, const std::string& text);
 
@@ -200,8 +197,6 @@ private:
 	uint32_t walkTicks;
 	int32_t focusCreature;
 	int32_t masterRadius;
-
-	uint8_t speechBubble;
 
 	bool floorChange;
 	bool attackable;

@@ -1694,7 +1694,6 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(SKULL_WHITE);
 	registerEnum(SKULL_RED);
 	registerEnum(SKULL_BLACK);
-	registerEnum(SKULL_ORANGE);
 
 	registerEnum(FLUID_NONE);
 	registerEnum(FLUID_WATER);

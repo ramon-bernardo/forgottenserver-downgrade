@@ -597,7 +597,7 @@ WeaponActionNames weaponActionNames = {
 
 SkullNames skullNames = {
     {"none", SKULL_NONE}, {"yellow", SKULL_YELLOW}, {"green", SKULL_GREEN},   {"white", SKULL_WHITE},
-    {"red", SKULL_RED},   {"black", SKULL_BLACK},   {"orange", SKULL_ORANGE},
+    {"red", SKULL_RED},   {"black", SKULL_BLACK},
 };
 
 std::vector<uint16_t> depotBoxes = {ITEM_DEPOT_BOX_I,    ITEM_DEPOT_BOX_II,   ITEM_DEPOT_BOX_III, ITEM_DEPOT_BOX_IV,

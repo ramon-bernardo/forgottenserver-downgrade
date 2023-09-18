@@ -22,10 +22,6 @@
 	</flags>
 	<attacks>
 		<attack name="melee" interval="2000" min="0" max="-385" />
-		<attack name="death" interval="2000" chance="15" range="7" radius="5" target="1" min="-120" max="-650">
-			<attribute key="shootEffect" value="death" />
-			<attribute key="areaEffect" value="blacksmoke" />
-		</attack>
 		<attack name="fire" interval="2000" chance="11" range="7" min="-330" max="-805">
 			<attribute key="shootEffect" value="fire" />
 		</attack>

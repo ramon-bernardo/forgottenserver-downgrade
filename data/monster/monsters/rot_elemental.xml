@@ -20,10 +20,6 @@
 	<bestiary class="Undead" prowess="50" expertise="500" mastery="1000" charmPoints="50" difficulty="medium" occurrence="common" locations="Rot Elemental Locations..." />
 	<attacks>
 		<attack name="melee" interval="2000" skill="58" attack="50" poison="280" />
-		<attack name="earth" interval="2000" chance="13" range="7" target="1" radius="3" min="-150" max="-250">
-			<attribute key="shootEffect" value="gloothspear" />
-			<attribute key="areaEffect" value="poison" />
-		</attack>
 		<attack name="earth" interval="2000" chance="15" length="6" spread="0" min="-150" max="-230">
 			<attribute key="areaEffect" value="poison" />
 		</attack>

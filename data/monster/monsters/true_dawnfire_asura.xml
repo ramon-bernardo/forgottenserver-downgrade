@@ -40,9 +40,6 @@
 		<attack name="death" interval="1000" chance="10" radius="3" target="1" min="150" max="350">
 			<attribute key="areaEffect" value="mortarea" />
 		</attack>
-		<attack name="death" interval="2000" chance="10" radius="4" min="100" max="300">
-			<attribute key="areaEffect" value="blacksmoke" />
-		</attack>
 		<attack name="speed" interval="2000" chance="15" radius="1" target="1" speedchange="-100" duration="30000">
 			<attribute key="areaEffect" value="redshimmer" />
 		</attack>

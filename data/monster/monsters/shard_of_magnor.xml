@@ -28,9 +28,6 @@
 		<attack name="physical" interval="2000" chance="70" length="7" spread="3" min="-400" max="-1000">
 			<attribute key="areaEffect" value="poison" />
 		</attack>
-		<attack name="energy" interval="2000" chance="0" target="1" radius="3" min="-400" max="-650">
-			<attribute key="areaEffect" value="greenchain" />
-		</attack>
 	</attacks>
 	<defenses armor="78" defense="25">
 		<defense name="healing" interval="2000" chance="14" min="150" max="350">

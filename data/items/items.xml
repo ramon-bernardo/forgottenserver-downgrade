@@ -25218,26 +25218,6 @@
 		<attribute key="defense" value="28" />
 		<attribute key="weaponType" value="club" />
 	</item>
-	<item id="15648" article="a" name="tarsal arrow">
-		<attribute key="weight" value="70" />
-		<attribute key="slotType" value="ammo" />
-		<attribute key="attack" value="33" />
-		<attribute key="weaponType" value="ammunition" />
-		<attribute key="ammoType" value="arrow" />
-		<attribute key="shootType" value="tarsalarrow" />
-		<attribute key="maxHitChance" value="94" />
-		<attribute key="supply" value="true" />
-	</item>
-	<item id="15649" article="a" name="vortex bolt">
-		<attribute key="weight" value="80" />
-		<attribute key="slotType" value="ammo" />
-		<attribute key="attack" value="36" />
-		<attribute key="weaponType" value="ammunition" />
-		<attribute key="ammoType" value="bolt" />
-		<attribute key="shootType" value="vortexbolt" />
-		<attribute key="maxHitChance" value="89" />
-		<attribute key="supply" value="true" />
-	</item>
 	<item id="15650" article="a" name="swarmer drum">
 		<attribute key="weight" value="3200" />
 	</item>
@@ -26052,16 +26032,6 @@
 	<item fromid="18297" toid="18298" name="mammoth bones" />
 	<item fromid="18299" toid="18300" article="a" name="mammoth bone" />
 	<item fromid="18301" toid="18302" name="icy bones" />
-	<item id="18304" article="a" name="crystalline arrow">
-		<attribute key="weight" value="75" />
-		<attribute key="slotType" value="ammo" />
-		<attribute key="attack" value="65" />
-		<attribute key="weaponType" value="ammunition" />
-		<attribute key="ammoType" value="arrow" />
-		<attribute key="shootType" value="crystallinearrow" />
-		<attribute key="maxHitChance" value="95" />
-		<attribute key="supply" value="true" />
-	</item>
 	<item id="18305" article="a" name="fresh mushroom beer">
 		<attribute key="weight" value="200" />
 		<attribute key="decayTo" value="18306" />
@@ -26476,37 +26446,6 @@
 	</item>
 	<item id="18434" article="a" name="hideous chunk">
 		<attribute key="weight" value="160" />
-	</item>
-	<item id="18435" article="a" name="prismatic bolt">
-		<attribute key="weight" value="85" />
-		<attribute key="slotType" value="ammo" />
-		<attribute key="attack" value="66" />
-		<attribute key="weaponType" value="ammunition" />
-		<attribute key="ammoType" value="bolt" />
-		<attribute key="shootType" value="prismaticbolt" />
-		<attribute key="maxHitChance" value="90" />
-		<attribute key="supply" value="true" />
-	</item>
-	<item id="18436" article="a" name="drill bolt">
-		<attribute key="weight" value="80" />
-		<attribute key="slotType" value="ammo" />
-		<attribute key="attack" value="56" />
-		<attribute key="weaponType" value="ammunition" />
-		<attribute key="ammoType" value="bolt" />
-		<attribute key="shootType" value="drillbolt" />
-		<attribute key="maxHitChance" value="90" />
-		<attribute key="supply" value="true" />
-	</item>
-	<item id="18437" article="an" name="envenomed arrow">
-		<attribute key="weight" value="70" />
-		<attribute key="slotType" value="ammo" />
-		<attribute key="attack" value="27" />
-		<attribute key="elementEarth" value="27" />
-		<attribute key="weaponType" value="ammunition" />
-		<attribute key="ammoType" value="arrow" />
-		<attribute key="shootType" value="envenomedarrow" />
-		<attribute key="maxHitChance" value="93" />
-		<attribute key="supply" value="true" />
 	</item>
 	<item id="18438" article="a" name="dead dragonling">
 		<attribute key="containerSize" value="25" />
@@ -33256,14 +33195,6 @@
 		<attribute key="description" value="A supply crate filled with turnips." />
 		<attribute key="weight" value="6000" />
 	</item>
-	<item id="23529" article="a" name="glooth spear">
-		<attribute key="attack" value="55" />
-		<attribute key="weaponType" value="distance" />
-		<attribute key="shootType" value="gloothspear" />
-		<attribute key="range" value="3" />
-		<attribute key="maxHitChance" value="80" />
-		<attribute key="weight" value="2600" />
-	</item>
 	<item id="23530" article="a" name="floating crate of turnips" />
 	<item id="23532" article="a" name="mootant armor rack">
 		<attribute key="decayTo" value="23534" />
@@ -33900,16 +33831,6 @@
 	<item id="23838" name="eggs of a sacred snake">
 		<attribute key="weight" value="020" />
 		<attribute key="description" value="Through the brown glistening shell you see movement." />
-	</item>
-	<item id="23839" article="a" name="simple arrow">
-		<attribute key="weight" value="60" />
-		<attribute key="slotType" value="ammo" />
-		<attribute key="attack" value="20" />
-		<attribute key="weaponType" value="ammunition" />
-		<attribute key="ammoType" value="arrow" />
-		<attribute key="shootType" value="simplearrow" />
-		<attribute key="maxHitChance" value="91" />
-		<attribute key="supply" value="true" />
 	</item>
 	<item id="23840" article="a" name="dead snake">
 		<attribute key="containerSize" value="1" />
@@ -38401,14 +38322,6 @@
 	<item id="28388" article="a" name="gleaming starlight vial" />
 	<item id="28389" article="a" name="dark sun catcher" />
 	<item id="28390" article="a" name="shining sun catcher" />
-	<item id="28391" article="a" name="leaf star">
-		<attribute key="weight" value="200" />
-		<attribute key="weaponType" value="distance" />
-		<attribute key="attack" value="48" />
-		<attribute key="range" value="4" />
-		<attribute key="elementEarth" value="2" />
-		<attribute key="shootType" value="leafstar" />
-	</item>
 	<item id="28392" name="swan feathers" />
 	<item id="28393" article="a" name="rainbow quartz" />
 	<item id="28394" name="tar" />
@@ -38427,31 +38340,6 @@
 	<item fromid="28408" toid="28410" name="rubble" />
 	<item id="28411" name="earth" />
 	<item id="28412" name="strange colours" />
-	<item id="28413" article="a" name="diamond arrow">
-		<attribute key="weight" value="80" />
-		<attribute key="weaponType" value="ammunition" />
-		<attribute key="ammoType" value="arrow" />
-		<attribute key="attack" value="37" />
-		<attribute key="shootType" value="diamondarrow" />
-		<attribute key="supply" value="true" />
-	</item>
-	<item id="28414" article="a" name="spectral bolt">
-		<attribute key="weight" value="90" />
-		<attribute key="weaponType" value="ammunition" />
-		<attribute key="ammoType" value="bolt" />
-		<attribute key="attack" value="78" />
-		<attribute key="shootType" value="spectralbolt" />
-		<attribute key="supply" value="true" />
-	</item>
-	<item id="28415" article="a" name="royal star">
-		<attribute key="weight" value="220" />
-		<attribute key="weaponType" value="distance" />
-		<attribute key="attack" value="64" />
-		<attribute key="range" value="4" />
-		<attribute key="elementFire" value="2" />
-		<attribute key="shootType" value="royalstar" />
-		<attribute key="supply" value="true" />
-	</item>
 	<item id="28416" article="a" name="wand of darkness">
 		<attribute key="weight" value="3200" />
 		<attribute key="weapontype" value="wand" />
@@ -42018,22 +41906,6 @@
 	<item id="38555" article="a" name="romantic carpet" />
 	<item id="38556" article="a" name="romantic carpet">
 		<attribute key="forceSerialize" value="true" />
-	</item>
-	<item id="38557" article="a" name="diamond arrow">
-		<attribute key="weight" value="80" />
-		<attribute key="weaponType" value="ammunition" />
-		<attribute key="ammoType" value="arrow" />
-		<attribute key="attack" value="37" />
-		<attribute key="shootType" value="diamondarrow" />
-		<attribute key="supply" value="true" />
-	</item>
-	<item id="38558" article="a" name="spectral bolt">
-		<attribute key="weight" value="90" />
-		<attribute key="weaponType" value="ammunition" />
-		<attribute key="ammoType" value="bolt" />
-		<attribute key="attack" value="78" />
-		<attribute key="shootType" value="spectralbolt" />
-		<attribute key="supply" value="true" />
 	</item>
 	<item id="38564" article="a" name="rope-ladder" />
 	<item fromid="38565" toid="38566" name="chaos critical dice" />

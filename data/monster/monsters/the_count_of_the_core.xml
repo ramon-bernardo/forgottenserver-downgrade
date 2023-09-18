@@ -25,9 +25,6 @@
 		<attack name="physical" interval="2000" chance="15" radius="8" min="0" max="-1500">
 			<attribute key="areaEffect" value="blackspark" />
 		</attack>
-		<attack name="death" interval="2000" chance="15" radius="8" min="0" max="-1500">
-			<attribute key="areaEffect" value="blacksmoke" />
-		</attack>
 	</attacks>
 	<defenses armor="30" defense="30" />
 	<immunities>

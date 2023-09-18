@@ -166,7 +166,6 @@ enum RaceType_t : uint8_t
 	RACE_UNDEAD,
 	RACE_FIRE,
 	RACE_ENERGY,
-	RACE_INK,
 };
 
 enum CombatType_t : uint16_t

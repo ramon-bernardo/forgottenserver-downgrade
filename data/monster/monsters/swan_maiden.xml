@@ -24,9 +24,6 @@
 			<attribute key="shootEffect" value="holy" />
 			<attribute key="areaEffect" value="holyarea" />
 		</attack>
-		<attack name="speed" interval="2000" chance="11" radius="6" speedchange="-450" duration="5000">
-			<attribute key="areaEffect" value="faeexplosion" />
-		</attack>
 	</attacks>
 	<defenses armor="54" defense="54">
 		<defense name="healing" interval="2000" chance="15" min="85" max="105">

@@ -1655,35 +1655,6 @@ void ProtocolGame::sendTextMessage(const TextMessage& message)
 	NetworkMessage msg;
 	msg.addByte(0xB4);
 	msg.addByte(message.type);
-	switch (message.type) {
-		case MESSAGE_DAMAGE_DEALT:
-		case MESSAGE_DAMAGE_RECEIVED:
-		case MESSAGE_DAMAGE_OTHERS: {
-			msg.addPosition(message.position);
-			msg.add<uint32_t>(message.primary.value);
-			msg.addByte(message.primary.color);
-			msg.add<uint32_t>(message.secondary.value);
-			msg.addByte(message.secondary.color);
-			break;
-		}
-		case MESSAGE_HEALED:
-		case MESSAGE_HEALED_OTHERS:
-		case MESSAGE_EXPERIENCE:
-		case MESSAGE_EXPERIENCE_OTHERS: {
-			msg.addPosition(message.position);
-			msg.add<uint32_t>(message.primary.value);
-			msg.addByte(message.primary.color);
-			break;
-		}
-		case MESSAGE_GUILD:
-		case MESSAGE_PARTY_MANAGEMENT:
-		case MESSAGE_PARTY:
-			msg.add<uint16_t>(message.channelId);
-			break;
-		default: {
-			break;
-		}
-	}
 	msg.addString(message.text);
 	writeToOutputBuffer(msg);
 }
@@ -2190,6 +2161,20 @@ void ProtocolGame::sendMagicEffect(const Position& pos, uint8_t type)
 	msg.addByte(MAGIC_EFFECTS_CREATE_EFFECT);
 	msg.addByte(type);
 	msg.addByte(MAGIC_EFFECTS_END_LOOP);
+	writeToOutputBuffer(msg);
+}
+
+void ProtocolGame::sendAnimatedText(const std::string& text, const Position& pos, TextColor_t color)
+{
+	if (!canSee(pos)) {
+		return;
+	}
+
+	NetworkMessage msg;
+	msg.addByte(0x84);
+	msg.addPosition(pos);
+	msg.addByte(color);
+	msg.addString(text);
 	writeToOutputBuffer(msg);
 }
 

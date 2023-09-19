@@ -392,11 +392,11 @@ static void showUseHotkeyMessage(Player* player, const Item* item, uint32_t coun
 {
 	const ItemType& it = Item::items[item->getID()];
 	if (!it.showCount) {
-		player->sendTextMessage(MESSAGE_HOTKEY_PRESSED, fmt::format("Using one of {:s}...", item->getName()));
+		player->sendTextMessage(MESSAGE_INFO_DESCR, fmt::format("Using one of {:s}...", item->getName()));
 	} else if (count == 1) {
-		player->sendTextMessage(MESSAGE_HOTKEY_PRESSED, fmt::format("Using the last {:s}...", item->getName()));
+		player->sendTextMessage(MESSAGE_INFO_DESCR, fmt::format("Using the last {:s}...", item->getName()));
 	} else {
-		player->sendTextMessage(MESSAGE_HOTKEY_PRESSED,
+		player->sendTextMessage(MESSAGE_INFO_DESCR,
 		                        fmt::format("Using one of {:d} {:s}...", count, item->getPluralName()));
 	}
 }
@@ -514,7 +514,7 @@ bool Action::loadFunction(const pugi::xml_attribute& attr, bool isScripted)
 	if (!isScripted) {
 		scripted = false;
 		std::cout << "[Warning - Action::loadFunction] Function \"" << attr.as_string() << "\" does not exist."
-			        << std::endl;
+		          << std::endl;
 		return false;
 	}
 	return true;

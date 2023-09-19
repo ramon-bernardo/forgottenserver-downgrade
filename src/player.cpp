@@ -1736,17 +1736,16 @@ void Player::removeExperience(uint64_t exp, bool sendText /* = false*/)
 
 		std::string expString = std::to_string(lostExp) + (lostExp != 1 ? " experience points." : " experience point.");
 
-		TextMessage message(MESSAGE_EXPERIENCE, "You lost " + expString);
-		message.position = position;
-		message.primary.value = lostExp;
-		message.primary.color = TEXTCOLOR_RED;
+		TextMessage message(MESSAGE_EVENT_ADVANCE, "You lost " + expString);
 		sendTextMessage(message);
 
 		SpectatorVec spectators;
 		g_game.map.getSpectators(spectators, position, false, true);
+		g_game.addAnimatedText(spectators, std::to_string(lostExp), position, TEXTCOLOR_RED);
+
 		spectators.erase(this);
 		if (!spectators.empty()) {
-			message.type = MESSAGE_EXPERIENCE_OTHERS;
+			message.type = MESSAGE_STATUS_DEFAULT;
 			message.text = getName() + " lost " + expString;
 			for (Creature* spectator : spectators) {
 				assert(dynamic_cast<Player*>(spectator) != nullptr);

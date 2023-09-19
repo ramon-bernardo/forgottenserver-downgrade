@@ -813,6 +813,12 @@ public:
 			client->sendMagicEffect(pos, type);
 		}
 	}
+	void sendAnimatedText(const std::string& message, const Position& pos, TextColor_t color)
+	{
+		if (client) {
+			client->sendAnimatedText(message, pos, color);
+		}
+	}
 	void sendPing();
 	void sendPingBack() const
 	{

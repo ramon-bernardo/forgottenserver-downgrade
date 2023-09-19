@@ -2605,7 +2605,8 @@ bool Game::internalStartTrade(Player* player, Player* tradePartner, Item* tradeI
 	player->sendTradeItemRequest(player->getName(), tradeItem, true);
 
 	if (tradePartner->tradeState == TRADE_NONE) {
-		tradePartner->sendTextMessage(MESSAGE_TRADE, fmt::format("{:s} wants to trade with you.", player->getName()));
+		tradePartner->sendTextMessage(MESSAGE_INFO_DESCR,
+		                              fmt::format("{:s} wants to trade with you.", player->getName()));
 		tradePartner->tradeState = TRADE_ACKNOWLEDGE;
 		tradePartner->tradePartner = player;
 	} else {
@@ -3891,21 +3892,21 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 			std::string spectatorMessage;
 
 			TextMessage message;
-			message.position = targetPos;
-			message.primary.value = realHealthChange;
-			message.primary.color = TEXTCOLOR_PASTELRED;
 
 			SpectatorVec spectators;
 			map.getSpectators(spectators, targetPos, false, true);
+
+			addAnimatedText(spectators, std::to_string(realHealthChange), targetPos, TEXTCOLOR_PASTELRED);
+
 			for (Creature* spectator : spectators) {
 				assert(dynamic_cast<Player*>(spectator) != nullptr);
 
 				Player* spectatorPlayer = static_cast<Player*>(spectator);
 				if (spectatorPlayer == attackerPlayer && attackerPlayer != targetPlayer) {
-					message.type = MESSAGE_HEALED;
+					message.type = MESSAGE_STATUS_DEFAULT;
 					message.text = fmt::format("You heal {:s} for {:s}.", target->getNameDescription(), damageString);
 				} else if (spectatorPlayer == targetPlayer) {
-					message.type = MESSAGE_HEALED;
+					message.type = MESSAGE_STATUS_DEFAULT;
 					if (!attacker) {
 						message.text = fmt::format("You were healed for {:s}.", damageString);
 					} else if (targetPlayer == attackerPlayer) {
@@ -3915,7 +3916,7 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 						                           damageString);
 					}
 				} else {
-					message.type = MESSAGE_HEALED_OTHERS;
+					message.type = MESSAGE_STATUS_DEFAULT;
 					if (spectatorMessage.empty()) {
 						if (!attacker) {
 							spectatorMessage =
@@ -3966,7 +3967,6 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 		}
 
 		TextMessage message;
-		message.position = targetPos;
 
 		SpectatorVec spectators;
 		if (targetPlayer &&
@@ -4006,11 +4006,9 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 
 				map.getSpectators(spectators, targetPos, true, true);
 				addMagicEffect(spectators, targetPos, CONST_ME_LOSEENERGY);
+				addAnimatedText(spectators, std::to_string(manaDamage), targetPos, TEXTCOLOR_BLUE);
 
 				std::string spectatorMessage;
-
-				message.primary.value = manaDamage;
-				message.primary.color = TEXTCOLOR_BLUE;
 
 				for (Creature* spectator : spectators) {
 					assert(dynamic_cast<Player*>(spectator) != nullptr);
@@ -4021,12 +4019,12 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 					}
 
 					if (spectatorPlayer == attackerPlayer && attackerPlayer != targetPlayer) {
-						message.type = MESSAGE_DAMAGE_DEALT;
+						message.type = MESSAGE_STATUS_DEFAULT;
 						message.text = fmt::format("{:s} loses {:d} mana due to your attack.",
 						                           target->getNameDescription(), manaDamage);
 						message.text[0] = std::toupper(message.text[0]);
 					} else if (spectatorPlayer == targetPlayer) {
-						message.type = MESSAGE_DAMAGE_RECEIVED;
+						message.type = MESSAGE_STATUS_DEFAULT;
 						if (!attacker) {
 							message.text = fmt::format("You lose {:d} mana.", manaDamage);
 						} else if (targetPlayer == attackerPlayer) {
@@ -4036,7 +4034,7 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 							                           attacker->getNameDescription());
 						}
 					} else {
-						message.type = MESSAGE_DAMAGE_OTHERS;
+						message.type = MESSAGE_STATUS_DEFAULT;
 						if (spectatorMessage.empty()) {
 							if (!attacker) {
 								spectatorMessage =
@@ -4118,19 +4116,27 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 			map.getSpectators(spectators, targetPos, true, true);
 		}
 
-		message.primary.value = damage.primary.value;
-		message.secondary.value = damage.secondary.value;
-
+		TextColor_t primaryColor;
+		TextColor_t secondaryColor;
 		uint8_t hitEffect;
-		if (message.primary.value) {
-			combatGetTypeInfo(damage.primary.type, target, message.primary.color, hitEffect);
+
+		if (damage.primary.value) {
+			combatGetTypeInfo(damage.primary.type, target, primaryColor, hitEffect);
+			if (primaryColor != TEXTCOLOR_NONE) {
+				addAnimatedText(spectators, std::to_string(damage.primary.value), targetPos, primaryColor);
+			}
+
 			if (hitEffect != CONST_ME_NONE) {
 				addMagicEffect(spectators, targetPos, hitEffect);
 			}
 		}
 
-		if (message.secondary.value) {
-			combatGetTypeInfo(damage.secondary.type, target, message.secondary.color, hitEffect);
+		if (damage.secondary.value) {
+			combatGetTypeInfo(damage.secondary.type, target, secondaryColor, hitEffect);
+			if (primaryColor != TEXTCOLOR_NONE) {
+				addAnimatedText(spectators, std::to_string(damage.secondary.value), targetPos, primaryColor);
+			}
+
 			if (hitEffect != CONST_ME_NONE) {
 				addMagicEffect(spectators, targetPos, hitEffect);
 			}
@@ -4156,7 +4162,7 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 			}
 		}
 
-		if (message.primary.color != TEXTCOLOR_NONE || message.secondary.color != TEXTCOLOR_NONE) {
+		if (primaryColor != TEXTCOLOR_NONE || secondaryColor != TEXTCOLOR_NONE) {
 			auto damageString = fmt::format("{:d} hitpoint{:s}", realDamage, realDamage != 1 ? "s" : "");
 
 			std::string spectatorMessage;
@@ -4170,12 +4176,12 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 				}
 
 				if (spectatorPlayer == attackerPlayer && attackerPlayer != targetPlayer) {
-					message.type = MESSAGE_DAMAGE_DEALT;
+					message.type = MESSAGE_STATUS_DEFAULT;
 					message.text =
 					    fmt::format("{:s} loses {:s} due to your attack.", target->getNameDescription(), damageString);
 					message.text[0] = std::toupper(message.text[0]);
 				} else if (spectatorPlayer == targetPlayer) {
-					message.type = MESSAGE_DAMAGE_RECEIVED;
+					message.type = MESSAGE_STATUS_DEFAULT;
 					if (!attacker) {
 						message.text = fmt::format("You lose {:s}.", damageString);
 					} else if (targetPlayer == attackerPlayer) {
@@ -4185,7 +4191,7 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 						                           attacker->getNameDescription());
 					}
 				} else {
-					message.type = MESSAGE_DAMAGE_OTHERS;
+					message.type = MESSAGE_STATUS_DEFAULT;
 					if (spectatorMessage.empty()) {
 						if (!attacker) {
 							spectatorMessage =
@@ -4255,11 +4261,9 @@ bool Game::combatChangeMana(Creature* attacker, Creature* target, CombatDamage& 
 		realManaChange = targetPlayer->getMana() - realManaChange;
 
 		if (realManaChange > 0 && !targetPlayer->isInGhostMode()) {
-			TextMessage message(MESSAGE_HEALED, "You gained " + std::to_string(realManaChange) + " mana.");
-			message.position = target->getPosition();
-			message.primary.value = realManaChange;
-			message.primary.color = TEXTCOLOR_MAYABLUE;
+			TextMessage message(MESSAGE_STATUS_DEFAULT, "You gained " + std::to_string(realManaChange) + " mana.");
 			targetPlayer->sendTextMessage(message);
+			addAnimatedText(std::to_string(realManaChange), target->getPosition(), TEXTCOLOR_MAYABLUE);
 		}
 	} else {
 		const Position& targetPos = target->getPosition();
@@ -4309,23 +4313,23 @@ bool Game::combatChangeMana(Creature* attacker, Creature* target, CombatDamage& 
 		std::string spectatorMessage;
 
 		TextMessage message;
-		message.position = targetPos;
-		message.primary.value = manaLoss;
-		message.primary.color = TEXTCOLOR_BLUE;
 
 		SpectatorVec spectators;
 		map.getSpectators(spectators, targetPos, false, true);
+
+		addAnimatedText(spectators, std::to_string(manaLoss), targetPos, TEXTCOLOR_BLUE);
+
 		for (Creature* spectator : spectators) {
 			assert(dynamic_cast<Player*>(spectator) != nullptr);
 
 			Player* spectatorPlayer = static_cast<Player*>(spectator);
 			if (spectatorPlayer == attackerPlayer && attackerPlayer != targetPlayer) {
-				message.type = MESSAGE_DAMAGE_DEALT;
+				message.type = MESSAGE_STATUS_DEFAULT;
 				message.text =
 				    fmt::format("{:s} loses {:d} mana due to your attack.", target->getNameDescription(), manaLoss);
 				message.text[0] = std::toupper(message.text[0]);
 			} else if (spectatorPlayer == targetPlayer) {
-				message.type = MESSAGE_DAMAGE_RECEIVED;
+				message.type = MESSAGE_STATUS_DEFAULT;
 				if (!attacker) {
 					message.text = fmt::format("You lose {:d} mana.", manaLoss);
 				} else if (targetPlayer == attackerPlayer) {
@@ -4335,7 +4339,7 @@ bool Game::combatChangeMana(Creature* attacker, Creature* target, CombatDamage& 
 					                           attacker->getNameDescription());
 				}
 			} else {
-				message.type = MESSAGE_DAMAGE_OTHERS;
+				message.type = MESSAGE_STATUS_DEFAULT;
 				if (spectatorMessage.empty()) {
 					if (!attacker) {
 						spectatorMessage = fmt::format("{:s} loses {:d} mana.", target->getNameDescription(), manaLoss);
@@ -4387,6 +4391,23 @@ void Game::addMagicEffect(const SpectatorVec& spectators, const Position& pos, u
 	for (Creature* spectator : spectators) {
 		if (Player* tmpPlayer = spectator->getPlayer()) {
 			tmpPlayer->sendMagicEffect(pos, effect);
+		}
+	}
+}
+
+void Game::addAnimatedText(const std::string& message, const Position& pos, TextColor_t color)
+{
+	SpectatorVec spectators;
+	map.getSpectators(spectators, pos, false, true);
+	addAnimatedText(spectators, message, pos, color);
+}
+
+void Game::addAnimatedText(const SpectatorVec& spectators, const std::string& message, const Position& pos,
+                           TextColor_t color)
+{
+	for (Creature* spectator : spectators) {
+		if (Player* tmpPlayer = spectator->getPlayer()) {
+			tmpPlayer->sendAnimatedText(message, pos, color);
 		}
 	}
 }

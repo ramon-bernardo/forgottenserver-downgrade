@@ -1466,32 +1466,17 @@ void LuaScriptInterface::registerFunctions()
 
 	registerEnum(ITEM_STACK_SIZE);
 
-	registerEnum(MESSAGE_STATUS_DEFAULT);
+	registerEnum(MESSAGE_CLASS_FIRST);
+	registerEnum(MESSAGE_STATUS_CONSOLE_RED);
+	registerEnum(MESSAGE_EVENT_ORANGE);
+	registerEnum(MESSAGE_STATUS_CONSOLE_ORANGE);
 	registerEnum(MESSAGE_STATUS_WARNING);
 	registerEnum(MESSAGE_EVENT_ADVANCE);
-	registerEnum(MESSAGE_STATUS_WARNING2);
-	registerEnum(MESSAGE_STATUS_SMALL);
-	registerEnum(MESSAGE_INFO_DESCR);
-	registerEnum(MESSAGE_DAMAGE_DEALT);
-	registerEnum(MESSAGE_DAMAGE_RECEIVED);
-	registerEnum(MESSAGE_HEALED);
-	registerEnum(MESSAGE_EXPERIENCE);
-	registerEnum(MESSAGE_DAMAGE_OTHERS);
-	registerEnum(MESSAGE_HEALED_OTHERS);
-	registerEnum(MESSAGE_EXPERIENCE_OTHERS);
 	registerEnum(MESSAGE_EVENT_DEFAULT);
-	registerEnum(MESSAGE_LOOT);
-	registerEnum(MESSAGE_TRADE);
-	registerEnum(MESSAGE_GUILD);
-	registerEnum(MESSAGE_PARTY_MANAGEMENT);
-	registerEnum(MESSAGE_PARTY);
-	registerEnum(MESSAGE_REPORT);
-	registerEnum(MESSAGE_HOTKEY_PRESSED);
-	registerEnum(MESSAGE_BEYOND_LAST);
-	registerEnum(MESSAGE_TOURNAMENT_INFO);
-	registerEnum(MESSAGE_ATTENTION);
-	registerEnum(MESSAGE_BOOSTED_CREATURE);
-	registerEnum(MESSAGE_TRANSACTION);
+	registerEnum(MESSAGE_STATUS_DEFAULT);
+	registerEnum(MESSAGE_INFO_DESCR);
+	registerEnum(MESSAGE_STATUS_SMALL);
+	registerEnum(MESSAGE_STATUS_CONSOLE_BLUE);
 
 	registerEnum(CREATURETYPE_PLAYER);
 	registerEnum(CREATURETYPE_MONSTER);
@@ -9271,39 +9256,14 @@ int LuaScriptInterface::luaPlayerShowTextDialog(lua_State* L)
 
 int LuaScriptInterface::luaPlayerSendTextMessage(lua_State* L)
 {
-	// player:sendTextMessage(type, text[, position, primaryValue = 0, primaryColor = TEXTCOLOR_NONE[,
-	// secondaryValue = 0, secondaryColor = TEXTCOLOR_NONE]]) player:sendTextMessage(type, text, channelId)
-
+	// player:sendTextMessage(type, text)
 	Player* player = getUserdata<Player>(L, 1);
 	if (!player) {
 		lua_pushnil(L);
 		return 1;
 	}
 
-	int parameters = lua_gettop(L);
-
 	TextMessage message(getNumber<MessageClasses>(L, 2), getString(L, 3));
-	if (parameters == 4) {
-		uint16_t channelId = getNumber<uint16_t>(L, 4);
-		ChatChannel* channel = g_chat->getChannel(*player, channelId);
-		if (!channel || !channel->hasUser(*player)) {
-			pushBoolean(L, false);
-			return 1;
-		}
-		message.channelId = channelId;
-	} else {
-		if (parameters >= 6) {
-			message.position = getPosition(L, 4);
-			message.primary.value = getNumber<int32_t>(L, 5);
-			message.primary.color = getNumber<TextColor_t>(L, 6);
-		}
-
-		if (parameters >= 8) {
-			message.secondary.value = getNumber<int32_t>(L, 7);
-			message.secondary.color = getNumber<TextColor_t>(L, 8);
-		}
-	}
-
 	player->sendTextMessage(message);
 	pushBoolean(L, true);
 

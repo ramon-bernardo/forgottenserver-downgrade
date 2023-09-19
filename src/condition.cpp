@@ -830,17 +830,18 @@ bool ConditionRegeneration::executeCondition(Creature* creature, int32_t interva
 				std::string healString =
 				    std::to_string(realHealthGain) + (realHealthGain != 1 ? " hitpoints." : " hitpoint.");
 
-				TextMessage message(MESSAGE_HEALED, "You were healed for " + healString);
-				message.position = player->getPosition();
-				message.primary.value = realHealthGain;
-				message.primary.color = TEXTCOLOR_MAYABLUE;
+				TextMessage message(MESSAGE_STATUS_DEFAULT, "You were healed for " + healString);
 				player->sendTextMessage(message);
 
 				SpectatorVec spectators;
 				g_game.map.getSpectators(spectators, player->getPosition(), false, true);
+				g_game.addAnimatedText(spectators, std::to_string(realHealthGain), player->getPosition(),
+				                       TEXTCOLOR_MAYABLUE);
+
 				spectators.erase(player);
+
 				if (!spectators.empty()) {
-					message.type = MESSAGE_HEALED_OTHERS;
+					message.type = MESSAGE_STATUS_DEFAULT;
 					message.text = player->getName() + " was healed for " + healString;
 					for (Creature* spectator : spectators) {
 						assert(dynamic_cast<Player*>(spectator) != nullptr);
@@ -862,17 +863,17 @@ bool ConditionRegeneration::executeCondition(Creature* creature, int32_t interva
 			if (isBuff && realManaGain > 0) {
 				std::string manaGainString = std::to_string(realManaGain);
 
-				TextMessage message(MESSAGE_HEALED, "You gained " + manaGainString + " mana.");
-				message.position = player->getPosition();
-				message.primary.value = realManaGain;
-				message.primary.color = TEXTCOLOR_MAYABLUE;
+				TextMessage message(MESSAGE_STATUS_DEFAULT, "You gained " + manaGainString + " mana.");
 				player->sendTextMessage(message);
 
 				SpectatorVec spectators;
 				g_game.map.getSpectators(spectators, player->getPosition(), false, true);
+				g_game.addAnimatedText(spectators, manaGainString, player->getPosition(),
+				                       TEXTCOLOR_MAYABLUE);
+
 				spectators.erase(player);
 				if (!spectators.empty()) {
-					message.type = MESSAGE_HEALED_OTHERS;
+					message.type = MESSAGE_STATUS_DEFAULT;
 					message.text = player->getName() + " gained " + manaGainString + " mana.";
 					for (Creature* spectator : spectators) {
 						assert(dynamic_cast<Player*>(spectator) != nullptr);

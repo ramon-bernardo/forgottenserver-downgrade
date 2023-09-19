@@ -32,13 +32,6 @@ struct TextMessage
 {
 	MessageClasses type = MESSAGE_STATUS_DEFAULT;
 	std::string text;
-	Position position;
-	uint16_t channelId;
-	struct
-	{
-		int32_t value = 0;
-		TextColor_t color;
-	} primary, secondary;
 
 	TextMessage() = default;
 	TextMessage(MessageClasses type, std::string text) : type(type), text(std::move(text)) {}
@@ -159,6 +152,7 @@ private:
 
 	void sendDistanceShoot(const Position& from, const Position& to, uint8_t type);
 	void sendMagicEffect(const Position& pos, uint8_t type);
+	void sendAnimatedText(const std::string& message, const Position& pos, TextColor_t color);
 	void sendCreatureHealth(const Creature* creature);
 	void sendSkills();
 	void sendPing();

@@ -168,43 +168,18 @@ enum SpeakClasses : uint8_t
 
 enum MessageClasses : uint8_t
 {
-	MESSAGE_STATUS_DEFAULT = 17,  // White, bottom + console
-	MESSAGE_STATUS_WARNING = 18,  // Red, over player + console
-	MESSAGE_EVENT_ADVANCE = 19,   // White, over player + console
-	MESSAGE_STATUS_WARNING2 = 20, // Red, over player + console
-	MESSAGE_STATUS_SMALL = 21,    // White, bottom of the screen
-	MESSAGE_INFO_DESCR = 22,      // Green, over player + console
-
-	// White, console
-	MESSAGE_DAMAGE_DEALT = 23,
-	MESSAGE_DAMAGE_RECEIVED = 24,
-	MESSAGE_HEALED = 25,
-	MESSAGE_EXPERIENCE = 26,
-	MESSAGE_DAMAGE_OTHERS = 27,
-	MESSAGE_HEALED_OTHERS = 28,
-	MESSAGE_EXPERIENCE_OTHERS = 29,
-
-	MESSAGE_EVENT_DEFAULT = 30, // White, bottom + console
-	MESSAGE_LOOT = 31,          // White, over player + console, supports colors as {text|itemClientId}
-	MESSAGE_TRADE = 32,         // Green, over player + console
-
-	// White, in channel (needs channel Id)
-	MESSAGE_GUILD = 33,
-	MESSAGE_PARTY_MANAGEMENT = 34,
-	MESSAGE_PARTY = 35,
-
-	MESSAGE_REPORT = 38,         // White, over player + conosle
-	MESSAGE_HOTKEY_PRESSED = 39, // Green, over player + console
-	// MESSAGE_TUTORIAL_HINT = 40, // not working (?)
-	// MESSAGE_THANK_YOU = 41, // not working (?)
-	// MESSAGE_MANA = 43, // not working (?)
-	MESSAGE_BEYOND_LAST = 44,     // White, console only
-	MESSAGE_TOURNAMENT_INFO = 45, // Window "Tournament" + "Ok" button
-	// unused 46?
-	// unused 47?
-	MESSAGE_ATTENTION = 48,        // White, console only
-	MESSAGE_BOOSTED_CREATURE = 49, // White, console only
-	MESSAGE_TRANSACTION = 51,      // White, console only
+	MESSAGE_CLASS_FIRST = 18,
+	MESSAGE_STATUS_CONSOLE_RED = 18,
+	MESSAGE_EVENT_ORANGE = 19,
+	MESSAGE_STATUS_CONSOLE_ORANGE = 20,
+	MESSAGE_STATUS_WARNING = 21,
+	MESSAGE_EVENT_ADVANCE = 22,
+	MESSAGE_EVENT_DEFAULT = 23,
+	MESSAGE_STATUS_DEFAULT = 24,
+	MESSAGE_INFO_DESCR = 25,
+	MESSAGE_STATUS_SMALL = 26,
+	MESSAGE_STATUS_CONSOLE_BLUE = 27,
+	MESSAGE_CLASS_LAST = MESSAGE_STATUS_CONSOLE_BLUE
 };
 
 enum FluidColors_t : uint8_t

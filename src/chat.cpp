@@ -34,10 +34,6 @@ void PrivateChatChannel::invitePlayer(const Player& player, Player& invitePlayer
 	                                         player.getSex() == PLAYERSEX_FEMALE ? "her" : "his"));
 
 	player.sendTextMessage(MESSAGE_INFO_DESCR, fmt::format("{:s} has been invited.", invitePlayer.getName()));
-
-	for (const auto& it : users) {
-		it.second->sendChannelEvent(id, invitePlayer.getName(), CHANNELEVENT_INVITE);
-	}
 }
 
 void PrivateChatChannel::excludePlayer(const Player& player, Player& excludePlayer)
@@ -51,10 +47,6 @@ void PrivateChatChannel::excludePlayer(const Player& player, Player& excludePlay
 	player.sendTextMessage(MESSAGE_INFO_DESCR, fmt::format("{:s} has been excluded.", excludePlayer.getName()));
 
 	excludePlayer.sendClosePrivate(id);
-
-	for (const auto& it : users) {
-		it.second->sendChannelEvent(id, excludePlayer.getName(), CHANNELEVENT_EXCLUDE);
-	}
 }
 
 void PrivateChatChannel::closeChannel() const
@@ -83,12 +75,6 @@ bool ChatChannel::addUser(Player& player)
 		}
 	}
 
-	if (!publicChannel) {
-		for (const auto& it : users) {
-			it.second->sendChannelEvent(id, player.getName(), CHANNELEVENT_JOIN);
-		}
-	}
-
 	users[player.getID()] = &player;
 	return true;
 }
@@ -101,12 +87,6 @@ bool ChatChannel::removeUser(const Player& player)
 	}
 
 	users.erase(iter);
-
-	if (!publicChannel) {
-		for (const auto& it : users) {
-			it.second->sendChannelEvent(id, player.getName(), CHANNELEVENT_LEAVE);
-		}
-	}
 
 	executeOnLeaveEvent(player);
 	return true;
@@ -272,13 +252,11 @@ bool Chat::load()
 	for (auto channelNode : doc.child("channels").children()) {
 		uint16_t channelId = pugi::cast<uint16_t>(channelNode.attribute("id").value());
 		std::string channelName = channelNode.attribute("name").as_string();
-		bool isPublic = channelNode.attribute("public").as_bool();
 		pugi::xml_attribute scriptAttribute = channelNode.attribute("script");
 
 		auto it = normalChannels.find(channelId);
 		if (it != normalChannels.end()) {
 			ChatChannel& channel = it->second;
-			channel.publicChannel = isPublic;
 			channel.name = channelName;
 
 			if (scriptAttribute) {
@@ -302,7 +280,6 @@ bool Chat::load()
 		}
 
 		ChatChannel channel(channelId, channelName);
-		channel.publicChannel = isPublic;
 
 		if (scriptAttribute) {
 			if (scriptInterface.loadFile("data/chatchannels/scripts/" + std::string(scriptAttribute.as_string())) ==

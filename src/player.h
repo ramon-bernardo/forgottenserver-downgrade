@@ -553,12 +553,6 @@ public:
 			client->sendChannelMessage(author, text, type, channel);
 		}
 	}
-	void sendChannelEvent(uint16_t channelId, const std::string& playerName, ChannelEvent_t channelEvent)
-	{
-		if (client) {
-			client->sendChannelEvent(channelId, playerName, channelEvent);
-		}
-	}
 	void sendCreatureAppear(const Creature* creature, const Position& pos,
 	                        MagicEffectClasses magicEffect = CONST_ME_NONE)
 	{
@@ -950,11 +944,10 @@ public:
 		}
 	}
 
-	void sendChannel(uint16_t channelId, const std::string& channelName, const UsersMap* channelUsers,
-	                 const InvitedMap* invitedUsers)
+	void sendChannel(uint16_t channelId, const std::string& channelName)
 	{
 		if (client) {
-			client->sendChannel(channelId, channelName, channelUsers, invitedUsers);
+			client->sendChannel(channelId, channelName);
 		}
 	}
 	void sendTutorial(uint8_t tutorialId)

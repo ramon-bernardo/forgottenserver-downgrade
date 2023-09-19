@@ -35,8 +35,6 @@ public:
 
 	virtual uint32_t getOwner() const { return 0; }
 
-	bool isPublicChannel() const { return publicChannel; }
-
 	bool executeOnJoinEvent(const Player& player);
 	bool executeCanJoinEvent(const Player& player);
 	bool executeOnLeaveEvent(const Player& player);
@@ -54,8 +52,6 @@ private:
 	int32_t onJoinEvent = -1;
 	int32_t onLeaveEvent = -1;
 	int32_t onSpeakEvent = -1;
-
-	bool publicChannel = false;
 
 	friend class Chat;
 };

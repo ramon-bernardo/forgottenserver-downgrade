@@ -112,7 +112,6 @@ private:
 	void parseUpdateContainer(NetworkMessage& msg);
 	void parseTextWindow(NetworkMessage& msg);
 	void parseHouseWindow(NetworkMessage& msg);
-	void parseWrapItem(NetworkMessage& msg);
 
 	void parseLookInShop(NetworkMessage& msg);
 	void parsePlayerPurchase(NetworkMessage& msg);

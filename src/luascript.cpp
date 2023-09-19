@@ -1535,7 +1535,6 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(ITEM_ATTRIBUTE_FLUIDTYPE);
 	registerEnum(ITEM_ATTRIBUTE_DOORID);
 	registerEnum(ITEM_ATTRIBUTE_DECAYTO);
-	registerEnum(ITEM_ATTRIBUTE_WRAPID);
 	registerEnum(ITEM_ATTRIBUTE_ATTACK_SPEED);
 	registerEnum(ITEM_ATTRIBUTE_OPENCONTAINER);
 

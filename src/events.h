@@ -55,7 +55,6 @@ class Events
 		int32_t playerOnGainExperience = -1;
 		int32_t playerOnLoseExperience = -1;
 		int32_t playerOnGainSkillTries = -1;
-		int32_t playerOnWrapItem = -1;
 		int32_t playerOnInventoryUpdate = -1;
 		int32_t playerOnNetworkMessage = -1;
 
@@ -109,7 +108,6 @@ public:
 	void eventPlayerOnGainExperience(Player* player, Creature* source, uint64_t& exp, uint64_t rawExp, bool sendText);
 	void eventPlayerOnLoseExperience(Player* player, uint64_t& exp);
 	void eventPlayerOnGainSkillTries(Player* player, skills_t skill, uint64_t& tries);
-	void eventPlayerOnWrapItem(Player* player, Item* item);
 	void eventPlayerOnInventoryUpdate(Player* player, Item* item, slots_t slot, bool equip);
 	void eventPlayerOnNetworkMessage(Player* player, uint8_t recvByte, NetworkMessage* msg);
 

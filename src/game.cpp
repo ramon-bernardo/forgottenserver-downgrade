@@ -1772,48 +1772,6 @@ slots_t getSlotType(const ItemType& it)
 }
 
 // Implementation of player invoked events
-void Game::playerEquipItem(uint32_t playerId, uint16_t spriteId)
-{
-	Player* player = getPlayerByID(playerId);
-	if (!player) {
-		return;
-	}
-
-	Item* item = player->getInventoryItem(CONST_SLOT_BACKPACK);
-	if (!item) {
-		return;
-	}
-
-	Container* backpack = item->getContainer();
-	if (!backpack) {
-		return;
-	}
-
-	const ItemType& it = Item::items.getItemIdByClientId(spriteId);
-	slots_t slot = getSlotType(it);
-
-	Item* slotItem = player->getInventoryItem(slot);
-	Item* equipItem = searchForItem(backpack, it.id);
-	Position fromPos, toPos;
-	uint8_t fromStackPos, toStackPos;
-	if (slotItem) {
-		internalGetPosition(slotItem, toPos, toStackPos);
-	}
-
-	if (equipItem) {
-		internalGetPosition(equipItem, fromPos, fromStackPos);
-	}
-
-	if (slotItem && slotItem->getID() == it.id &&
-	    (!it.stackable || slotItem->getItemCount() == ITEM_STACK_SIZE || !equipItem)) {
-		internalMoveItem(slotItem->getParent(), player, CONST_SLOT_WHEREEVER, slotItem, slotItem->getItemCount(),
-		                 nullptr, 0, player, nullptr, &fromPos, &toPos);
-	} else if (equipItem) {
-		internalMoveItem(equipItem->getParent(), player, slot, equipItem, equipItem->getItemCount(), nullptr, 0, player,
-		                 nullptr, &fromPos, &toPos);
-	}
-}
-
 void Game::playerMove(uint32_t playerId, Direction direction)
 {
 	Player* player = getPlayerByID(playerId);

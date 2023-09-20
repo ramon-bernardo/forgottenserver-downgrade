@@ -607,9 +607,6 @@ void ProtocolGame::parsePacket(NetworkMessage& msg)
 			g_dispatcher.addTask(DISPATCHER_TASK_EXPIRATION,
 			                     [playerID = player->getID()]() { g_game.playerTurn(playerID, DIRECTION_WEST); });
 			break;
-		case 0x77:
-			parseEquipObject(msg);
-			break;
 		case 0x78:
 			parseThrow(msg);
 			break;
@@ -1228,16 +1225,6 @@ void ProtocolGame::parseFollow(NetworkMessage& msg)
 	uint32_t creatureID = msg.get<uint32_t>();
 	// msg.get<uint32_t>(); creatureID (same as above)
 	g_dispatcher.addTask([=, playerID = player->getID()]() { g_game.playerFollowCreature(playerID, creatureID); });
-}
-
-void ProtocolGame::parseEquipObject(NetworkMessage& msg)
-{
-	// hotkey equip (?)
-	uint16_t spriteID = msg.get<uint16_t>();
-	// msg.get<uint8_t>(); // bool smartMode (?)
-
-	g_dispatcher.addTask(DISPATCHER_TASK_EXPIRATION,
-	                     [=, playerID = player->getID()]() { g_game.playerEquipItem(playerID, spriteID); });
 }
 
 void ProtocolGame::parseTextWindow(NetworkMessage& msg)

@@ -90,7 +90,6 @@ private:
 	void parseFightModes(NetworkMessage& msg);
 	void parseAttack(NetworkMessage& msg);
 	void parseFollow(NetworkMessage& msg);
-	void parseEquipObject(NetworkMessage& msg);
 
 	void parseBugReport(NetworkMessage& msg);
 	void parseDebugAssert(NetworkMessage& msg);

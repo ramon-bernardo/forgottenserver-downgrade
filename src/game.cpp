@@ -2382,26 +2382,6 @@ void Game::playerWriteItem(uint32_t playerId, uint32_t windowTextId, std::string
 	player->setWriteItem(nullptr);
 }
 
-void Game::playerSeekInContainer(uint32_t playerId, uint8_t containerId, uint16_t index)
-{
-	Player* player = getPlayerByID(playerId);
-	if (!player) {
-		return;
-	}
-
-	Container* container = player->getContainerByID(containerId);
-	if (!container) {
-		return;
-	}
-
-	if ((index % container->capacity()) != 0 || index >= container->size()) {
-		return;
-	}
-
-	player->setContainerIndex(containerId, index);
-	player->sendContainer(containerId, container, container->hasParent(), index);
-}
-
 void Game::playerUpdateHouseWindow(uint32_t playerId, uint8_t listId, uint32_t windowTextId, const std::string& text)
 {
 	Player* player = getPlayerByID(playerId);

@@ -696,10 +696,6 @@ void ProtocolGame::parsePacket(NetworkMessage& msg)
 		case 0xCA:
 			parseUpdateContainer(msg);
 			break;
-		case 0xCC:
-			parseSeekInContainer(msg);
-			break;
-		// case 0xCD: break; // request inspect window
 		case 0xD2:
 			g_dispatcher.addTask([playerID = player->getID()]() { g_game.playerRequestOutfit(playerID); });
 			break;
@@ -1356,14 +1352,6 @@ void ProtocolGame::parseEnableSharedPartyExperience(NetworkMessage& msg)
 	bool sharedExpActive = msg.getByte() == 1;
 	g_dispatcher.addTask(
 	    [=, playerID = player->getID()]() { g_game.playerEnableSharedPartyExperience(playerID, sharedExpActive); });
-}
-
-void ProtocolGame::parseSeekInContainer(NetworkMessage& msg)
-{
-	uint8_t containerId = msg.getByte();
-	uint16_t index = msg.get<uint16_t>();
-	g_dispatcher.addTask(
-	    [=, playerID = player->getID()]() { g_game.playerSeekInContainer(playerID, containerId, index); });
 }
 
 // Send methods

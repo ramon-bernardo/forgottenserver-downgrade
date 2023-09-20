@@ -144,7 +144,6 @@ private:
 	void sendCreatureHealth(const Creature* creature);
 	void sendSkills();
 	void sendPing();
-	void sendPingBack();
 	void sendCreatureTurn(const Creature* creature, uint32_t stackPos);
 	void sendCreatureSay(const Creature* creature, SpeakClasses type, const std::string& text,
 	                     const Position* pos = nullptr);

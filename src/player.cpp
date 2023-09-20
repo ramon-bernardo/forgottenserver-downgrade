@@ -623,15 +623,6 @@ void Player::closeContainer(uint8_t cid)
 	openContainers.erase(it);
 }
 
-void Player::setContainerIndex(uint8_t cid, uint16_t index)
-{
-	auto it = openContainers.find(cid);
-	if (it == openContainers.end()) {
-		return;
-	}
-	it->second.index = index;
-}
-
 Container* Player::getContainerByID(uint8_t cid)
 {
 	auto it = openContainers.find(cid);

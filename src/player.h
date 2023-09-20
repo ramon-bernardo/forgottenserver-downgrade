@@ -214,7 +214,6 @@ public:
 
 	void addContainer(uint8_t cid, Container* container);
 	void closeContainer(uint8_t cid);
-	void setContainerIndex(uint8_t cid, uint16_t index);
 
 	Container* getContainerByID(uint8_t cid);
 	int8_t getContainerID(const Container* container) const;

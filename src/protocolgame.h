@@ -16,14 +16,6 @@ class Player;
 class ProtocolGame;
 class Tile;
 
-enum SessionEndTypes_t : uint8_t
-{
-	SESSION_END_LOGOUT = 0,
-	SESSION_END_UNKNOWN = 1, // unknown, no difference from logout
-	SESSION_END_FORCECLOSE = 2,
-	SESSION_END_UNKNOWN2 = 3, // unknown, no difference from logout
-};
-
 using ProtocolGame_ptr = std::shared_ptr<ProtocolGame>;
 
 extern Game g_game;
@@ -237,9 +229,6 @@ private:
 
 	// inventory
 	void sendInventoryItem(slots_t slot, const Item* item);
-
-	// session end
-	void sendSessionEnd(SessionEndTypes_t reason);
 
 	// Help functions
 

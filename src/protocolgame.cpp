@@ -322,7 +322,6 @@ void ProtocolGame::logout(bool displayEffect, bool forced)
 		}
 	}
 
-	sendSessionEnd(forced ? SESSION_END_FORCECLOSE : SESSION_END_LOGOUT);
 	disconnect();
 
 	g_game.removeCreature(player);
@@ -2698,14 +2697,6 @@ void ProtocolGame::sendSupplyUsed(const uint16_t clientId)
 	msg.add<uint16_t>(clientId);
 
 	writeToOutputBuffer(msg);
-}
-
-void ProtocolGame::sendSessionEnd(SessionEndTypes_t reason)
-{
-	auto output = OutputMessagePool::getOutputMessage();
-	output->addByte(0x18);
-	output->addByte(reason);
-	send(output);
 }
 
 ////////////// Add common messages

@@ -888,12 +888,6 @@ public:
 			client->sendWorldLight(lightInfo);
 		}
 	}
-	void sendWorldTime()
-	{
-		if (client) {
-			client->sendWorldTime();
-		}
-	}
 	void sendChannelsDialog()
 	{
 		if (client) {

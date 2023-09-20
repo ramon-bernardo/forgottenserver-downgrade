@@ -280,8 +280,7 @@ Thing* Game::internalGetThing(Player* player, const Position& pos, int32_t index
 	}
 
 	// inventory
-	slots_t slot = static_cast<slots_t>(pos.y);
-	return player->getInventoryItem(slot);
+	return player->getInventoryItem(static_cast<slots_t>(pos.y));
 }
 
 void Game::internalGetPosition(Item* item, Position& pos, uint8_t& stackpos)

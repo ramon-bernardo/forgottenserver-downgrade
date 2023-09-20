@@ -525,13 +525,9 @@ void ProtocolGame::parsePacket(NetworkMessage& msg)
 		case 0x1E:
 			g_dispatcher.addTask([playerID = player->getID()]() { g_game.playerReceivePing(playerID); });
 			break;
-		// case 0x2A: break; // bestiary tracker
-		// case 0x2C: break; // team finder (leader)
-		// case 0x2D: break; // team finder (member)
-		// case 0x28: break; // stash withdraw
-		case 0x32:
+		case 0x32: // otclient extended opcode
 			parseExtendedOpcode(msg);
-			break; // otclient extended opcode
+			break;
 		case 0x64:
 			parseAutoWalk(msg);
 			break;
@@ -637,10 +633,6 @@ void ProtocolGame::parsePacket(NetworkMessage& msg)
 			break;
 		case 0x8E: /* join aggression */
 			break;
-		// case 0x8F: break; // quick loot
-		// case 0x90: break; // loot container
-		// case 0x91: break; // update loot whitelist
-		// case 0x92: break; // request locker items
 		case 0x96:
 			parseSay(msg);
 			break;
@@ -695,11 +687,9 @@ void ProtocolGame::parsePacket(NetworkMessage& msg)
 		case 0xAC:
 			parseChannelExclude(msg);
 			break;
-		// case 0xB1: break; // request highscores
 		case 0xBE:
 			g_dispatcher.addTask([playerID = player->getID()]() { g_game.playerCancelAttackAndFollow(playerID); });
 			break;
-		// case 0xC7: break; // request tournament leaderboard
 		case 0xC9: /* update tile */
 			break;
 		case 0xCA:
@@ -715,19 +705,12 @@ void ProtocolGame::parsePacket(NetworkMessage& msg)
 		case 0xD3:
 			parseSetOutfit(msg);
 			break;
-		// case 0xD5: break; // apply imbuement
-		// case 0xD6: break; // clear imbuement
-		// case 0xD7: break; // close imbuing window
 		case 0xDC:
 			parseAddVip(msg);
 			break;
 		case 0xDD:
 			parseRemoveVip(msg);
 			break;
-		// case 0xDF: break; // premium shop (?)
-		// case 0xE0: break; // premium shop (?)
-		// case 0xE4: break; // buy charm rune
-		// case 0xE5: break; // request character info (cyclopedia)
 		case 0xE6:
 			parseBugReport(msg);
 			break;
@@ -736,17 +719,11 @@ void ProtocolGame::parsePacket(NetworkMessage& msg)
 		case 0xE8:
 			parseDebugAssert(msg);
 			break;
-		// case 0xEF: break; // request store coins transfer
 		case 0xF2:
 			parseRuleViolationReport(msg);
 			break;
 		case 0xF3: /* get object info */
 			break;
-			// case 0xFA: break; // store window open
-			// case 0xFB: break; // store window click
-			// case 0xFC: break; // store window buy
-			// case 0xFD: break; // store window history 1
-			// case 0xFE: break; // store window history 2
 
 		default:
 			g_dispatcher.addTask([=, playerID = player->getID(), msg = new NetworkMessage(msg)]() {

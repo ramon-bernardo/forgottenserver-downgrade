@@ -177,11 +177,10 @@ private:
 	void sendCreatureShield(const Creature* creature);
 	void sendCreatureSkull(const Creature* creature);
 
-	void sendShop(Npc* npc, const ShopInfoList& itemList);
+	void sendShop(const ShopInfoList& itemList);
 	void sendCloseShop();
 	void sendSaleItemList(const std::list<ShopInfo>& shop);
 	void sendResourceBalance(const ResourceTypes_t resourceType, uint64_t amount);
-	void sendStoreBalance();
 	void sendTradeItemRequest(const std::string& traderName, const Item* item, bool ack);
 	void sendCloseTrade();
 

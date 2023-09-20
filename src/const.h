@@ -410,13 +410,13 @@ enum item_t : uint16_t
 
 	ITEM_MAGICWALL = 1497,
 	ITEM_MAGICWALL_PERSISTENT = 1498,
-	ITEM_MAGICWALL_SAFE = 11098,
-	ITEM_MAGICWALL_NOPVP = 20669,
+	// ITEM_MAGICWALL_SAFE = X, TODO: create item and check onStepInField system
+	// ITEM_MAGICWALL_NOPVP = X, TODO: create item and check onStepInField system
 
 	ITEM_WILDGROWTH = 1499,
 	ITEM_WILDGROWTH_PERSISTENT = 2721,
-	ITEM_WILDGROWTH_SAFE = 11099,
-	ITEM_WILDGROWTH_NOPVP = 20670,
+	// ITEM_WILDGROWTH_SAFE = X, TODO: create item and check onStepInField system
+	// ITEM_WILDGROWTH_NOPVP = X, TODO: create item and check onStepInField system
 
 	ITEM_BAG = 1987,
 	ITEM_SHOPPING_BAG = 23782,

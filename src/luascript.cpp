@@ -1573,10 +1573,10 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(ITEM_ENERGYFIELD_NOPVP);
 	registerEnum(ITEM_MAGICWALL);
 	registerEnum(ITEM_MAGICWALL_PERSISTENT);
-	registerEnum(ITEM_MAGICWALL_SAFE);
+	// registerEnum(ITEM_MAGICWALL_SAFE);
 	registerEnum(ITEM_WILDGROWTH);
 	registerEnum(ITEM_WILDGROWTH_PERSISTENT);
-	registerEnum(ITEM_WILDGROWTH_SAFE);
+	// registerEnum(ITEM_WILDGROWTH_SAFE);
 	registerEnum(ITEM_DECORATION_KIT);
 
 	registerEnum(WIELDINFO_NONE);

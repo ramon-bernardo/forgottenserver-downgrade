@@ -237,7 +237,6 @@ private:
 
 	// inventory
 	void sendInventoryItem(slots_t slot, const Item* item);
-	void sendItems();
 
 	// session end
 	void sendSessionEnd(SessionEndTypes_t reason);

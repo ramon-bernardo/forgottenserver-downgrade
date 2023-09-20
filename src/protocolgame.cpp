@@ -2308,7 +2308,6 @@ void ProtocolGame::sendAddCreature(const Creature* creature, const Position& pos
 	// send client info
 	sendClientFeatures(); // player speed, bug reports, store url, pvp mode, etc
 	sendBasicData();      // premium account, vocation, known spells, prey system status, magic shield status
-	sendItems();          // send carried items for action bars
 
 	// enter world and send game screen
 	sendPendingStateEntered();
@@ -2427,32 +2426,6 @@ void ProtocolGame::sendInventoryItem(slots_t slot, const Item* item)
 		msg.addByte(0x79);
 		msg.addByte(slot);
 	}
-	writeToOutputBuffer(msg);
-}
-
-// to do: make it lightweight, update each time player gets/loses an item
-void ProtocolGame::sendItems()
-{
-	NetworkMessage msg;
-	msg.addByte(0xF5);
-
-	// find all items carried by character (itemId, amount)
-	std::map<uint32_t, uint32_t> inventory;
-	player->getAllItemTypeCount(inventory);
-
-	msg.add<uint16_t>(inventory.size() + 11);
-	for (uint16_t i = 1; i <= 11; i++) {
-		msg.add<uint16_t>(i); // slotId
-		msg.addByte(0);       // always 0
-		msg.add<uint16_t>(1); // always 1
-	}
-
-	for (const auto& item : inventory) {
-		msg.add<uint16_t>(Item::items[item.first].clientId); // item clientId
-		msg.addByte(0);                                      // always 0
-		msg.add<uint16_t>(item.second);                      // count
-	}
-
 	writeToOutputBuffer(msg);
 }
 

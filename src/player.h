@@ -672,12 +672,6 @@ public:
 			client->sendInventoryItem(slot, item);
 		}
 	}
-	void sendItems()
-	{
-		if (client) {
-			client->sendItems();
-		}
-	}
 	void openSavedContainers();
 	void sendQuiverUpdate(bool sendAll = false)
 	{

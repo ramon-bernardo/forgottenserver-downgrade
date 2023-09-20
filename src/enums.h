@@ -89,7 +89,6 @@ enum VipStatus_t : uint8_t
 {
 	VIPSTATUS_OFFLINE = 0,
 	VIPSTATUS_ONLINE = 1,
-	VIPSTATUS_PENDING = 2
 };
 
 enum ChannelEvent_t : uint8_t

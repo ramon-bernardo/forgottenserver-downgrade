@@ -312,46 +312,6 @@ function Player.getWeaponType(self)
 	return WEAPON_NONE
 end
 
-function Player.updateKillTracker(self, monster, corpse)
-	local monsterType = monster:getType()
-	if not monsterType then
-		return false
-	end
-
-	local msg = NetworkMessage()
-	msg:addByte(0xD1)
-	msg:addString(monster:getName())
-
-	local monsterOutfit = monsterType:getOutfit()
-	msg:addU16(monsterOutfit.lookType or 19)
-	msg:addByte(monsterOutfit.lookHead)
-	msg:addByte(monsterOutfit.lookBody)
-	msg:addByte(monsterOutfit.lookLegs)
-	msg:addByte(monsterOutfit.lookFeet)
-	msg:addByte(monsterOutfit.lookAddons)
-
-	local corpseSize = corpse:getSize()
-	msg:addByte(corpseSize)
-	for index = corpseSize - 1, 0, -1 do
-		msg:addItem(corpse:getItem(index))
-	end
-
-	local party = self:getParty()
-	if party then
-		local members = party:getMembers()
-		members[#members + 1] = party:getLeader()
-
-		for _, member in ipairs(members) do
-			msg:sendToPlayer(member)
-		end
-	else
-		msg:sendToPlayer(self)
-	end
-
-	msg:delete()
-	return true
-end
-
 function Player.getTotalMoney(self)
 	return self:getMoney() + self:getBankBalance()
 end
@@ -384,10 +344,6 @@ function Player.isPromoted(self)
 	local vocation = self:getVocation()
 	local fromVocId = vocation:getDemotion():getId()
 	return vocation:getId() ~= fromVocId
-end
-
-function Player.getMaxTrackedQuests(self)
-	return configManager.getNumber(self:isPremium() and configKeys.QUEST_TRACKER_PREMIUM_LIMIT or configKeys.QUEST_TRACKER_FREE_LIMIT)
 end
 
 function Player.getQuests(self)
@@ -429,62 +385,6 @@ function Player.sendQuestLine(self, quest)
 		msg:addString(mission:getName(self))
 		msg:addString(mission:getDescription(self))
 	end
-
-	msg:sendToPlayer(self)
-	msg:delete()
-	return true
-end
-
-function Player.getTrackedQuests(self, missionsId)
-	local playerId = self:getId()
-	local maxTrackedQuests = self:getMaxTrackedQuests()
-	local trackedQuests = {}
-	Game.getTrackedQuests()[playerId] = trackedQuests
-	local quests = Game.getQuests()
-	local missions = Game.getMissions()
-	local trackeds = 0
-	for _, missionId in pairs(missionsId) do
-		local mission = missions[missionId]
-		if mission and mission:isStarted(self) then
-			trackedQuests[mission] = quests[mission.questId]
-			trackeds = trackeds + 1
-			if trackeds >= maxTrackedQuests then
-				break
-			end
-		end
-	end
-	return trackedQuests, trackeds
-end
-
-function Player.sendQuestTracker(self, missionsId)
-	local msg = NetworkMessage()
-	msg:addByte(0xD0)
-	msg:addByte(1)
-
-	local trackedQuests, trackeds = self:getTrackedQuests(missionsId)
-	msg:addByte(self:getMaxTrackedQuests() - trackeds)
-	msg:addByte(trackeds)
-
-	for mission, quest in pairs(trackedQuests or {}) do
-		msg:addU16(mission.id)
-		msg:addString(quest.name)
-		msg:addString(mission:getName(self))
-		msg:addString(mission:getDescription(self))
-	end
-
-	msg:sendToPlayer(self)
-	msg:delete()
-	return true
-end
-
-function Player.sendUpdateQuestTracker(self, mission)
-	local msg = NetworkMessage()
-	msg:addByte(0xD0)
-	msg:addByte(0)
-
-	msg:addU16(mission.id)
-	msg:addString(mission:getName(self))
-	msg:addString(mission:getDescription(self))
 
 	msg:sendToPlayer(self)
 	msg:delete()

@@ -40,19 +40,6 @@ function Quest:getMissions(player)
 	return missions
 end
 
-function Quest:isTracking(key, value)
-	if self.storageId == key and value == self.storageValue then
-		return true
-	end
-
-	for _, mission in pairs(self.missions) do
-		if mission.storageId == key and value >= mission.startValue and value <= mission.endValue then
-			return true
-		end
-	end
-	return false
-end
-
 Mission = {}
 Mission.__index = Mission
 

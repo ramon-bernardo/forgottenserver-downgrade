@@ -115,11 +115,9 @@ end
 do
 	local quests = {}
 	local missions = {}
-	local trackedQuests = {}
 
 	function Game.getQuests() return quests end
 	function Game.getMissions() return missions end
-	function Game.getTrackedQuests() return trackedQuests end
 
 	function Game.getQuestById(id) return quests[id] end
 	function Game.getMissionById(id) return missions[id] end
@@ -127,13 +125,6 @@ do
 	function Game.clearQuests()
 		quests = {}
 		missions = {}
-		for playerId, _ in pairs(trackedQuests) do
-			local player = Player(playerId)
-			if player then
-				player:sendQuestTracker({})
-			end
-		end
-		trackedQuests = {}
 		return true
 	end
 

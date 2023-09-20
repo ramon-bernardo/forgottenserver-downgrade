@@ -388,7 +388,7 @@ void ProtocolGame::onRecvFirstMessage(NetworkMessage& msg)
 
 	msg.skipBytes(1); // Gamemaster flag
 
-	// acc name or email, password, token, timestamp divided by 30
+	// acc name, password, token, timestamp divided by 30
 	auto sessionArgs = explodeString(msg.getString(), "\n", 4);
 	if (sessionArgs.size() < 2) {
 		disconnectClient("Malformed session key.");

@@ -5,7 +5,6 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   `secret` char(16) DEFAULT NULL,
   `type` int NOT NULL DEFAULT '1',
   `premium_ends_at` int unsigned NOT NULL DEFAULT '0',
-  `email` varchar(255) NOT NULL DEFAULT '',
   `creation` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)

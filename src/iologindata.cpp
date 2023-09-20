@@ -35,9 +35,9 @@ bool IOLoginData::loginserverAuthentication(const std::string& name, const std::
 {
 	Database& db = Database::getInstance();
 
-	DBResult_ptr result = db.storeQuery(fmt::format(
-	    "SELECT `id`, `name`, `password`, `type`, `premium_ends_at` FROM `accounts` WHERE `name` = {:s} OR `email` = {:s}",
-	    db.escapeString(name), db.escapeString(name)));
+	DBResult_ptr result = db.storeQuery(
+	    fmt::format("SELECT `id`, `name`, `password`, `type`, `premium_ends_at` FROM `accounts` WHERE `name` = {:s}",
+	                db.escapeString(name)));
 	if (!result) {
 		return false;
 	}
@@ -67,8 +67,8 @@ std::pair<uint32_t, uint32_t> IOLoginData::gameworldAuthentication(std::string_v
 {
 	Database& db = Database::getInstance();
 	DBResult_ptr result = db.storeQuery(fmt::format(
-	    "SELECT `a`.`id` AS `account_id`, `a`.`password`, `p`.`id` AS `character_id` FROM `accounts` `a` JOIN `players` `p` ON `a`.`id` = `p`.`account_id` WHERE (`a`.`name` = {:s} OR `a`.`email` = {:s}) AND `p`.`name` = {:s} AND `p`.`deletion` = 0",
-	    db.escapeString(accountName), db.escapeString(accountName), db.escapeString(characterName)));
+	    "SELECT `a`.`id` AS `account_id`, `a`.`password`, `p`.`id` AS `character_id` FROM `accounts` `a` JOIN `players` `p` ON `a`.`id` = `p`.`account_id` WHERE (`a`.`name` = {:s}) AND `p`.`name` = {:s} AND `p`.`deletion` = 0",
+	    db.escapeString(accountName), db.escapeString(characterName)));
 	if (!result) {
 		return {};
 	}

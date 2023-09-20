@@ -246,10 +246,6 @@ public:
 	uint32_t getLevel() const { return level; }
 	uint8_t getLevelPercent() const { return levelPercent; }
 	uint32_t getMagicLevel() const { return std::max<int32_t>(0, magLevel + varStats[STAT_MAGICPOINTS]); }
-	uint32_t getSpecialMagicLevel(CombatType_t type) const
-	{
-		return std::max<int32_t>(0, specialMagicLevelSkill[combatTypeToIndex(type)]);
-	}
 	uint32_t getBaseMagicLevel() const { return magLevel; }
 	uint8_t getMagicLevelPercent() const { return magLevelPercent; }
 	uint8_t getSoul() const { return soul; }
@@ -314,11 +310,6 @@ public:
 	void setItemAbility(slots_t slot, bool enabled) { inventoryAbilities[slot] = enabled; }
 
 	void setVarSkill(skills_t skill, int32_t modifier) { varSkills[skill] += modifier; }
-
-	void setSpecialMagicLevelSkill(CombatType_t type, int16_t modifier)
-	{
-		specialMagicLevelSkill[combatTypeToIndex(type)] += modifier;
-	}
 
 	void setVarStats(stats_t stat, int32_t modifier);
 
@@ -419,10 +410,6 @@ public:
 	uint16_t getSkillLevel(uint8_t skill) const
 	{
 		return std::max<uint16_t>(0, skills[skill].level + varSkills[skill]);
-	}
-	uint16_t getSpecialMagicLevelSkill(CombatType_t type) const
-	{
-		return std::max<int32_t>(0, specialMagicLevelSkill[combatTypeToIndex(type)]);
 	}
 	uint16_t getBaseSkill(uint8_t skill) const { return skills[skill].level; }
 	uint8_t getSkillPercent(uint8_t skill) const { return skills[skill].percent; }
@@ -1156,7 +1143,6 @@ private:
 	uint16_t maxManaShieldBar = 0;
 	int32_t varSkills[SKILL_LAST + 1] = {};
 	int32_t varStats[STAT_LAST + 1] = {};
-	std::array<int16_t, COMBAT_COUNT> specialMagicLevelSkill = {0};
 	int32_t purchaseCallback = -1;
 	int32_t saleCallback = -1;
 	int32_t MessageBufferCount = 0;

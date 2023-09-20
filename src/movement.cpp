@@ -794,12 +794,6 @@ ReturnValue MoveEvent::EquipItem(MoveEvent* moveEvent, Player* player, Item* ite
 		}
 	}
 
-	for (int32_t i = 0; i < COMBAT_COUNT; ++i) {
-		if (it.abilities->specialMagicLevelSkill[i]) {
-			player->setSpecialMagicLevelSkill(indexToCombatType(i), it.abilities->specialMagicLevelSkill[i]);
-		}
-	}
-
 	if (needUpdateSkills) {
 		player->sendSkills();
 	}
@@ -875,12 +869,6 @@ ReturnValue MoveEvent::DeEquipItem(MoveEvent*, Player* player, Item* item, slots
 		if (it.abilities->skills[i] != 0) {
 			needUpdateSkills = true;
 			player->setVarSkill(static_cast<skills_t>(i), -it.abilities->skills[i]);
-		}
-	}
-
-	for (int32_t i = 0; i < COMBAT_COUNT; ++i) {
-		if (it.abilities->specialMagicLevelSkill[i] != 0) {
-			player->setSpecialMagicLevelSkill(indexToCombatType(i), -it.abilities->specialMagicLevelSkill[i]);
 		}
 	}
 

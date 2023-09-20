@@ -355,15 +355,6 @@ do
 			end
 		end
 
-		-- element magic level
-		do
-			for element, value in pairs(abilities.specialMagicLevel) do
-				if value ~= 0 then
-					descriptions[#descriptions + 1] = string.format("%s magic level %+d", getCombatName(2^(element-1)), value)
-				end
-			end
-		end
-
 		-- cleave
 		-- perfect shot
 		-- to do

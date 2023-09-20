@@ -407,31 +407,6 @@ void ProtocolGame::onRecvFirstMessage(NetworkMessage& msg)
 		return;
 	}
 
-	std::string_view token;
-	uint32_t tokenTime = 0;
-
-	// two-factor auth
-	if (g_config.getBoolean(ConfigManager::TWO_FACTOR_AUTH)) {
-		if (sessionArgs.size() < 4) {
-			disconnectClient("Authentication failed. Incomplete session key.");
-			return;
-		}
-
-		token = sessionArgs[2];
-
-		try {
-			tokenTime = std::stoul(sessionArgs[3].data());
-		} catch (const std::invalid_argument&) {
-			disconnectClient("Malformed token packet.");
-			return;
-		} catch (const std::out_of_range&) {
-			disconnectClient("Token time is too long.");
-			return;
-		}
-	} else {
-		tokenTime = std::floor(challengeTimestamp / 30);
-	}
-
 	auto characterName = msg.getString();
 	uint32_t timeStamp = msg.get<uint32_t>();
 	uint8_t randNumber = msg.getByte();
@@ -462,7 +437,7 @@ void ProtocolGame::onRecvFirstMessage(NetworkMessage& msg)
 	}
 
 	// TODO: use structured binding when C++20 is adopted
-	auto authIds = IOLoginData::gameworldAuthentication(accountName, password, characterName, token, tokenTime);
+	auto authIds = IOLoginData::gameworldAuthentication(accountName, password, characterName);
 	if (authIds.first == 0) {
 		disconnectClient("Account name or password is not correct.");
 		return;

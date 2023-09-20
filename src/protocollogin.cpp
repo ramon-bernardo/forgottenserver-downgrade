@@ -35,26 +35,7 @@ void ProtocolLogin::getCharacterList(const std::string& accountName, const std::
 		return;
 	}
 
-	uint32_t ticks = time(nullptr) / AUTHENTICATOR_PERIOD;
-
 	auto output = OutputMessagePool::getOutputMessage();
-	if (!account.key.empty()) {
-		if (token.empty() ||
-		    !(token == generateToken(account.key, ticks) || token == generateToken(account.key, ticks - 1) ||
-		      token == generateToken(account.key, ticks + 1))) {
-			output->addByte(0x0D);
-			output->addByte(0);
-			send(output);
-			disconnect();
-			return;
-		}
-		output->addByte(0x0C);
-		output->addByte(0);
-	}
-
-	// Add session key
-	output->addByte(0x28);
-	output->addString(accountName + "\n" + password + "\n" + token + "\n" + std::to_string(ticks));
 
 	// Add char list
 	output->addByte(0x64);

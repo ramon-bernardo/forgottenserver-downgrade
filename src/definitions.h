@@ -12,9 +12,6 @@ static constexpr auto CLIENT_VERSION_MIN = 860;
 static constexpr auto CLIENT_VERSION_MAX = 860;
 static constexpr auto CLIENT_VERSION_STR = "8.6";
 
-static constexpr auto AUTHENTICATOR_DIGITS = 6U;
-static constexpr auto AUTHENTICATOR_PERIOD = 30U;
-
 #ifndef __FUNCTION__
 #define __FUNCTION__ __func__
 #endif

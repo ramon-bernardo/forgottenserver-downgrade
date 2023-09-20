@@ -54,15 +54,10 @@ enum tradestate_t : uint8_t
 
 struct VIPEntry
 {
-	VIPEntry(uint32_t guid, std::string_view name, std::string_view description, uint32_t icon, bool notify) :
-	    guid{guid}, name{name}, description{description}, icon{icon}, notify{notify}
-	{}
+	VIPEntry(uint32_t guid, std::string_view name) : guid{guid}, name{name} {}
 
 	uint32_t guid;
 	std::string name;
-	std::string description;
-	uint32_t icon;
-	bool notify;
 };
 
 struct OpenContainer
@@ -365,7 +360,6 @@ public:
 	bool removeVIP(uint32_t vipGuid);
 	bool addVIP(uint32_t vipGuid, const std::string& vipName, VipStatus_t status);
 	bool addVIPInternal(uint32_t vipGuid);
-	bool editVIP(uint32_t vipGuid, const std::string& description, uint32_t icon, bool notify);
 
 	// follow functions
 	bool setFollowCreature(Creature* creature) override;

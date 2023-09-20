@@ -756,9 +756,6 @@ void ProtocolGame::parsePacket(NetworkMessage& msg)
 		case 0xDD:
 			parseRemoveVip(msg);
 			break;
-		case 0xDE:
-			parseEditVip(msg);
-			break;
 		// case 0xDF: break; // premium shop (?)
 		// case 0xE0: break; // premium shop (?)
 		// case 0xE4: break; // buy charm rune
@@ -1325,17 +1322,6 @@ void ProtocolGame::parseRemoveVip(NetworkMessage& msg)
 	g_dispatcher.addTask([=, playerID = player->getID()]() { g_game.playerRequestRemoveVip(playerID, guid); });
 }
 
-void ProtocolGame::parseEditVip(NetworkMessage& msg)
-{
-	uint32_t guid = msg.get<uint32_t>();
-	auto description = msg.getString();
-	uint32_t icon = std::min<uint32_t>(10, msg.get<uint32_t>()); // 10 is max icon in 9.63
-	bool notify = msg.getByte() != 0;
-	g_dispatcher.addTask([=, playerID = player->getID(), description = std::string{description}]() {
-		g_game.playerRequestEditVip(playerID, guid, description, icon, notify);
-	});
-}
-
 void ProtocolGame::parseRotateItem(NetworkMessage& msg)
 {
 	Position pos = msg.getPosition();
@@ -1729,7 +1715,7 @@ void ProtocolGame::sendContainer(uint8_t cid, const Container* container, bool h
 
 	msg.addByte(container->capacity());
 	msg.addByte(hasParent ? 0x01 : 0x00);
-	msg.addByte(0x00);                                     // show search icon (boolean)
+	msg.addByte(0x00); // show search icon (boolean)
 
 	uint32_t containerSize = container->size();
 	msg.add<uint16_t>(containerSize);
@@ -2663,18 +2649,13 @@ void ProtocolGame::sendUpdatedVIPStatus(uint32_t guid, VipStatus_t newStatus)
 	writeToOutputBuffer(msg);
 }
 
-void ProtocolGame::sendVIP(uint32_t guid, const std::string& name, const std::string& description, uint32_t icon,
-                           bool notify, VipStatus_t status)
+void ProtocolGame::sendVIP(uint32_t guid, const std::string& name, VipStatus_t status)
 {
 	NetworkMessage msg;
 	msg.addByte(0xD2);
 	msg.add<uint32_t>(guid);
 	msg.addString(name);
-	msg.addString(description);
-	msg.add<uint32_t>(std::min<uint32_t>(10, icon));
-	msg.addByte(notify ? 0x01 : 0x00);
 	msg.addByte(status);
-	msg.addByte(0x00); // vipGroups (placeholder)
 	writeToOutputBuffer(msg);
 }
 
@@ -2691,7 +2672,7 @@ void ProtocolGame::sendVIPEntries()
 			vipStatus = VIPSTATUS_OFFLINE;
 		}
 
-		sendVIP(entry.guid, entry.name, entry.description, entry.icon, entry.notify, vipStatus);
+		sendVIP(entry.guid, entry.name, vipStatus);
 	}
 }
 

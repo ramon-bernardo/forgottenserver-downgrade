@@ -1,5 +1,5 @@
 function onUpdateDatabase()
-	print("> Updating database to version 8 (account viplist with description, icon and notify server side)")
+	print("> Updating database to version 8")
 	db.query("RENAME TABLE `player_viplist` TO `account_viplist`")
 	db.query("ALTER TABLE `account_viplist` DROP FOREIGN KEY `account_viplist_ibfk_1`")
 	db.query("UPDATE `account_viplist` SET `player_id` = (SELECT `account_id` FROM `players` WHERE `id` = `player_id`)")
@@ -10,7 +10,6 @@ function onUpdateDatabase()
 	db.query("ALTER TABLE `account_viplist` DROP INDEX `vip_id`, ADD INDEX `player_id` (`player_id`)")
 	db.query("ALTER TABLE `account_viplist` ADD FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE")
 	db.query("ALTER TABLE `account_viplist` ADD FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE")
-	db.query("ALTER TABLE `account_viplist` ADD `description` VARCHAR(128) NOT NULL DEFAULT '', ADD `icon` TINYINT( 2 ) UNSIGNED NOT NULL DEFAULT '0', ADD `notify` TINYINT( 1 ) NOT NULL DEFAULT '0'")
 
 	-- Remove duplicates
 	local resultId = db.storeQuery("SELECT `account_id`, `player_id`, COUNT(*) AS `count` FROM `account_viplist` GROUP BY `account_id`, `player_id` HAVING COUNT(*) > 1")

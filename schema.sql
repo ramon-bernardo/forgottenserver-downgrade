@@ -125,9 +125,6 @@ CREATE TABLE IF NOT EXISTS `player_namelocks` (
 CREATE TABLE IF NOT EXISTS `account_viplist` (
   `account_id` int NOT NULL COMMENT 'id of account whose viplist entry it is',
   `player_id` int NOT NULL COMMENT 'id of target player of viplist entry',
-  `description` varchar(128) NOT NULL DEFAULT '',
-  `icon` tinyint unsigned NOT NULL DEFAULT '0',
-  `notify` tinyint NOT NULL DEFAULT '0',
   UNIQUE KEY `account_player_index` (`account_id`,`player_id`),
   FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE,
   FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE

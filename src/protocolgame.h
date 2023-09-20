@@ -125,7 +125,6 @@ private:
 	// VIP methods
 	void parseAddVip(NetworkMessage& msg);
 	void parseRemoveVip(NetworkMessage& msg);
-	void parseEditVip(NetworkMessage& msg);
 
 	void parseRotateItem(NetworkMessage& msg);
 
@@ -192,8 +191,7 @@ private:
 	void sendOutfitWindow();
 
 	void sendUpdatedVIPStatus(uint32_t guid, VipStatus_t newStatus);
-	void sendVIP(uint32_t guid, const std::string& name, const std::string& description, uint32_t icon, bool notify,
-	             VipStatus_t status);
+	void sendVIP(uint32_t guid, const std::string& name, VipStatus_t status);
 	void sendVIPEntries();
 
 	void sendItemClasses();

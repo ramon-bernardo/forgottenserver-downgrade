@@ -990,34 +990,21 @@ std::forward_list<VIPEntry> IOLoginData::getVIPEntries(uint32_t accountId)
 	std::forward_list<VIPEntry> entries;
 
 	DBResult_ptr result = Database::getInstance().storeQuery(fmt::format(
-	    "SELECT `player_id`, (SELECT `name` FROM `players` WHERE `id` = `player_id`) AS `name`, `description`, `icon`, `notify` FROM `account_viplist` WHERE `account_id` = {:d}",
+	    "SELECT `player_id`, (SELECT `name` FROM `players` WHERE `id` = `player_id`) AS `name` FROM `account_viplist` WHERE `account_id` = {:d}",
 	    accountId));
 	if (result) {
 		do {
-			entries.emplace_front(result->getNumber<uint32_t>("player_id"), result->getString("name"),
-			                      result->getString("description"), result->getNumber<uint32_t>("icon"),
-			                      result->getNumber<uint16_t>("notify") != 0);
+			entries.emplace_front(result->getNumber<uint32_t>("player_id"), result->getString("name"));
 		} while (result->next());
 	}
 	return entries;
 }
 
-void IOLoginData::addVIPEntry(uint32_t accountId, uint32_t guid, const std::string& description, uint32_t icon,
-                              bool notify)
+void IOLoginData::addVIPEntry(uint32_t accountId, uint32_t guid)
 {
 	Database& db = Database::getInstance();
-	db.executeQuery(fmt::format(
-	    "INSERT INTO `account_viplist` (`account_id`, `player_id`, `description`, `icon`, `notify`) VALUES ({:d}, {:d}, {:s}, {:d}, {:d})",
-	    accountId, guid, db.escapeString(description), icon, notify));
-}
-
-void IOLoginData::editVIPEntry(uint32_t accountId, uint32_t guid, const std::string& description, uint32_t icon,
-                               bool notify)
-{
-	Database& db = Database::getInstance();
-	db.executeQuery(fmt::format(
-	    "UPDATE `account_viplist` SET `description` = {:s}, `icon` = {:d}, `notify` = {:d} WHERE `account_id` = {:d} AND `player_id` = {:d}",
-	    db.escapeString(description), icon, notify, accountId, guid));
+	db.executeQuery(
+	    fmt::format("INSERT INTO `account_viplist` (`account_id`, `player_id`) VALUES ({:d}, {:d})", accountId, guid));
 }
 
 void IOLoginData::removeVIPEntry(uint32_t accountId, uint32_t guid)

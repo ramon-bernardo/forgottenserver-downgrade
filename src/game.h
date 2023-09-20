@@ -346,6 +346,7 @@ public:
 	                           uint16_t spriteId);
 	void playerCloseContainer(uint32_t playerId, uint8_t cid);
 	void playerMoveUpContainer(uint32_t playerId, uint8_t cid);
+	void playerUpdateTile(uint32_t playerId, const Position& pos);
 	void playerUpdateContainer(uint32_t playerId, uint8_t cid);
 	void playerRotateItem(uint32_t playerId, const Position& pos, uint8_t stackPos, const uint16_t spriteId);
 	void playerWriteItem(uint32_t playerId, uint32_t windowTextId, std::string_view text);

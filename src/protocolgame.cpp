@@ -690,7 +690,8 @@ void ProtocolGame::parsePacket(NetworkMessage& msg)
 		case 0xBE:
 			g_dispatcher.addTask([playerID = player->getID()]() { g_game.playerCancelAttackAndFollow(playerID); });
 			break;
-		case 0xC9: /* update tile */
+		case 0xC9:
+			parseUpdateTile(msg);
 			break;
 		case 0xCA:
 			parseUpdateContainer(msg);
@@ -1068,6 +1069,12 @@ void ProtocolGame::parseUpArrowContainer(NetworkMessage& msg)
 {
 	uint8_t cid = msg.getByte();
 	g_dispatcher.addTask([=, playerID = player->getID()]() { g_game.playerMoveUpContainer(playerID, cid); });
+}
+
+void ProtocolGame::parseUpdateTile(NetworkMessage& msg)
+{
+	Position pos = msg.getPosition();
+	g_dispatcher.addTask([=, playerID = player->getID()]() { g_game.playerUpdateTile(playerID, pos); });
 }
 
 void ProtocolGame::parseUpdateContainer(NetworkMessage& msg)

@@ -2251,6 +2251,22 @@ void Game::playerMoveUpContainer(uint32_t playerId, uint8_t cid)
 	player->sendContainer(cid, parentContainer, parentContainer->hasParent(), player->getContainerIndex(cid));
 }
 
+void Game::playerUpdateTile(uint32_t playerId, const Position& pos)
+{
+	Player* player = getPlayerByID(playerId);
+	if (!player) {
+		return;
+	}
+
+	if (!player->canSee(pos)) {
+		return;
+	}
+
+	if (const Tile* tile = map.getTile(pos)) {
+		player->sendUpdateTile(tile, pos);
+	}
+}
+
 void Game::playerUpdateContainer(uint32_t playerId, uint8_t cid)
 {
 	Player* player = getPlayerByID(playerId);

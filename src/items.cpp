@@ -330,7 +330,6 @@ bool Items::loadFromOtb(const std::string& file)
 		uint8_t lightLevel = 0;
 		uint8_t lightColor = 0;
 		uint8_t alwaysOnTopOrder = 0;
-		uint8_t classification = 0;
 
 		uint8_t attrib;
 		while (stream.read<uint8_t>(attrib)) {
@@ -410,17 +409,6 @@ bool Items::loadFromOtb(const std::string& file)
 					break;
 				}
 
-				case ITEM_ATTR_CLASSIFICATION: {
-					if (datalen != sizeof(uint8_t)) {
-						return false;
-					}
-
-					if (!stream.read<uint8_t>(classification)) {
-						return false;
-					}
-					break;
-				}
-
 				default: {
 					// skip unknown attributes
 					if (!stream.skip(datalen)) {
@@ -494,7 +482,6 @@ bool Items::loadFromOtb(const std::string& file)
 		iType.lightLevel = lightLevel;
 		iType.lightColor = lightColor;
 		iType.wareId = wareId;
-		iType.classification = classification;
 		iType.alwaysOnTopOrder = alwaysOnTopOrder;
 	}
 

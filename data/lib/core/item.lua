@@ -2,10 +2,6 @@ function Item.getType(self)
 	return ItemType(self:getId())
 end
 
-function Item:getClassification()
-	return self:getType():getClassification()
-end
-
 function Item.isContainer(self)
 	return false
 end
@@ -515,21 +511,6 @@ do
 
 		-- imbuements (to do)
 		-- \nImbuements: (Basic Strike 2:30h, Basic Void 2:30h, Empty Slot).
-
-		-- item class
-		-- Classification: x (0.50% Onslaught).
-		do
-			local classification = itemType:getClassification()
-			local tier = isVirtual and 0 or item:getTier() or 0
-
-			if classification > 0 or tier > 0 then
-				if classification == 0 then
-					classification = "other"
-				end
-
-				response[#response + 1] = string.format("\nClassification: %s.", classification)
-			end
-		end
 
 		-- item count (will be reused later)
 		local count = isVirtual and 1 or item:getCount()

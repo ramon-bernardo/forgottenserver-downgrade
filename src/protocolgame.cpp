@@ -1489,10 +1489,6 @@ void ProtocolGame::sendClientFeatures()
 	msg.add<uint32_t>(player->getID());
 	msg.add<uint16_t>(50); // beat duration
 
-	msg.addDouble(Creature::speedA, 3);
-	msg.addDouble(Creature::speedB, 3);
-	msg.addDouble(Creature::speedC, 3);
-
 	// can report bugs?
 	msg.addByte(player->getAccountType() >= ACCOUNT_TYPE_TUTOR ? 0x01 : 0x00);
 

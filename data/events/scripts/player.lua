@@ -76,10 +76,10 @@ function Player:onReportRuleViolation(targetName, reportType, reportReason, comm
 	end
 end
 
-function Player:onReportBug(message, position, category)
+function Player:onReportBug(message)
 	local onReportBug = EventCallback.onReportBug
 	if onReportBug then
-		return onReportBug(self, message, position, category)
+		return onReportBug(self, message)
 	end
 	return true
 end

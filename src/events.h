@@ -100,7 +100,7 @@ public:
 	void eventPlayerOnReportRuleViolation(Player* player, const std::string& targetName, uint8_t reportType,
 	                                      uint8_t reportReason, const std::string& comment,
 	                                      const std::string& translation);
-	bool eventPlayerOnReportBug(Player* player, const std::string& message, const Position& position, uint8_t category);
+	bool eventPlayerOnReportBug(Player* player, const std::string& message);
 	bool eventPlayerOnTurn(Player* player, Direction direction);
 	bool eventPlayerOnTradeRequest(Player* player, Player* target, Item* item);
 	bool eventPlayerOnTradeAccept(Player* player, Player* target, Item* item, Item* targetItem);

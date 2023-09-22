@@ -364,9 +364,6 @@ uint32_t ConditionGeneric::getIcons() const
 			break;
 
 		case CONDITION_ROOT:
-			icons |= ICON_ROOT;
-			break;
-
 		default:
 			break;
 	}
@@ -1419,9 +1416,6 @@ uint32_t ConditionDamage::getIcons() const
 			break;
 
 		case CONDITION_BLEEDING:
-			icons |= ICON_BLEEDING;
-			break;
-
 		default:
 			break;
 	}
@@ -1996,9 +1990,6 @@ uint32_t ConditionManaShield::getIcons() const
 
 	switch (conditionType) {
 		case CONDITION_MANASHIELD_BREAKABLE:
-			icons |= ICON_MANASHIELD_BREAKABLE;
-			break;
-
 		default:
 			break;
 	}

@@ -631,8 +631,6 @@ void ProtocolGame::parsePacket(NetworkMessage& msg)
 		case 0x8D:
 			parseLookInBattleList(msg);
 			break;
-		case 0x8E: /* join aggression */
-			break;
 		case 0x96:
 			parseSay(msg);
 			break;

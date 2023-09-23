@@ -753,7 +753,12 @@ public:
 		}
 	}
 	void sendPing();
-	void sendStats();
+	void sendStats()
+	{
+		if (client) {
+			client->sendStats();
+		}
+	}
 
 	void sendSkills() const
 	{

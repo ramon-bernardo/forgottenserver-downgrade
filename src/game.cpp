@@ -3215,8 +3215,8 @@ void Game::playerSay(uint32_t playerId, uint16_t channelId, SpeakClasses type, c
 			g_chat->talkToChannel(*player, type, text, channelId);
 			break;
 
-		// case TALKTYPE_RVR_CHANNEL: playerReportRuleViolation(...)
-		// case SPEAK_RVR_CONTINUE: playerContinueReport(...)
+			// case TALKTYPE_RVR_CHANNEL: playerReportRuleViolation(...)
+			// case SPEAK_RVR_CONTINUE: playerContinueReport(...)
 
 		case TALKTYPE_BROADCAST:
 			playerBroadcastMessage(player, text);

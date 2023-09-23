@@ -796,13 +796,6 @@ DepotLocker& Player::getDepotLocker()
 
 void Player::sendCancelMessage(ReturnValue message) const { sendCancelMessage(getReturnMessage(message)); }
 
-void Player::sendStats()
-{
-	if (client) {
-		client->sendStats();
-	}
-}
-
 void Player::sendPing()
 {
 	int64_t timeNow = OTSYS_TIME();

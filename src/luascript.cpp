@@ -1624,6 +1624,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(PlayerFlag_IsAlwaysPremium);
 	registerEnum(PlayerFlag_IgnoreYellCheck);
 	registerEnum(PlayerFlag_IgnoreSendPrivateCheck);
+	registerEnum(PlayerFlag_CannotShowLevel);
 
 	registerEnum(PLAYERSEX_FEMALE);
 	registerEnum(PLAYERSEX_MALE);

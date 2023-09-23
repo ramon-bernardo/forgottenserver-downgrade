@@ -1570,7 +1570,7 @@ void ProtocolGame::sendContainer(uint8_t cid, const Container* container, bool h
 	msg.add<uint16_t>(containerSize);
 
 	uint8_t itemsToSend = std::min<uint32_t>(std::min<uint32_t>(container->capacity(), containerSize),
-	                                        std::numeric_limits<uint8_t>::max());
+	                                         std::numeric_limits<uint8_t>::max());
 
 	for (auto it = container->getItemList().begin(), end = it + itemsToSend; it != end; ++it) {
 		msg.addItem(*it);
@@ -1629,7 +1629,9 @@ void ProtocolGame::sendSaleItemList(const std::list<ShopInfo>& shop)
 
 	NetworkMessage msg;
 	msg.addByte(0x7B);
-	msg.add<uint32_t>(std::min<uint64_t>((playerBank + playerMoney), std::numeric_limits<uint32_t>::max())); // deprecated and ignored by QT client. OTClient still uses it.
+	msg.add<uint32_t>(std::min<uint64_t>(
+	    (playerBank + playerMoney),
+	    std::numeric_limits<uint32_t>::max())); // deprecated and ignored by QT client. OTClient still uses it.
 
 	std::map<uint16_t, uint32_t> saleMap;
 
@@ -1790,8 +1792,13 @@ void ProtocolGame::sendCreatureSay(const Creature* creature, SpeakClasses type, 
 	static uint32_t statementId = 0;
 	msg.add<uint32_t>(++statementId);
 
-	msg.addString(creature->getName());
-	msg.addByte(0x00); // "(Traded)" suffix after player name
+	if (creature->isHealthHidden() || type == TALKTYPE_CHANNEL_RA) {
+		msg.addString("");
+	} else if (type == TALKTYPE_RVR_ANSWER) {
+		msg.addString("Gamemaster");
+	} else {
+		msg.addString(creature->getName());
+	}
 
 	// Add level only for players
 	if (const Player* speaker = creature->getPlayer()) {

@@ -2091,17 +2091,6 @@ void ProtocolGame::sendUpdateTile(const Tile* tile, const Position& pos)
 	writeToOutputBuffer(msg);
 }
 
-void ProtocolGame::sendFightModes()
-{
-	NetworkMessage msg;
-	msg.addByte(0xA7);
-	msg.addByte(player->fightMode);
-	msg.addByte(player->chaseMode);
-	msg.addByte(player->secureMode);
-	msg.addByte(PVP_MODE_DOVE);
-	writeToOutputBuffer(msg);
-}
-
 void ProtocolGame::sendAddCreature(const Creature* creature, const Position& pos, int32_t stackpos,
                                    MagicEffectClasses magicEffect /*= CONST_ME_NONE*/)
 {

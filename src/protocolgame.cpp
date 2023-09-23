@@ -714,8 +714,6 @@ void ProtocolGame::parsePacket(NetworkMessage& msg)
 		case 0xF2:
 			parseRuleViolationReport(msg);
 			break;
-		case 0xF3: /* get object info */
-			break;
 
 		default:
 			g_dispatcher.addTask([=, playerID = player->getID(), msg = new NetworkMessage(msg)]() {

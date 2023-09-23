@@ -2431,30 +2431,6 @@ void ProtocolGame::sendHouseWindow(uint32_t windowTextId, const std::string& tex
 	writeToOutputBuffer(msg);
 }
 
-void ProtocolGame::sendCombatAnalyzer(CombatType_t type, int32_t amount, DamageAnalyzerImpactType impactType,
-                                      const std::string& target)
-{
-	NetworkMessage msg;
-	msg.addByte(0xCC);
-	msg.addByte(impactType);
-	msg.add<uint32_t>(amount);
-
-	switch (impactType) {
-		case RECEIVED:
-			msg.addByte(getClientDamageType(type));
-			msg.addString(target);
-			break;
-
-		case DEALT:
-			msg.addByte(getClientDamageType(type));
-			break;
-
-		default:
-			break;
-	}
-	writeToOutputBuffer(msg);
-}
-
 void ProtocolGame::sendOutfitWindow()
 {
 	const auto& outfits = Outfits::getInstance().getOutfits(player->getSex());

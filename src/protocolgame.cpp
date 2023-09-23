@@ -1441,9 +1441,8 @@ void ProtocolGame::sendCreatureSquare(const Creature* creature, SquareColor_t co
 	}
 
 	NetworkMessage msg;
-	msg.addByte(0x93);
+	msg.addByte(0x86);
 	msg.add<uint32_t>(creature->getID());
-	msg.addByte(0x01);
 	msg.addByte(color);
 	writeToOutputBuffer(msg);
 }

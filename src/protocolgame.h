@@ -156,7 +156,7 @@ private:
 	void sendClientFeatures();
 	void sendBasicData();
 	void sendTextMessage(const TextMessage& message);
-	void sendReLoginWindow(uint8_t unfairFightReduction);
+	void sendReLoginWindow();
 
 	void sendTutorial(uint8_t tutorialId);
 	void sendAddMarker(const Position& pos, uint8_t markType, const std::string& desc);

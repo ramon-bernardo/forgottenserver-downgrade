@@ -1565,22 +1565,21 @@ void ProtocolGame::sendContainer(uint8_t cid, const Container* container, bool h
 
 	msg.addByte(container->capacity());
 	msg.addByte(hasParent ? 0x01 : 0x00);
-	msg.addByte(0x00); // show search icon (boolean)
 
 	uint32_t containerSize = container->size();
-	msg.add<uint16_t>(containerSize);
-	msg.add<uint16_t>(firstIndex);
-	if (firstIndex < containerSize) {
-		uint8_t itemsToSend = std::min<uint32_t>(std::min<uint32_t>(container->capacity(), containerSize - firstIndex),
-		                                         std::numeric_limits<uint8_t>::max());
+	uint8_t maxContainerSize = std::numeric_limits<uint8_t>::max();
+	msg.addByte(std::min<uint8_t>(container->size(), maxContainerSize));
 
-		msg.addByte(itemsToSend);
-		for (auto it = container->getItemList().begin() + firstIndex, end = it + itemsToSend; it != end; ++it) {
+	if (firstIndex < containerSize) {
+		uint32_t i = 0;
+		uint8_t itemsToSend =
+		    std::min<uint8_t>(std::min<uint32_t>(container->capacity(), containerSize - firstIndex), maxContainerSize);
+		for (auto it = container->getItemList().begin() + firstIndex, end = it + itemsToSend;
+		     i < maxContainerSize && it != end; ++it, ++i) {
 			msg.addItem(*it);
 		}
-	} else {
-		msg.addByte(0x00);
 	}
+
 	writeToOutputBuffer(msg);
 }
 
@@ -2618,7 +2617,7 @@ void ProtocolGame::AddPlayerStats(NetworkMessage& msg)
 
 	msg.add<uint16_t>(std::min<int32_t>(player->getMana(), std::numeric_limits<uint16_t>::max()));
 	msg.add<uint16_t>(std::min<int32_t>(player->getMaxMana(), std::numeric_limits<uint16_t>::max()));
-		
+
 	msg.addByte(std::min<uint32_t>(player->getMagicLevel(), std::numeric_limits<uint8_t>::max()));
 	msg.addByte(player->getMagicLevelPercent());
 

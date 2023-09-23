@@ -1479,29 +1479,6 @@ void ProtocolGame::sendStats()
 	writeToOutputBuffer(msg);
 }
 
-void ProtocolGame::sendClientFeatures()
-{
-	NetworkMessage msg;
-	msg.addByte(0x17);
-
-	msg.add<uint32_t>(player->getID());
-	msg.add<uint16_t>(50); // beat duration
-
-	// can report bugs?
-	msg.addByte(player->getAccountType() >= ACCOUNT_TYPE_TUTOR ? 0x01 : 0x00);
-
-	msg.addByte(0x00); // can change pvp framing option
-	msg.addByte(0x00); // expert mode button enabled
-
-	msg.add<uint16_t>(0x00); // store images url (string or u16 0x00)
-	msg.add<uint16_t>(25);   // premium coin package size
-
-	msg.addByte(0x00); // exiva button enabled (bool)
-	msg.addByte(0x00); // Tournament button (bool)
-
-	writeToOutputBuffer(msg);
-}
-
 void ProtocolGame::sendBasicData()
 {
 	NetworkMessage msg;
@@ -2211,7 +2188,6 @@ void ProtocolGame::sendAddCreature(const Creature* creature, const Position& pos
 	player->sendIcons(); // active conditions
 
 	// send client info
-	sendClientFeatures(); // player speed, bug reports, store url, pvp mode, etc
 	sendBasicData();      // premium account, vocation, known spells, prey system status, magic shield status
 
 	// enter world and send game screen

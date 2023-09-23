@@ -180,8 +180,6 @@ private:
 	void sendVIP(uint32_t guid, const std::string& name, VipStatus_t status);
 	void sendVIPEntries();
 
-	void sendItemClasses();
-
 	void sendCreatureLight(const Creature* creature);
 	void sendWorldLight(LightInfo lightInfo);
 

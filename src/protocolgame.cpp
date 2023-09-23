@@ -1479,29 +1479,6 @@ void ProtocolGame::sendStats()
 	writeToOutputBuffer(msg);
 }
 
-void ProtocolGame::sendBasicData()
-{
-	NetworkMessage msg;
-	msg.addByte(0x9F);
-	if (player->isPremium()) {
-		msg.addByte(1);
-		msg.add<uint32_t>(g_config.getBoolean(ConfigManager::FREE_PREMIUM) ? 0 : player->premiumEndsAt);
-	} else {
-		msg.addByte(0);
-		msg.add<uint32_t>(0);
-	}
-	msg.addByte(player->getVocation()->getClientId());
-	msg.addByte(0x00); // is prey system enabled (bool)
-
-	// unlock spells on action bar
-	msg.add<uint16_t>(0xFF);
-	for (uint8_t spellId = 0x00; spellId < 0xFF; spellId++) {
-		msg.addByte(spellId);
-	}
-	msg.addByte(player->getVocation()->getMagicShield()); // is magic shield active (bool)
-	writeToOutputBuffer(msg);
-}
-
 void ProtocolGame::sendTextMessage(const TextMessage& message)
 {
 	NetworkMessage msg;
@@ -2186,9 +2163,6 @@ void ProtocolGame::sendAddCreature(const Creature* creature, const Position& pos
 	sendStats();         // hp, cap, level, xp rate, etc.
 	sendSkills();        // skills
 	player->sendIcons(); // active conditions
-
-	// send client info
-	sendBasicData();      // premium account, vocation, known spells, prey system status, magic shield status
 
 	// enter world and send game screen
 	sendPendingStateEntered();

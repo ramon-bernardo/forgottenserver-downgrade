@@ -759,12 +759,6 @@ public:
 	void sendPing();
 	void sendStats();
 
-	void sendBasicData() const
-	{
-		if (client) {
-			client->sendBasicData();
-		}
-	}
 	void sendSkills() const
 	{
 		if (client) {

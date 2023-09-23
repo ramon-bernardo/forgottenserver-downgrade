@@ -3998,7 +3998,6 @@ bool Player::isPremium() const
 void Player::setPremiumTime(time_t premiumEndsAt)
 {
 	this->premiumEndsAt = premiumEndsAt;
-	sendBasicData();
 }
 
 PartyShields_t Player::getPartyShield(const Player* player) const

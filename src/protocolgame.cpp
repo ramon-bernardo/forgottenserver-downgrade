@@ -1830,16 +1830,25 @@ void ProtocolGame::sendToChannel(const Creature* creature, SpeakClasses type, co
 
 	static uint32_t statementId = 0;
 	msg.add<uint32_t>(++statementId);
+
 	if (!creature) {
 		msg.add<uint32_t>(0x00);
-		msg.addByte(0x00); // "(Traded)" suffix after player name
 	} else {
-		msg.addString(creature->getName());
-		msg.addByte(0x00); // "(Traded)" suffix after player name
+		if (creature->isHealthHidden() || type == TALKTYPE_CHANNEL_RA) {
+			msg.addString("");
+		} else if (type == TALKTYPE_RVR_ANSWER) {
+			msg.addString("Gamemaster");
+		} else {
+			msg.addString(creature->getName());
+		}
 
 		// Add level only for players
 		if (const Player* speaker = creature->getPlayer()) {
-			msg.add<uint16_t>(speaker->getLevel());
+			if (speaker->hasFlag(PlayerFlag_CannotShowLevel)) {
+				msg.add<uint16_t>(0x00);
+			} else {
+				msg.add<uint16_t>(speaker->getLevel());
+			}
 		} else {
 			msg.add<uint16_t>(0x00);
 		}

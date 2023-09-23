@@ -1553,7 +1553,7 @@ void ProtocolGame::sendIcons(uint32_t icons)
 	writeToOutputBuffer(msg);
 }
 
-void ProtocolGame::sendContainer(uint8_t cid, const Container* container, bool hasParent, uint16_t firstIndex)
+void ProtocolGame::sendContainer(uint8_t cid, const Container* container, bool hasParent)
 {
 	NetworkMessage msg;
 	msg.addByte(0x6E);
@@ -1566,20 +1566,15 @@ void ProtocolGame::sendContainer(uint8_t cid, const Container* container, bool h
 	msg.addByte(container->capacity());
 	msg.addByte(hasParent ? 0x01 : 0x00);
 
-	uint32_t containerSize = container->size();
-	uint8_t maxContainerSize = std::numeric_limits<uint8_t>::max();
-	msg.addByte(std::min<uint8_t>(container->size(), maxContainerSize));
+	uint8_t containerSize = std::min<uint8_t>(container->size(), std::numeric_limits<uint8_t>::max());
+	msg.add<uint16_t>(containerSize);
 
-	if (firstIndex < containerSize) {
-		uint32_t i = 0;
-		uint8_t itemsToSend =
-		    std::min<uint8_t>(std::min<uint32_t>(container->capacity(), containerSize - firstIndex), maxContainerSize);
-		for (auto it = container->getItemList().begin() + firstIndex, end = it + itemsToSend;
-		     i < maxContainerSize && it != end; ++it, ++i) {
-			msg.addItem(*it);
-		}
+	uint8_t itemsToSend = std::min<uint32_t>(std::min<uint32_t>(container->capacity(), containerSize),
+	                                         std::numeric_limits<uint8_t>::max());
+
+	for (auto it = container->getItemList().begin(), end = it + itemsToSend; it != end; ++it) {
+		msg.addItem(*it);
 	}
-
 	writeToOutputBuffer(msg);
 }
 
@@ -1609,8 +1604,8 @@ void ProtocolGame::sendShop(const ShopInfoList& itemList)
 	NetworkMessage msg;
 	msg.addByte(0x7A);
 
-	uint16_t itemsToSend = std::min<size_t>(itemList.size(), std::numeric_limits<uint16_t>::max());
-	msg.add<uint16_t>(itemsToSend);
+	uint8_t itemsToSend = std::min<uint8_t>(itemList.size(), std::numeric_limits<uint8_t>::max());
+	msg.addByte(itemsToSend);
 
 	uint16_t i = 0;
 	for (auto it = itemList.begin(); i < itemsToSend; ++it, ++i) {
@@ -2279,12 +2274,11 @@ void ProtocolGame::sendInventoryItem(slots_t slot, const Item* item)
 	writeToOutputBuffer(msg);
 }
 
-void ProtocolGame::sendAddContainerItem(uint8_t cid, uint16_t slot, const Item* item)
+void ProtocolGame::sendAddContainerItem(uint8_t cid, const Item* item)
 {
 	NetworkMessage msg;
 	msg.addByte(0x70);
 	msg.addByte(cid);
-	msg.add<uint16_t>(slot);
 	msg.addItem(item);
 	writeToOutputBuffer(msg);
 }
@@ -2294,22 +2288,17 @@ void ProtocolGame::sendUpdateContainerItem(uint8_t cid, uint16_t slot, const Ite
 	NetworkMessage msg;
 	msg.addByte(0x71);
 	msg.addByte(cid);
-	msg.add<uint16_t>(slot);
+	msg.addByte(slot);
 	msg.addItem(item);
 	writeToOutputBuffer(msg);
 }
 
-void ProtocolGame::sendRemoveContainerItem(uint8_t cid, uint16_t slot, const Item* lastItem)
+void ProtocolGame::sendRemoveContainerItem(uint8_t cid, uint16_t slot)
 {
 	NetworkMessage msg;
 	msg.addByte(0x72);
 	msg.addByte(cid);
-	msg.add<uint16_t>(slot);
-	if (lastItem) {
-		msg.addItem(lastItem);
-	} else {
-		msg.add<uint16_t>(0x00);
-	}
+	msg.addByte(slot);
 	writeToOutputBuffer(msg);
 }
 

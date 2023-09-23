@@ -582,11 +582,9 @@ void Player::addContainer(uint8_t cid, Container* container)
 	if (it != openContainers.end()) {
 		OpenContainer& openContainer = it->second;
 		openContainer.container = container;
-		openContainer.index = 0;
 	} else {
 		OpenContainer openContainer;
 		openContainer.container = container;
-		openContainer.index = 0;
 		openContainers[cid] = openContainer;
 	}
 }
@@ -620,15 +618,6 @@ int8_t Player::getContainerID(const Container* container) const
 		}
 	}
 	return -1;
-}
-
-uint16_t Player::getContainerIndex(uint8_t cid) const
-{
-	auto it = openContainers.find(cid);
-	if (it == openContainers.end()) {
-		return 0;
-	}
-	return it->second.index;
 }
 
 bool Player::canOpenCorpse(uint32_t ownerId) const
@@ -919,13 +908,8 @@ void Player::sendAddContainerItem(const Container* container, const Item* item)
 			continue;
 		}
 
-		uint16_t slot = openContainer.index;
-		if (slot >= container->capacity()) {
-			item = container->getItemByIndex(slot);
-		}
-
 		if (item) {
-			client->sendAddContainerItem(it.first, slot, item);
+			client->sendAddContainerItem(it.first, item);
 		}
 	}
 }
@@ -942,12 +926,7 @@ void Player::sendUpdateContainerItem(const Container* container, uint16_t slot, 
 			continue;
 		}
 
-		if (slot < openContainer.index) {
-			continue;
-		}
-
-		uint16_t pageEnd = openContainer.index + container->capacity();
-		if (slot >= pageEnd) {
+		if (slot >= container->capacity()) {
 			continue;
 		}
 
@@ -967,14 +946,7 @@ void Player::sendRemoveContainerItem(const Container* container, uint16_t slot)
 			continue;
 		}
 
-		uint16_t& firstIndex = openContainer.index;
-		if (firstIndex > 0 && firstIndex >= container->size() - 1) {
-			firstIndex -= container->capacity();
-			sendContainer(it.first, container, false, firstIndex);
-		}
-
-		client->sendRemoveContainerItem(it.first, std::max<uint16_t>(slot, firstIndex),
-		                                container->getItemByIndex(container->capacity() + firstIndex));
+		client->sendRemoveContainerItem(it.first, std::max<uint16_t>(slot, std::numeric_limits<uint16_t>::min()));
 	}
 }
 
@@ -1331,7 +1303,7 @@ void Player::onSendContainer(const Container* container)
 	for (const auto& it : openContainers) {
 		const OpenContainer& openContainer = it.second;
 		if (openContainer.container == container) {
-			client->sendContainer(it.first, container, hasParent, openContainer.index);
+			client->sendContainer(it.first, container, hasParent);
 		}
 	}
 }
@@ -3995,10 +3967,7 @@ bool Player::isPremium() const
 	return premiumEndsAt > time(nullptr);
 }
 
-void Player::setPremiumTime(time_t premiumEndsAt)
-{
-	this->premiumEndsAt = premiumEndsAt;
-}
+void Player::setPremiumTime(time_t premiumEndsAt) { this->premiumEndsAt = premiumEndsAt; }
 
 PartyShields_t Player::getPartyShield(const Player* player) const
 {

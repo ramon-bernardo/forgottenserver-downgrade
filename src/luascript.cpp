@@ -2507,7 +2507,6 @@ void LuaScriptInterface::registerFunctions()
 
 	registerMethod("Player", "getContainerId", LuaScriptInterface::luaPlayerGetContainerId);
 	registerMethod("Player", "getContainerById", LuaScriptInterface::luaPlayerGetContainerById);
-	registerMethod("Player", "getContainerIndex", LuaScriptInterface::luaPlayerGetContainerIndex);
 
 	registerMethod("Player", "getInstantSpells", LuaScriptInterface::luaPlayerGetInstantSpells);
 	registerMethod("Player", "canCast", LuaScriptInterface::luaPlayerCanCast);
@@ -9881,18 +9880,6 @@ int LuaScriptInterface::luaPlayerGetContainerById(lua_State* L)
 	if (container) {
 		pushUserdata<Container>(L, container);
 		setMetatable(L, -1, "Container");
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaPlayerGetContainerIndex(lua_State* L)
-{
-	// player:getContainerIndex(id)
-	Player* player = getUserdata<Player>(L, 1);
-	if (player) {
-		lua_pushnumber(L, player->getContainerIndex(getNumber<uint8_t>(L, 2)));
 	} else {
 		lua_pushnil(L);
 	}

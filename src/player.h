@@ -63,7 +63,6 @@ struct VIPEntry
 struct OpenContainer
 {
 	Container* container;
-	uint16_t index;
 };
 
 struct OutfitEntry
@@ -217,7 +216,6 @@ public:
 
 	Container* getContainerByID(uint8_t cid);
 	int8_t getContainerID(const Container* container) const;
-	uint16_t getContainerIndex(uint8_t cid) const;
 
 	bool canOpenCorpse(uint32_t ownerId) const;
 
@@ -651,10 +649,10 @@ public:
 	void sendAddContainerItem(const Container* container, const Item* item);
 	void sendUpdateContainerItem(const Container* container, uint16_t slot, const Item* newItem);
 	void sendRemoveContainerItem(const Container* container, uint16_t slot);
-	void sendContainer(uint8_t cid, const Container* container, bool hasParent, uint16_t firstIndex)
+	void sendContainer(uint8_t cid, const Container* container, bool hasParent)
 	{
 		if (client) {
-			client->sendContainer(cid, container, hasParent, firstIndex);
+			client->sendContainer(cid, container, hasParent);
 		}
 	}
 

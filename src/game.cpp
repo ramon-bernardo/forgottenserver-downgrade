@@ -3206,16 +3206,22 @@ void Game::playerSay(uint32_t playerId, uint16_t channelId, SpeakClasses type, c
 			playerYell(player, text);
 			break;
 
-		case TALKTYPE_PRIVATE_TO:
-		case TALKTYPE_PRIVATE_RED_TO:
+		case TALKTYPE_PRIVATE:
+		case TALKTYPE_PRIVATE_RED:
+		case TALKTYPE_RVR_ANSWER:
 			playerSpeakTo(player, type, receiver, text);
 			break;
 
 		case TALKTYPE_CHANNEL_O:
 		case TALKTYPE_CHANNEL_Y:
-		case TALKTYPE_CHANNEL_R1:
+		case TALKTYPE_CHANNEL_RN:
+		case TALKTYPE_CHANNEL_RA:
+		case TALKTYPE_CHANNEL_W:
 			g_chat->talkToChannel(*player, type, text, channelId);
 			break;
+
+		// case TALKTYPE_RVR_CHANNEL: playerReportRuleViolation(...)
+		// case SPEAK_RVR_CONTINUE: playerContinueReport(...)
 
 		case TALKTYPE_BROADCAST:
 			playerBroadcastMessage(player, text);
@@ -3238,7 +3244,7 @@ bool Game::playerSaySpell(Player* player, SpeakClasses type, const std::string& 
 	result = g_spells->playerSaySpell(player, words);
 	if (result == TALKACTION_BREAK) {
 		if (!g_config.getBoolean(ConfigManager::EMOTE_SPELLS)) {
-			return internalCreatureSay(player, TALKTYPE_SPELL, words, false);
+			return internalCreatureSay(player, TALKTYPE_SAY, words, false);
 		}
 		return internalCreatureSay(player, TALKTYPE_MONSTER_SAY, words, false);
 	} else if (result == TALKACTION_FAILED) {
@@ -3313,11 +3319,11 @@ bool Game::playerSpeakTo(Player* player, SpeakClasses type, const std::string& r
 		return false;
 	}
 
-	if (type == TALKTYPE_PRIVATE_RED_TO &&
+	if (type == TALKTYPE_PRIVATE_RED &&
 	    (player->hasFlag(PlayerFlag_CanTalkRedPrivate) || player->getAccountType() >= ACCOUNT_TYPE_GAMEMASTER)) {
-		type = TALKTYPE_PRIVATE_RED_FROM;
+		type = TALKTYPE_PRIVATE_RED;
 	} else {
-		type = TALKTYPE_PRIVATE_FROM;
+		type = TALKTYPE_PRIVATE;
 	}
 
 	if (!player->isAccessPlayer() && !player->hasFlag(PlayerFlag_IgnoreSendPrivateCheck)) {
@@ -4826,7 +4832,7 @@ void Game::sendGuildMotd(uint32_t playerId)
 
 	Guild* guild = player->getGuild();
 	if (guild) {
-		player->sendChannelMessage("Message of the Day", guild->getMotd(), TALKTYPE_CHANNEL_R1, CHANNEL_GUILD);
+		player->sendChannelMessage("Message of the Day", guild->getMotd(), TALKTYPE_CHANNEL_RN, CHANNEL_GUILD);
 	}
 }
 

@@ -1715,21 +1715,21 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(TALKTYPE_SAY);
 	registerEnum(TALKTYPE_WHISPER);
 	registerEnum(TALKTYPE_YELL);
-	registerEnum(TALKTYPE_PRIVATE_FROM);
-	registerEnum(TALKTYPE_PRIVATE_TO);
-	registerEnum(TALKTYPE_CHANNEL_Y);
-	registerEnum(TALKTYPE_CHANNEL_O);
-	registerEnum(TALKTYPE_SPELL);
-	registerEnum(TALKTYPE_PRIVATE_NP);
-	registerEnum(TALKTYPE_PRIVATE_NP_CONSOLE);
 	registerEnum(TALKTYPE_PRIVATE_PN);
+	registerEnum(TALKTYPE_PRIVATE_NP);
+	registerEnum(TALKTYPE_PRIVATE);
+	registerEnum(TALKTYPE_CHANNEL_Y);
+	registerEnum(TALKTYPE_CHANNEL_W);
+	registerEnum(TALKTYPE_RVR_CHANNEL);
+	registerEnum(TALKTYPE_RVR_ANSWER);
+	registerEnum(TALKTYPE_RVR_CONTINUE);
 	registerEnum(TALKTYPE_BROADCAST);
-	registerEnum(TALKTYPE_CHANNEL_R1);
-	registerEnum(TALKTYPE_PRIVATE_RED_FROM);
-	registerEnum(TALKTYPE_PRIVATE_RED_TO);
+	registerEnum(TALKTYPE_CHANNEL_RN);
+	registerEnum(TALKTYPE_PRIVATE_RED);
+	registerEnum(TALKTYPE_CHANNEL_O);
+	registerEnum(TALKTYPE_CHANNEL_RA);
 	registerEnum(TALKTYPE_MONSTER_SAY);
 	registerEnum(TALKTYPE_MONSTER_YELL);
-	registerEnum(TALKTYPE_POTION);
 
 	registerEnum(TEXTCOLOR_BLUE);
 	registerEnum(TEXTCOLOR_LIGHTGREEN);
@@ -9307,7 +9307,7 @@ int LuaScriptInterface::luaPlayerSendPrivateMessage(lua_State* L)
 
 	const Player* speaker = getUserdata<const Player>(L, 2);
 	const std::string& text = getString(L, 3);
-	SpeakClasses type = getNumber<SpeakClasses>(L, 4, TALKTYPE_PRIVATE_FROM);
+	SpeakClasses type = getNumber<SpeakClasses>(L, 4, TALKTYPE_PRIVATE);
 	player->sendPrivateMessage(speaker, type, text);
 	pushBoolean(L, true);
 	return 1;

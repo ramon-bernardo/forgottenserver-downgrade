@@ -1566,10 +1566,10 @@ void ProtocolGame::sendContainer(uint8_t cid, const Container* container, bool h
 	msg.addByte(container->capacity());
 	msg.addByte(hasParent ? 0x01 : 0x00);
 
-	uint8_t containerSize = std::min<uint8_t>(container->size(), std::numeric_limits<uint8_t>::max());
+	uint8_t containerSize = std::min<size_t>(container->size(), std::numeric_limits<uint8_t>::max());
 	msg.add<uint16_t>(containerSize);
 
-	uint8_t itemsToSend = std::min<uint8_t>(std::min<uint32_t>(container->capacity(), containerSize),
+	uint8_t itemsToSend = std::min<uint32_t>(std::min<uint32_t>(container->capacity(), containerSize),
 	                                        std::numeric_limits<uint8_t>::max());
 
 	for (auto it = container->getItemList().begin(), end = it + itemsToSend; it != end; ++it) {
@@ -1604,7 +1604,7 @@ void ProtocolGame::sendShop(const ShopInfoList& itemList)
 	NetworkMessage msg;
 	msg.addByte(0x7A);
 
-	uint8_t itemsToSend = std::min<uint8_t>(itemList.size(), std::numeric_limits<uint8_t>::max());
+	uint8_t itemsToSend = std::min<size_t>(itemList.size(), std::numeric_limits<uint8_t>::max());
 	msg.addByte(itemsToSend);
 
 	uint16_t i = 0;
@@ -1626,12 +1626,10 @@ void ProtocolGame::sendSaleItemList(const std::list<ShopInfo>& shop)
 {
 	uint64_t playerBank = player->getBankBalance();
 	uint64_t playerMoney = player->getMoney();
-	sendResourceBalance(RESOURCE_BANK_BALANCE, playerBank);
-	sendResourceBalance(RESOURCE_GOLD_EQUIPPED, playerMoney);
 
 	NetworkMessage msg;
 	msg.addByte(0x7B);
-	msg.add<uint64_t>(playerBank + playerMoney); // deprecated and ignored by QT client. OTClient still uses it.
+	msg.add<uint32_t>(std::min<uint64_t>((playerBank + playerMoney), std::numeric_limits<uint32_t>::max())); // deprecated and ignored by QT client. OTClient still uses it.
 
 	std::map<uint16_t, uint32_t> saleMap;
 
@@ -1704,15 +1702,6 @@ void ProtocolGame::sendSaleItemList(const std::list<ShopInfo>& shop)
 		msg.addByte(std::min<uint32_t>(it->second, std::numeric_limits<uint8_t>::max()));
 	}
 
-	writeToOutputBuffer(msg);
-}
-
-void ProtocolGame::sendResourceBalance(const ResourceTypes_t resourceType, uint64_t amount)
-{
-	NetworkMessage msg;
-	msg.addByte(0xEE);
-	msg.addByte(resourceType);
-	msg.add<uint64_t>(amount);
 	writeToOutputBuffer(msg);
 }
 

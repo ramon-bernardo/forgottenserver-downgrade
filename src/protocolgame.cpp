@@ -1569,8 +1569,8 @@ void ProtocolGame::sendContainer(uint8_t cid, const Container* container, bool h
 	uint8_t containerSize = std::min<uint8_t>(container->size(), std::numeric_limits<uint8_t>::max());
 	msg.add<uint16_t>(containerSize);
 
-	uint8_t itemsToSend = std::min<uint32_t>(std::min<uint32_t>(container->capacity(), containerSize),
-	                                         std::numeric_limits<uint8_t>::max());
+	uint8_t itemsToSend = std::min<uint8_t>(std::min<uint32_t>(container->capacity(), containerSize),
+	                                        std::numeric_limits<uint8_t>::max());
 
 	for (auto it = container->getItemList().begin(), end = it + itemsToSend; it != end; ++it) {
 		msg.addItem(*it);

@@ -1868,11 +1868,13 @@ void ProtocolGame::sendPrivateMessage(const Player* speaker, SpeakClasses type, 
 	msg.add<uint32_t>(++statementId);
 	if (speaker) {
 		msg.addString(speaker->getName());
-		msg.addByte(0x00); // "(Traded)" suffix after player name
-		msg.add<uint16_t>(speaker->getLevel());
+		if (speaker->hasFlag(PlayerFlag_CannotShowLevel)) {
+			msg.add<uint16_t>(0x00);
+		} else {
+			msg.add<uint16_t>(speaker->getLevel());
+		}
 	} else {
 		msg.add<uint32_t>(0x00);
-		msg.addByte(0x00); // "(Traded)" suffix after player name
 	}
 	msg.addByte(type);
 	msg.addString(text);

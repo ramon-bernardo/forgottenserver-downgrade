@@ -182,7 +182,6 @@ private:
 
 	void sendItemClasses();
 
-	void sendPendingStateEntered();
 	void sendEnterWorld();
 
 	void sendFightModes();

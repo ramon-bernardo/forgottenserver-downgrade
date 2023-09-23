@@ -2091,13 +2091,6 @@ void ProtocolGame::sendUpdateTile(const Tile* tile, const Position& pos)
 	writeToOutputBuffer(msg);
 }
 
-void ProtocolGame::sendPendingStateEntered()
-{
-	NetworkMessage msg;
-	msg.addByte(0x0A);
-	writeToOutputBuffer(msg);
-}
-
 void ProtocolGame::sendEnterWorld()
 {
 	NetworkMessage msg;
@@ -2160,7 +2153,6 @@ void ProtocolGame::sendAddCreature(const Creature* creature, const Position& pos
 	player->sendIcons(); // active conditions
 
 	// enter world and send game screen
-	sendPendingStateEntered();
 	sendEnterWorld();
 	sendMapDescription(pos);
 

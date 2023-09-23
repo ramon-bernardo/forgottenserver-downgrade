@@ -1295,11 +1295,11 @@ void ProtocolGame::parseViolationWindow(NetworkMessage& msg)
 	uint16_t statementId = msg.get<uint16_t>();
 	bool ipBanishment = (msg.getByte() == 0x01);
 
-	g_dispatcher.addTask(
-	    [=, playerID = player->getID(), targetName = std::string{targetName}, comment = std::string{comment}, statement = std::string{statement}, ]() {
-		    g_game.playerViolationWindow(playerID, targetName, reason, action, comment, statement, statementId,
-		                                 ipBanishment);
-	    });
+	g_dispatcher.addTask([=, playerID = player->getID(), targetName = std::string{targetName},
+	                      comment = std::string{comment}, statement = std::string{statement}]() {
+		g_game.playerViolationWindow(playerID, targetName, reason, action, comment, statement, statementId,
+		                             ipBanishment);
+	});
 }
 
 void ProtocolGame::parseDebugAssert(NetworkMessage& msg)

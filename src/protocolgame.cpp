@@ -1802,7 +1802,11 @@ void ProtocolGame::sendCreatureSay(const Creature* creature, SpeakClasses type, 
 
 	// Add level only for players
 	if (const Player* speaker = creature->getPlayer()) {
-		msg.add<uint16_t>(speaker->getLevel());
+		if (player->hasFlag(PlayerFlag_CannotShowLevel)) {
+			msg.add<uint16_t>(0x00);
+		} else {
+			msg.add<uint16_t>(speaker->getLevel());
+		}
 	} else {
 		msg.add<uint16_t>(0x00);
 	}

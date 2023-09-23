@@ -349,7 +349,9 @@ void ProtocolGame::onRecvFirstMessage(NetworkMessage& msg)
 		}
 	}
 
-	msg.skipBytes(3); // U16 dat revision, U8 preview state
+	if (version >= 1270) {
+		msg.skipBytes(3); // U16 dat revision, U8 preview state
+	}
 
 	// Disconnect if RSA decrypt fails
 	if (!Protocol::RSA_decrypt(msg)) {
@@ -388,26 +390,20 @@ void ProtocolGame::onRecvFirstMessage(NetworkMessage& msg)
 
 	msg.skipBytes(1); // Gamemaster flag
 
-	// acc name, password, token, timestamp divided by 30
-	auto sessionArgs = explodeString(msg.getString(), "\n", 4);
-	if (sessionArgs.size() < 2) {
-		disconnectClient("Malformed session key.");
-		return;
-	}
-
 	if (operatingSystem == CLIENTOS_QT_LINUX) {
 		msg.getString(); // OS name (?)
 		msg.getString(); // OS version (?)
 	}
 
-	auto accountName = sessionArgs[0];
-	auto password = sessionArgs[1];
+	auto accountName = msg.getString();
 	if (accountName.empty()) {
 		disconnectClient("You must enter your account name.");
 		return;
 	}
 
 	auto characterName = msg.getString();
+	auto password = msg.getString();
+
 	uint32_t timeStamp = msg.get<uint32_t>();
 	uint8_t randNumber = msg.getByte();
 	if (challengeTimestamp != timeStamp || challengeRandom != randNumber) {

@@ -220,11 +220,6 @@ ReturnValue Container::queryAdd(int32_t index, const Thing& thing, uint32_t coun
 		return RETURNVALUE_THISISIMPOSSIBLE;
 	}
 
-	// quiver: allow ammo only
-	if (getWeaponType() == WEAPON_QUIVER && item->getWeaponType() != WEAPON_AMMO) {
-		return RETURNVALUE_QUIVERAMMOONLY;
-	}
-
 	const Cylinder* cylinder = getParent();
 
 	if (!hasBitSet(FLAG_NOLIMIT, flags)) {

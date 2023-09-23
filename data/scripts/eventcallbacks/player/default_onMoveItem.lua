@@ -9,7 +9,7 @@ ec.onMoveItem = function(self, item, count, fromPosition, toPosition, fromCylind
 		local itemType, moveItem = ItemType(item:getId())
 		if bit.band(itemType:getSlotPosition(), SLOTP_TWO_HAND) ~= 0 and toPosition.y == CONST_SLOT_LEFT then
 			local rightItem = self:getSlotItem(CONST_SLOT_RIGHT)
-			if rightItem and not(itemType:isBow() and rightItem:getType():getWeaponType() == WEAPON_QUIVER) then
+			if rightItem and not(itemType:isBow() then
 				moveItem = self:getSlotItem(CONST_SLOT_RIGHT)
 			end
 		elseif itemType:getWeaponType() == WEAPON_SHIELD and toPosition.y == CONST_SLOT_RIGHT then

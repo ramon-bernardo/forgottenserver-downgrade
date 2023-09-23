@@ -2112,6 +2112,18 @@ void Player::addInFightTicks(bool pzlock /*= false*/)
 	addCondition(condition);
 }
 
+void Player::sendFYIBox(const std::string& message)
+{
+	if (message.empty() || message.length() > 1018) {
+		std::cout << "[Error - Player::sendFYIBox] Trying to send an empty or too huge message." << std::endl;
+		return;
+	}
+
+	if (client) {
+		client->sendFYIBox(message);
+	}
+}
+
 void Player::removeList()
 {
 	g_game.removePlayer(this);

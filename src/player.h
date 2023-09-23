@@ -115,12 +115,7 @@ public:
 
 	CreatureType_t getType() const override { return CREATURETYPE_PLAYER; }
 
-	void sendFYIBox(const std::string& message)
-	{
-		if (client) {
-			client->sendFYIBox(message);
-		}
-	}
+	void sendFYIBox(const std::string& message);
 
 	void setGUID(uint32_t guid) { this->guid = guid; }
 	uint32_t getGUID() const { return guid; }

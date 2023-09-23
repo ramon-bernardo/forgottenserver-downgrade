@@ -1001,8 +1001,6 @@ void ProtocolGame::parseAutoWalk(NetworkMessage& msg)
 
 void ProtocolGame::parseSetOutfit(NetworkMessage& msg)
 {
-	uint8_t outfitType = msg.getByte();
-
 	Outfit_t newOutfit;
 	newOutfit.lookType = msg.get<uint16_t>();
 	newOutfit.lookHead = msg.getByte();
@@ -1012,12 +1010,7 @@ void ProtocolGame::parseSetOutfit(NetworkMessage& msg)
 	newOutfit.lookAddons = msg.getByte();
 
 	// Set outfit window
-	if (outfitType == 0) {
-		msg.get<uint16_t>(); // familiar looktype
-		bool randomizeMount = msg.getByte() == 0x01;
-		g_dispatcher.addTask(
-		    [=, playerID = player->getID()]() { g_game.playerChangeOutfit(playerID, newOutfit, randomizeMount); });
-	}
+	g_dispatcher.addTask([=, playerID = player->getID()]() { g_game.playerChangeOutfit(playerID, newOutfit); });
 }
 
 void ProtocolGame::parseUseItem(NetworkMessage& msg)

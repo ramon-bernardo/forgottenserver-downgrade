@@ -640,12 +640,6 @@ public:
 			client->sendSpellGroupCooldown(groupId, time);
 		}
 	}
-	void sendUseItemCooldown(uint32_t time)
-	{
-		if (client) {
-			client->sendUseItemCooldown(time);
-		}
-	}
 	void sendSupplyUsed(const uint16_t clientId) const
 	{
 		if (client) {

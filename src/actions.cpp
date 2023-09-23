@@ -405,7 +405,7 @@ bool Actions::useItem(Player* player, const Position& pos, uint8_t index, Item* 
 {
 	int32_t cooldown = g_config.getNumber(ConfigManager::ACTIONS_DELAY_INTERVAL);
 	player->setNextAction(OTSYS_TIME() + cooldown);
-	player->sendUseItemCooldown(cooldown);
+
 	if (item->isSupply()) {
 		player->sendSupplyUsed(item->getClientID());
 	}
@@ -444,7 +444,6 @@ bool Actions::useItemEx(Player* player, const Position& fromPos, const Position&
 {
 	int32_t cooldown = g_config.getNumber(ConfigManager::EX_ACTIONS_DELAY_INTERVAL);
 	player->setNextAction(OTSYS_TIME() + cooldown);
-	player->sendUseItemCooldown(cooldown);
 
 	Action* action = getAction(item);
 	if (!action) {

@@ -835,11 +835,11 @@ bool Events::eventPlayerOnReportBug(Player* player, const std::string& message)
 	return scriptInterface.callFunction(2);
 }
 
-bool Events::eventPlayerOnViolationWindow(Player* player, const std::string& name, uint8_t reason,
+bool Events::eventPlayerOnViolationWindow(Player* player, const std::string& targetName, uint8_t reason,
                                           ViolationAction_t action, const std::string& comment,
                                           const std::string& statement, uint16_t statementId, bool ipBanishment)
 {
-	// Player:onViolationWindow(name, reason, action, comment, statement, statementId, ipBanishment)
+	// Player:onViolationWindow(targetName, reason, action, comment, statement, statementId, ipBanishment)
 	if (info.playerOnViolationWindow == -1) {
 		return true;
 	}
@@ -858,7 +858,7 @@ bool Events::eventPlayerOnViolationWindow(Player* player, const std::string& nam
 	LuaScriptInterface::pushUserdata<Player>(L, player);
 	LuaScriptInterface::setMetatable(L, -1, "Player");
 
-	LuaScriptInterface::pushString(L, name);
+	LuaScriptInterface::pushString(L, targetName);
 
 	lua_pushnumber(L, reason);
 	lua_pushnumber(L, action);

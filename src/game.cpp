@@ -4861,16 +4861,17 @@ void Game::playerReportBug(uint32_t playerId, const std::string& message)
 	g_events->eventPlayerOnReportBug(player, message);
 }
 
-void Game::playerViolationWindow(uint32_t playerId, const std::string& name, uint8_t reason, ViolationAction_t action,
-                                 const std::string& comment, const std::string& statement, uint16_t statementId,
-                                 bool ipBanishment)
+void Game::playerViolationWindow(uint32_t playerId, const std::string& targetName, uint8_t reason,
+                                 ViolationAction_t action, const std::string& comment, const std::string& statement,
+                                 uint16_t statementId, bool ipBanishment)
 {
 	Player* player = getPlayerByID(playerId);
 	if (!player) {
 		return;
 	}
 
-	g_events->eventPlayerOnViolationWindow(player, name, reason, action, comment, statement, statementId, ipBanishment);
+	g_events->eventPlayerOnViolationWindow(player, targetName, reason, action, comment, statement, statementId,
+	                                       ipBanishment);
 }
 
 void Game::playerDebugAssert(uint32_t playerId, const std::string& assertLine, const std::string& date,

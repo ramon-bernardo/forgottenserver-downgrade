@@ -102,9 +102,9 @@ public:
 	                                      uint8_t reportReason, const std::string& comment,
 	                                      const std::string& translation);
 	bool eventPlayerOnReportBug(Player* player, const std::string& message);
-	bool eventPlayerOnViolationWindow(Player* player, const std::string& name, uint8_t reason, ViolationAction_t action,
-	                                  const std::string& comment, const std::string& statement, uint16_t statementId,
-	                                  bool ipBanishment);
+	bool eventPlayerOnViolationWindow(Player* player, const std::string& targetName, uint8_t reason,
+	                                  ViolationAction_t action, const std::string& comment,
+	                                  const std::string& statement, uint16_t statementId, bool ipBanishment);
 	bool eventPlayerOnTurn(Player* player, Direction direction);
 	bool eventPlayerOnTradeRequest(Player* player, Player* target, Item* item);
 	bool eventPlayerOnTradeAccept(Player* player, Player* target, Item* item, Item* targetItem);

@@ -1285,7 +1285,7 @@ void ProtocolGame::parseBugReport(NetworkMessage& msg)
 
 void ProtocolGame::parseViolationWindow(NetworkMessage& msg)
 {
-	auto target = msg.getString();
+	auto targetName = msg.getString();
 	uint8_t reason = msg.getByte();
 
 	ViolationAction_t action = static_cast<ViolationAction_t>(msg.getByte());
@@ -1295,8 +1295,8 @@ void ProtocolGame::parseViolationWindow(NetworkMessage& msg)
 	bool ipBanishment = (msg.getByte() == 0x01);
 
 	g_dispatcher.addTask(
-	    [=, playerID = player->getID(), target = std::string{target}, comment = std::string{comment}, statement = std::string{statement}, ]() {
-		    g_game.playerViolationWindow(playerID, target, reason, action, comment, statement, statementId,
+	    [=, playerID = player->getID(), targetName = std::string{targetName}, comment = std::string{comment}, statement = std::string{statement}, ]() {
+		    g_game.playerViolationWindow(playerID, targetName, reason, action, comment, statement, statementId,
 		                                 ipBanishment);
 	    });
 }

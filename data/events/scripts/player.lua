@@ -69,10 +69,10 @@ function Player:onMoveCreature(creature, fromPosition, toPosition)
 	return true
 end
 
-function Player:onViolationWindow(name, reason, action, comment, statement, statementId, ipBanishment)
+function Player:onViolationWindow(targetName, reason, action, comment, statement, statementId, ipBanishment)
 	local onViolationWindow = EventCallback.onViolationWindow
 	if onViolationWindow then
-		onViolationWindow(self, name, reason, action, comment, statement, statementId, ipBanishment)
+		onViolationWindow(self, targetName, reason, action, comment, statement, statementId, ipBanishment)
 	end
 end
 

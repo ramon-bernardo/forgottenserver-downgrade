@@ -2664,37 +2664,19 @@ void ProtocolGame::AddPlayerStats(NetworkMessage& msg)
 	msg.add<uint16_t>(std::min<int32_t>(player->getMaxHealth(), std::numeric_limits<uint16_t>::max()));
 
 	msg.add<uint32_t>(player->hasFlag(PlayerFlag_HasInfiniteCapacity) ? 1000000 : player->getFreeCapacity());
-	msg.add<uint64_t>(player->getExperience());
+	msg.add<uint32_t>(std::min<uint32_t>(player->getExperience(), std::numeric_limits<int32_t>::max()));
 
 	msg.add<uint16_t>(player->getLevel());
 	msg.addByte(player->getLevelPercent());
 
-	msg.add<uint16_t>(player->getClientExpDisplay());
-	msg.add<uint16_t>(player->getClientLowLevelBonusDisplay());
-	msg.add<uint16_t>(0); // store exp bonus
-	msg.add<uint16_t>(player->getClientStaminaBonusDisplay());
-
 	msg.add<uint16_t>(std::min<int32_t>(player->getMana(), std::numeric_limits<uint16_t>::max()));
 	msg.add<uint16_t>(std::min<int32_t>(player->getMaxMana(), std::numeric_limits<uint16_t>::max()));
+		
+	msg.addByte(std::min<uint32_t>(player->getMagicLevel(), std::numeric_limits<uint8_t>::max()));
+	msg.addByte(player->getMagicLevelPercent());
 
 	msg.addByte(player->getSoul());
 	msg.add<uint16_t>(player->getStaminaMinutes());
-	msg.add<uint16_t>(player->getBaseSpeed() / 2);
-
-	Condition* condition = player->getCondition(CONDITION_REGENERATION, CONDITIONID_DEFAULT);
-	msg.add<uint16_t>(condition ? condition->getTicks() / 1000 : 0x00);
-
-	msg.add<uint16_t>(0); // xp boost time (seconds)
-	msg.addByte(0x00);    // enables exp boost in the store
-
-	if (ConditionManaShield* conditionManaShield =
-	        dynamic_cast<ConditionManaShield*>(player->getCondition(CONDITION_MANASHIELD_BREAKABLE))) {
-		msg.add<uint16_t>(conditionManaShield->getManaShield());    // remaining mana shield
-		msg.add<uint16_t>(conditionManaShield->getMaxManaShield()); // total mana shield
-	} else {
-		msg.add<uint16_t>(0); // remaining mana shield
-		msg.add<uint16_t>(0); // total mana shield
-	}
 }
 
 void ProtocolGame::AddPlayerSkills(NetworkMessage& msg)

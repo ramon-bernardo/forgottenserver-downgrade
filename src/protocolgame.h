@@ -182,8 +182,6 @@ private:
 
 	void sendItemClasses();
 
-	void sendEnterWorld();
-
 	void sendFightModes();
 
 	void sendCreatureLight(const Creature* creature);

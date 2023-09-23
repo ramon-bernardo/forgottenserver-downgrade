@@ -2091,13 +2091,6 @@ void ProtocolGame::sendUpdateTile(const Tile* tile, const Position& pos)
 	writeToOutputBuffer(msg);
 }
 
-void ProtocolGame::sendEnterWorld()
-{
-	NetworkMessage msg;
-	msg.addByte(0x0F);
-	writeToOutputBuffer(msg);
-}
-
 void ProtocolGame::sendFightModes()
 {
 	NetworkMessage msg;
@@ -2153,7 +2146,6 @@ void ProtocolGame::sendAddCreature(const Creature* creature, const Position& pos
 	player->sendIcons(); // active conditions
 
 	// enter world and send game screen
-	sendEnterWorld();
 	sendMapDescription(pos);
 
 	// send login effect

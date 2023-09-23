@@ -1624,7 +1624,6 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(PlayerFlag_IsAlwaysPremium);
 	registerEnum(PlayerFlag_IgnoreYellCheck);
 	registerEnum(PlayerFlag_IgnoreSendPrivateCheck);
-	registerEnum(PlayerFlag_CannotShowLevel);
 
 	registerEnum(PLAYERSEX_FEMALE);
 	registerEnum(PLAYERSEX_MALE);
@@ -2533,6 +2532,9 @@ void LuaScriptInterface::registerFunctions()
 	               LuaScriptInterface::luaPlayerGetClientLowLevelBonusDisplay);
 	registerMethod("Player", "setClientLowLevelBonusDisplay",
 	               LuaScriptInterface::luaPlayerSetClientLowLevelBonusDisplay);
+
+	registerMethod("Player", "isHiddenLevel", LuaScriptInterface::luaPlayerIsHiddenLevel);
+	registerMethod("Player", "setHiddenLevel", LuaScriptInterface::luaPlayerSetHiddenLevel);
 
 	// Monster
 	registerClass("Monster", "Creature", LuaScriptInterface::luaMonsterCreate);
@@ -10094,6 +10096,31 @@ int LuaScriptInterface::luaPlayerSetClientLowLevelBonusDisplay(lua_State* L)
 	if (player) {
 		player->setClientLowLevelBonusDisplay(getNumber<uint16_t>(L, 2));
 		player->sendStats();
+		pushBoolean(L, true);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPlayerIsHiddenLevel(lua_State* L)
+{
+	// player:isHiddenLevel()
+	Player* player = getUserdata<Player>(L, 1);
+	if (player) {
+		lua_pushnumber(L, player->isHealthHidden());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPlayerSetHiddenLevel(lua_State* L)
+{
+	// player:setHiddenLevel(hide)
+	Player* player = getUserdata<Player>(L, 1);
+	if (player) {
+		player->setHiddenLevel(getBoolean(L, 2));
 		pushBoolean(L, true);
 	} else {
 		lua_pushnil(L);

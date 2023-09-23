@@ -1802,7 +1802,7 @@ void ProtocolGame::sendCreatureSay(const Creature* creature, SpeakClasses type, 
 
 	// Add level only for players
 	if (const Player* speaker = creature->getPlayer()) {
-		if (speaker->hasFlag(PlayerFlag_CannotShowLevel)) {
+		if (speaker->isLevelHidden()) {
 			msg.add<uint16_t>(0x00);
 		} else {
 			msg.add<uint16_t>(speaker->getLevel());
@@ -1844,7 +1844,7 @@ void ProtocolGame::sendToChannel(const Creature* creature, SpeakClasses type, co
 
 		// Add level only for players
 		if (const Player* speaker = creature->getPlayer()) {
-			if (speaker->hasFlag(PlayerFlag_CannotShowLevel)) {
+			if (speaker->isLevelHidden()) {
 				msg.add<uint16_t>(0x00);
 			} else {
 				msg.add<uint16_t>(speaker->getLevel());
@@ -1868,7 +1868,7 @@ void ProtocolGame::sendPrivateMessage(const Player* speaker, SpeakClasses type, 
 	msg.add<uint32_t>(++statementId);
 	if (speaker) {
 		msg.addString(speaker->getName());
-		if (speaker->hasFlag(PlayerFlag_CannotShowLevel)) {
+		if (speaker->isLevelHidden()) {
 			msg.add<uint16_t>(0x00);
 		} else {
 			msg.add<uint16_t>(speaker->getLevel());

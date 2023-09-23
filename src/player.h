@@ -380,6 +380,9 @@ public:
 	void setFightMode(fightMode_t mode) { fightMode = mode; }
 	void setSecureMode(bool mode) { secureMode = mode; }
 
+	bool isLevelHidden() const { return hiddenLevel; }
+	void setHiddenLevel(bool b) { hiddenLevel = b; }
+
 	// combat functions
 	bool setAttackedCreature(Creature* creature) override;
 	bool isImmune(CombatType_t type) const override;
@@ -1090,6 +1093,7 @@ private:
 	fightMode_t fightMode = FIGHTMODE_ATTACK;
 	AccountType_t accountType = ACCOUNT_TYPE_NORMAL;
 
+	bool hiddenLevel = false;
 	bool chaseMode = false;
 	bool secureMode = false;
 	bool ghostMode = false;

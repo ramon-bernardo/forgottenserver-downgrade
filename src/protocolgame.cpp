@@ -1916,7 +1916,7 @@ void ProtocolGame::sendSkills()
 void ProtocolGame::sendPing()
 {
 	NetworkMessage msg;
-	msg.addByte(0x1D);
+	msg.addByte(0x1E);
 	writeToOutputBuffer(msg);
 }
 

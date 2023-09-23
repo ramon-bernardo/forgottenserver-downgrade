@@ -84,6 +84,7 @@ private:
 	void parseFollow(NetworkMessage& msg);
 
 	void parseBugReport(NetworkMessage& msg);
+	void parseViolationWindow(NetworkMessage& msg);
 	void parseDebugAssert(NetworkMessage& msg);
 	void parseRuleViolationReport(NetworkMessage& msg);
 

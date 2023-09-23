@@ -47,6 +47,7 @@ ec.onMoveItem = {returnValue=true}
 ec.onItemMoved = {}
 ec.onMoveCreature = {}
 ec.onReportRuleViolation = {}
+ec.onViolationWindow = {}
 ec.onReportBug = {}
 ec.onTurn = {}
 ec.onGainExperience = {[3] = 1}

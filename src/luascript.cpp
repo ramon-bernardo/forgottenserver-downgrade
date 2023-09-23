@@ -1628,6 +1628,19 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(PLAYERSEX_FEMALE);
 	registerEnum(PLAYERSEX_MALE);
 
+	registerEnum(ACTION_NOTATION);
+	registerEnum(ACTION_NAMEREPORT);
+	registerEnum(ACTION_BANISHMENT);
+	registerEnum(ACTION_BANREPORT);
+	registerEnum(ACTION_BANFINAL);
+	registerEnum(ACTION_BANREPORTFINAL);
+	registerEnum(ACTION_STATEMENT);
+	registerEnum(ACTION_DELETION);
+	registerEnum(ACTION_NAMELOCK);
+	registerEnum(ACTION_BANLOCK);
+	registerEnum(ACTION_BANLOCKFINAL);
+	registerEnum(ACTION_PLACEHOLDER);
+
 	registerEnum(REPORT_REASON_NAMEINAPPROPRIATE);
 	registerEnum(REPORT_REASON_NAMEPOORFORMATTED);
 	registerEnum(REPORT_REASON_NAMEADVERTISING);

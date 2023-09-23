@@ -306,6 +306,9 @@ public:
 	void sendGuildMotd(uint32_t playerId);
 	void kickPlayer(uint32_t playerId, bool displayEffect);
 	void playerReportBug(uint32_t playerId, const std::string& message);
+	void playerViolationWindow(uint32_t playerId, const std::string& name, uint8_t reason, ViolationAction_t action,
+	                           const std::string& comment, const std::string& statement, uint16_t statementId,
+	                           bool ipBanishment);
 	void playerDebugAssert(uint32_t playerId, const std::string& assertLine, const std::string& date,
 	                       const std::string& description, const std::string& comment);
 	void playerReportRuleViolation(uint32_t playerId, const std::string& targetName, uint8_t reportType,

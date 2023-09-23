@@ -94,6 +94,8 @@ bool Events::load()
 				info.playerOnMoveCreature = event;
 			} else if (methodName == "onReportRuleViolation") {
 				info.playerOnReportRuleViolation = event;
+			} else if (methodName == "onViolationWindow") {
+				info.playerOnViolationWindow = event;
 			} else if (methodName == "onReportBug") {
 				info.playerOnReportBug = event;
 			} else if (methodName == "onTurn") {
@@ -831,6 +833,44 @@ bool Events::eventPlayerOnReportBug(Player* player, const std::string& message)
 	LuaScriptInterface::pushString(L, message);
 
 	return scriptInterface.callFunction(2);
+}
+
+bool Events::eventPlayerOnViolationWindow(Player* player, const std::string& name, uint8_t reason,
+                                          ViolationAction_t action, const std::string& comment,
+                                          const std::string& statement, uint16_t statementId, bool ipBanishment)
+{
+	// Player:onViolationWindow(name, reason, action, comment, statement, statementId, ipBanishment)
+	if (info.playerOnViolationWindow == -1) {
+		return true;
+	}
+
+	if (!scriptInterface.reserveScriptEnv()) {
+		std::cout << "[Error - Events::eventPlayerOnViolationWindow] Call stack overflow" << std::endl;
+		return false;
+	}
+
+	ScriptEnvironment* env = scriptInterface.getScriptEnv();
+	env->setScriptId(info.playerOnViolationWindow, &scriptInterface);
+
+	lua_State* L = scriptInterface.getLuaState();
+	scriptInterface.pushFunction(info.playerOnViolationWindow);
+
+	LuaScriptInterface::pushUserdata<Player>(L, player);
+	LuaScriptInterface::setMetatable(L, -1, "Player");
+
+	LuaScriptInterface::pushString(L, name);
+
+	lua_pushnumber(L, reason);
+	lua_pushnumber(L, action);
+
+	LuaScriptInterface::pushString(L, comment);
+	LuaScriptInterface::pushString(L, statement);
+
+	lua_pushnumber(L, statementId);
+
+	LuaScriptInterface::pushBoolean(L, ipBanishment);
+
+	return scriptInterface.callFunction(8);
 }
 
 bool Events::eventPlayerOnTurn(Player* player, Direction direction)

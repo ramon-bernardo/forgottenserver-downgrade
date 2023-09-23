@@ -166,7 +166,6 @@ private:
 	void sendShop(const ShopInfoList& itemList);
 	void sendCloseShop();
 	void sendSaleItemList(const std::list<ShopInfo>& shop);
-	void sendResourceBalance(const ResourceTypes_t resourceType, uint64_t amount);
 	void sendTradeItemRequest(const std::string& traderName, const Item* item, bool ack);
 	void sendCloseTrade();
 

@@ -450,15 +450,6 @@ enum item_t : uint16_t
 	ITEM_DOCUMENT_RO = 1968, // read-only
 };
 
-enum ResourceTypes_t : uint8_t
-{
-	RESOURCE_BANK_BALANCE = 0x00,
-	RESOURCE_GOLD_EQUIPPED = 0x01,
-	RESOURCE_PREY_WILDCARDS = 0x0A,
-	RESOURCE_DAILYREWARD_STREAK = 0x14,
-	RESOURCE_DAILYREWARD_JOKERS = 0x15,
-};
-
 enum PlayerFlags : uint64_t
 {
 	PlayerFlag_CannotUseCombat = 1 << 0,

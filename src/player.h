@@ -893,12 +893,6 @@ public:
 			client->sendEnterWorld();
 		}
 	}
-	void sendFightModes()
-	{
-		if (client) {
-			client->sendFightModes();
-		}
-	}
 	void sendNetworkMessage(const NetworkMessage& message)
 	{
 		if (client) {

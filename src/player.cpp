@@ -4017,10 +4017,6 @@ PartyShields_t Player::getPartyShield(const Player* player) const
 		return SHIELD_WHITEYELLOW;
 	}
 
-	if (player->party) {
-		return SHIELD_GRAY;
-	}
-
 	return SHIELD_NONE;
 }
 

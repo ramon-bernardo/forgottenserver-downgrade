@@ -349,7 +349,6 @@ enum PartyShields_t : uint8_t
 	SHIELD_YELLOW_NOSHAREDEXP_BLINK = 8,
 	SHIELD_BLUE_NOSHAREDEXP = 9,
 	SHIELD_YELLOW_NOSHAREDEXP = 10,
-	SHIELD_GRAY = 11,
 };
 
 enum GuildEmblems_t : uint8_t

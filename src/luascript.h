@@ -957,15 +957,6 @@ private:
 
 	static int luaPlayerSendCreatureSquare(lua_State* L);
 
-	static int luaPlayerGetClientExpDisplay(lua_State* L);
-	static int luaPlayerSetClientExpDisplay(lua_State* L);
-
-	static int luaPlayerGetClientStaminaBonusDisplay(lua_State* L);
-	static int luaPlayerSetClientStaminaBonusDisplay(lua_State* L);
-
-	static int luaPlayerGetClientLowLevelBonusDisplay(lua_State* L);
-	static int luaPlayerSetClientLowLevelBonusDisplay(lua_State* L);
-
 	static int luaPlayerIsHiddenLevel(lua_State* L);
 	static int luaPlayerSetHiddenLevel(lua_State* L);
 

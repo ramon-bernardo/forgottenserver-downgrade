@@ -2519,17 +2519,6 @@ void LuaScriptInterface::registerFunctions()
 
 	registerMethod("Player", "sendCreatureSquare", LuaScriptInterface::luaPlayerSendCreatureSquare);
 
-	registerMethod("Player", "getClientExpDisplay", LuaScriptInterface::luaPlayerGetClientExpDisplay);
-	registerMethod("Player", "setClientExpDisplay", LuaScriptInterface::luaPlayerSetClientExpDisplay);
-
-	registerMethod("Player", "getClientStaminaBonusDisplay", LuaScriptInterface::luaPlayerGetClientStaminaBonusDisplay);
-	registerMethod("Player", "setClientStaminaBonusDisplay", LuaScriptInterface::luaPlayerSetClientStaminaBonusDisplay);
-
-	registerMethod("Player", "getClientLowLevelBonusDisplay",
-	               LuaScriptInterface::luaPlayerGetClientLowLevelBonusDisplay);
-	registerMethod("Player", "setClientLowLevelBonusDisplay",
-	               LuaScriptInterface::luaPlayerSetClientLowLevelBonusDisplay);
-
 	registerMethod("Player", "isHiddenLevel", LuaScriptInterface::luaPlayerIsHiddenLevel);
 	registerMethod("Player", "setHiddenLevel", LuaScriptInterface::luaPlayerSetHiddenLevel);
 
@@ -9997,84 +9986,6 @@ int LuaScriptInterface::luaPlayerSendCreatureSquare(lua_State* L)
 
 	player->sendCreatureSquare(creature, getNumber<SquareColor_t>(L, 3));
 	pushBoolean(L, true);
-	return 1;
-}
-
-int LuaScriptInterface::luaPlayerGetClientExpDisplay(lua_State* L)
-{
-	// player:getClientExpDisplay()
-	Player* player = getUserdata<Player>(L, 1);
-	if (player) {
-		lua_pushnumber(L, player->getClientExpDisplay());
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaPlayerSetClientExpDisplay(lua_State* L)
-{
-	// player:setClientExpDisplay(value)
-	Player* player = getUserdata<Player>(L, 1);
-	if (player) {
-		player->setClientExpDisplay(getNumber<uint16_t>(L, 2));
-		player->sendStats();
-		pushBoolean(L, true);
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaPlayerGetClientStaminaBonusDisplay(lua_State* L)
-{
-	// player:getClientStaminaBonusDisplay()
-	Player* player = getUserdata<Player>(L, 1);
-	if (player) {
-		lua_pushnumber(L, player->getClientStaminaBonusDisplay());
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaPlayerSetClientStaminaBonusDisplay(lua_State* L)
-{
-	// player:setClientStaminaBonusDisplay(value)
-	Player* player = getUserdata<Player>(L, 1);
-	if (player) {
-		player->setClientStaminaBonusDisplay(getNumber<uint16_t>(L, 2));
-		player->sendStats();
-		pushBoolean(L, true);
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaPlayerGetClientLowLevelBonusDisplay(lua_State* L)
-{
-	// player:getClientLowLevelBonusDisplay()
-	Player* player = getUserdata<Player>(L, 1);
-	if (player) {
-		lua_pushnumber(L, player->getClientLowLevelBonusDisplay());
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaPlayerSetClientLowLevelBonusDisplay(lua_State* L)
-{
-	// player:setClientLowLevelBonusDisplay(value)
-	Player* player = getUserdata<Player>(L, 1);
-	if (player) {
-		player->setClientLowLevelBonusDisplay(getNumber<uint16_t>(L, 2));
-		player->sendStats();
-		pushBoolean(L, true);
-	} else {
-		lua_pushnil(L);
-	}
 	return 1;
 }
 

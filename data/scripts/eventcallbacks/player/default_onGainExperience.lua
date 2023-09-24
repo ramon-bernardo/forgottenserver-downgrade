@@ -60,7 +60,7 @@ function default.onGainExperience(player, source, exp, rawExp, sendText)
 		useStamina(player)
 
 		local staminaMinutes = player:getStamina()
-		if staminaMinutes > 2340 and player:isPremium() then
+		if staminaMinutes > 2400 and player:isPremium() then
 			exp = exp * 1.5
 		elseif staminaMinutes <= 840 then
 			exp = exp * 0.5

@@ -392,7 +392,7 @@ function Player.sendQuestLine(self, quest)
 end
 
 local function getStaminaBonus(staminaMinutes)
-	if staminaMinutes > 2340 then
+	if staminaMinutes > 2400 then
 		return 150
 	elseif staminaMinutes < 840 then
 		return 50

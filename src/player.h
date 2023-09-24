@@ -642,6 +642,12 @@ public:
 			client->sendSupplyUsed(clientId);
 		}
 	}
+	void sendBeatServer(const uint16_t interval) const
+	{
+		if (client) {
+			client->sendBeatServer(interval);
+		}
+	}
 
 	// container
 	void sendAddContainerItem(const Container* container, const Item* item);

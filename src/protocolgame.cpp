@@ -1352,6 +1352,22 @@ void ProtocolGame::parseEnableSharedPartyExperience(NetworkMessage& msg)
 }
 
 // Send methods
+void ProtocolGame::sendBeatServer(uint16_t interval)
+{
+	NetworkMessage msg;
+	msg.addByte(0x0A);
+	msg.add<uint32_t>(player->getID());
+	msg.add<uint16_t>(interval);
+
+	if (player->getAccountType() >= ACCOUNT_TYPE_TUTOR) {
+		msg.addByte(0x01);
+	} else {
+		msg.addByte(0x00);
+	}
+
+	writeToOutputBuffer(msg);
+}
+
 void ProtocolGame::sendOpenPrivateChannel(const std::string& receiver)
 {
 	NetworkMessage msg;
@@ -2134,7 +2150,7 @@ void ProtocolGame::sendAddCreature(const Creature* creature, const Position& pos
 	sendSkills();        // skills
 	player->sendIcons(); // active conditions
 
-	// enter world and send game screen
+	sendBeatServer(BEAT_INTERVAL);
 	sendMapDescription(pos);
 
 	// send login effect

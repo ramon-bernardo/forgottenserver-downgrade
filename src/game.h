@@ -58,6 +58,8 @@ static constexpr int32_t RANGE_USE_WITH_CREATURE_INTERVAL = 400;
 static constexpr int32_t RANGE_ROTATE_ITEM_INTERVAL = 400;
 static constexpr int32_t RANGE_REQUEST_TRADE_INTERVAL = 400;
 
+static constexpr uint16_t BEAT_INTERVAL = 50;
+
 static constexpr uint8_t ITEM_STACK_SIZE = 100;
 
 /**

@@ -9,32 +9,19 @@ AccountStorageKeys = {
 }
 
 GlobalStorageKeys = {
-	cobraBastionFlask = 30000,
 }
 
 PlayerStorageKeys = {
 	-- Misc:
-	annihilatorReward = 30015,
-	goldenOutfit = 30016,
-	-- empty: 30017
-	promotion = 30018,
-	delayLargeSeaShell = 30019,
-	firstRod = 30020,
-	delayWallMirror = 30021,
-	-- empty: 30022
-	madSheepSummon = 30023,
-	crateUsable = 30024,
-	-- empty: 30025
-	afflictedOutfit = 30026,
-	afflictedPlagueMask = 30027,
-	afflictedPlagueBell = 30028,
-	-- empty: 30029
-	-- empty: 30030
-	nailCaseUseCount = 30031,
-	swampDigging = 30032,
-	insectoidCell = 30033,
-	vortexTamer = 30034,
-	mutatedPumpkin = 30035,
+	annihilatorReward = 30001,
+	goldenOutfit = 30002,
+	promotion = 30003,
+	delayLargeSeaShell = 30004,
+	firstRod = 30005,
+	delayWallMirror = 30006,
+	madSheepSummon = 30007,
+	crateUsable = 30008,
+	insectoidCell = 30009,
 
 	-- Achievements:
 	achievementsTotal = 19999,

@@ -325,17 +325,6 @@ function Player.addAddonToAllOutfits(self, addon)
 	end
 end
 
-function Player.setSpecialContainersAvailable(self, available)
-	local msg = NetworkMessage()
-	msg:addByte(0x2A)
-
-	msg:addByte(0x00) -- stash
-
-	msg:sendToPlayer(self)
-	msg:delete()
-	return true
-end
-
 function Player.addBankBalance(self, amount)
 	self:setBankBalance(self:getBankBalance() + amount)
 end

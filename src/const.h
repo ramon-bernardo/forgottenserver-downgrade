@@ -180,7 +180,6 @@ enum FluidColors_t : uint8_t
 	FLUID_YELLOW,
 	FLUID_WHITE,
 	FLUID_PURPLE,
-	FLUID_BLACK,
 };
 
 enum FluidTypes_t : uint8_t

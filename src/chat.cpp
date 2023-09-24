@@ -465,6 +465,12 @@ bool Chat::talkToChannel(const Player& player, SpeakClasses type, const std::str
 		type = TALKTYPE_CHANNEL_Y;
 	}
 
+	if (type == TALKTYPE_CHANNEL_RN) {
+		if (!player.hasFlag(PlayerFlag_CanTalkRedChannel)) {
+			type = TALKTYPE_CHANNEL_Y;
+		}
+	}
+
 	if (!channel->executeOnSpeakEvent(player, type, text)) {
 		return false;
 	}

@@ -1614,6 +1614,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(PlayerFlag_SetMaxSpeed);
 	registerEnum(PlayerFlag_SpecialVIP);
 	registerEnum(PlayerFlag_NotGenerateLoot);
+	registerEnum(PlayerFlag_CanTalkRedChannelAnonymous);
 	registerEnum(PlayerFlag_IgnoreProtectionZone);
 	registerEnum(PlayerFlag_IgnoreSpellCheck);
 	registerEnum(PlayerFlag_IgnoreWeaponCheck);

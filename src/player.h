@@ -624,18 +624,6 @@ public:
 			client->sendCreatureShield(creature);
 		}
 	}
-	void sendSpellCooldown(uint8_t spellId, uint32_t time)
-	{
-		if (client) {
-			client->sendSpellCooldown(spellId, time);
-		}
-	}
-	void sendSpellGroupCooldown(SpellGroup_t groupId, uint32_t time)
-	{
-		if (client) {
-			client->sendSpellGroupCooldown(groupId, time);
-		}
-	}
 	void sendSupplyUsed(const uint16_t clientId) const
 	{
 		if (client) {

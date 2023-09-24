@@ -1795,13 +1795,6 @@ void ConditionSpellCooldown::addCondition(Creature* creature, const Condition* c
 {
 	if (updateCondition(condition)) {
 		setTicks(condition->getTicks());
-
-		if (subId != 0 && ticks > 0) {
-			Player* player = creature->getPlayer();
-			if (player) {
-				player->sendSpellCooldown(subId, ticks);
-			}
-		}
 	}
 }
 
@@ -1811,12 +1804,6 @@ bool ConditionSpellCooldown::startCondition(Creature* creature)
 		return false;
 	}
 
-	if (subId != 0 && ticks > 0) {
-		Player* player = creature->getPlayer();
-		if (player) {
-			player->sendSpellCooldown(subId, ticks);
-		}
-	}
 	return true;
 }
 
@@ -1824,13 +1811,6 @@ void ConditionSpellGroupCooldown::addCondition(Creature* creature, const Conditi
 {
 	if (updateCondition(condition)) {
 		setTicks(condition->getTicks());
-
-		if (subId != 0 && ticks > 0) {
-			Player* player = creature->getPlayer();
-			if (player) {
-				player->sendSpellGroupCooldown(static_cast<SpellGroup_t>(subId), ticks);
-			}
-		}
 	}
 }
 
@@ -1840,12 +1820,6 @@ bool ConditionSpellGroupCooldown::startCondition(Creature* creature)
 		return false;
 	}
 
-	if (subId != 0 && ticks > 0) {
-		Player* player = creature->getPlayer();
-		if (player) {
-			player->sendSpellGroupCooldown(static_cast<SpellGroup_t>(subId), ticks);
-		}
-	}
 	return true;
 }
 

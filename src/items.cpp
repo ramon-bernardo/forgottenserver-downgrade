@@ -229,8 +229,8 @@ const std::unordered_map<std::string, FluidTypes_t> FluidTypesMap = {
 
 Items::Items()
 {
-	items.reserve(45000);
-	nameToItems.reserve(45000);
+	items.reserve(15000);
+	nameToItems.reserve(15000);
 }
 
 void Items::clear()

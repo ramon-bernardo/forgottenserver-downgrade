@@ -430,7 +430,7 @@ private:
 	class ClientIdToServerIdMap
 	{
 	public:
-		ClientIdToServerIdMap() { vec.reserve(45000); }
+		ClientIdToServerIdMap() { vec.reserve(15000); }
 
 		void emplace(uint16_t clientId, uint16_t serverId)
 		{

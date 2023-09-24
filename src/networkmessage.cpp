@@ -89,8 +89,6 @@ void NetworkMessage::addItem(uint16_t id, uint8_t count)
 		addByte(count);
 	} else if (it.isSplash() || it.isFluidContainer()) {
 		addByte(fluidMap[count & 7]);
-	} else if (it.isContainer()) {
-		addByte(0x00); // assigned loot container icon
 	}
 }
 
@@ -104,10 +102,6 @@ void NetworkMessage::addItem(const Item* item)
 		addByte(std::min<uint16_t>(0xFF, item->getItemCount()));
 	} else if (it.isSplash() || it.isFluidContainer()) {
 		addByte(fluidMap[item->getFluidType() & 7]);
-	}
-
-	if (it.isContainer()) {
-		addByte(0x00); // assigned loot container icon
 	}
 }
 

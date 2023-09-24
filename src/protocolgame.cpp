@@ -2399,9 +2399,14 @@ void ProtocolGame::sendOutfitWindow()
 void ProtocolGame::sendUpdatedVIPStatus(uint32_t guid, VipStatus_t newStatus)
 {
 	NetworkMessage msg;
-	msg.addByte(0xD3);
+
+	if (newStatus == VIPSTATUS_ONLINE) {
+		msg.addByte(0xD3);
+	} else {
+		msg.addByte(0xD4);
+	}
+
 	msg.add<uint32_t>(guid);
-	msg.addByte(newStatus);
 	writeToOutputBuffer(msg);
 }
 

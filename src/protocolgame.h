@@ -186,8 +186,6 @@ private:
 
 	void sendCreatureSquare(const Creature* creature, SquareColor_t color);
 
-	void sendSupplyUsed(const uint16_t clientId);
-
 	// tiles
 	void sendMapDescription(const Position& pos);
 

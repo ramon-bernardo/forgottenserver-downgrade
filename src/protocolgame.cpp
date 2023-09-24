@@ -2438,15 +2438,6 @@ void ProtocolGame::sendVIPEntries()
 	}
 }
 
-void ProtocolGame::sendSupplyUsed(const uint16_t clientId)
-{
-	NetworkMessage msg;
-	msg.addByte(0xCE);
-	msg.add<uint16_t>(clientId);
-
-	writeToOutputBuffer(msg);
-}
-
 ////////////// Add common messages
 void ProtocolGame::AddCreature(NetworkMessage& msg, const Creature* creature, bool known, uint32_t remove)
 {

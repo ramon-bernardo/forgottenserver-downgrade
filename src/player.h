@@ -624,12 +624,6 @@ public:
 			client->sendCreatureShield(creature);
 		}
 	}
-	void sendSupplyUsed(const uint16_t clientId) const
-	{
-		if (client) {
-			client->sendSupplyUsed(clientId);
-		}
-	}
 	void sendBeatServer(const uint16_t interval) const
 	{
 		if (client) {

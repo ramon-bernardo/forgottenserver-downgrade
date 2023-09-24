@@ -4393,11 +4393,6 @@ void Game::internalDecayItem(Item* item)
 	if (decayTo > 0) {
 		startDecay(transformItem(item, decayTo));
 	} else {
-		if (const Player* player = item->getHoldingPlayer()) {
-			const ItemType& it = Item::items[item->getID()];
-			player->sendSupplyUsed(it.transformDeEquipTo != 0 ? Item::items[it.transformDeEquipTo].clientId
-			                                                  : item->getClientID());
-		}
 		ReturnValue ret = internalRemoveItem(item);
 		if (ret != RETURNVALUE_NOERROR) {
 			std::cout << "[Debug - Game::internalDecayItem] internalDecayItem failed, error code: "

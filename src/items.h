@@ -194,7 +194,6 @@ enum ItemParseAttributes_t
 	ITEM_PARSE_BOOSTPERCENTDROWN,
 	ITEM_PARSE_BOOSTPERCENTPHYSICAL,
 	ITEM_PARSE_BOOSTPERCENTHEALING,
-	ITEM_PARSE_SUPPLY,
 };
 
 struct Abilities
@@ -263,7 +262,6 @@ public:
 	bool isPickupable() const { return (allowPickupable || pickupable); }
 	bool isUseable() const { return (useable); }
 	bool hasSubType() const { return (isFluidContainer() || isSplash() || stackable || charges != 0); }
-	bool isSupply() const { return supply; }
 
 	Abilities& getAbilities()
 	{
@@ -386,7 +384,6 @@ public:
 	bool lookThrough = false;
 	bool stopTime = false;
 	bool showCount = true;
-	bool supply = false;
 };
 
 class Items

@@ -808,7 +808,6 @@ public:
 		return it.rotatable && it.rotateTo;
 	}
 	bool hasWalkStack() const { return items[id].walkStack; }
-	bool isSupply() const { return items[id].isSupply(); }
 
 	const std::string& getName() const
 	{

@@ -2315,8 +2315,6 @@ void ProtocolGame::sendTextWindow(uint32_t windowTextId, Item* item, uint16_t ma
 		msg.add<uint16_t>(0x00);
 	}
 
-	msg.addByte(0x00); // "(traded)" suffix after player name (bool)
-
 	time_t writtenDate = item->getDate();
 	if (writtenDate != 0) {
 		msg.addString(formatDateShort(writtenDate));

@@ -2429,12 +2429,13 @@ void ProtocolGame::sendVIPEntries()
 	const std::forward_list<VIPEntry>& vipEntries = IOLoginData::getVIPEntries(player->getAccount());
 
 	for (const VIPEntry& entry : vipEntries) {
-		VipStatus_t vipStatus = VIPSTATUS_ONLINE;
+		VipStatus_t vipStatus;
 
 		Player* vipPlayer = g_game.getPlayerByGUID(entry.guid);
-
 		if (!vipPlayer || !player->canSeeCreature(vipPlayer)) {
 			vipStatus = VIPSTATUS_OFFLINE;
+		} else {
+			vipStatus = VIPSTATUS_ONLINE;
 		}
 
 		sendVIP(entry.guid, entry.name, vipStatus);

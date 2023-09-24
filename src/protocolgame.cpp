@@ -2441,22 +2441,6 @@ void ProtocolGame::sendVIPEntries()
 ////////////// Add common messages
 void ProtocolGame::AddCreature(NetworkMessage& msg, const Creature* creature, bool known, uint32_t remove)
 {
-	CreatureType_t creatureType = creature->getType();
-	const Player* otherPlayer = creature->getPlayer();
-	const Player* masterPlayer = nullptr;
-	uint32_t masterId = 0;
-
-	if (creatureType == CREATURETYPE_MONSTER) {
-		const Creature* master = creature->getMaster();
-		if (master) {
-			masterPlayer = master->getPlayer();
-			if (masterPlayer) {
-				masterId = master->getID();
-				creatureType = CREATURETYPE_SUMMON_OWN;
-			}
-		}
-	}
-
 	if (known) {
 		msg.add<uint16_t>(0x62);
 		msg.add<uint32_t>(creature->getID());
@@ -2496,6 +2480,8 @@ void ProtocolGame::AddCreature(NetworkMessage& msg, const Creature* creature, bo
 	msg.add<uint16_t>(creature->getStepSpeed());
 
 	msg.addByte(player->getSkullClient(creature));
+
+	const Player* otherPlayer = creature->getPlayer();
 	msg.addByte(player->getPartyShield(otherPlayer));
 
 	if (!known) {

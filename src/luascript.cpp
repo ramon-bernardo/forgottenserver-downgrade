@@ -1481,8 +1481,6 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(CREATURETYPE_PLAYER);
 	registerEnum(CREATURETYPE_MONSTER);
 	registerEnum(CREATURETYPE_NPC);
-	registerEnum(CREATURETYPE_SUMMON_OWN);
-	registerEnum(CREATURETYPE_SUMMON_OTHERS);
 
 	registerEnum(CLIENTOS_LINUX);
 	registerEnum(CLIENTOS_WINDOWS);

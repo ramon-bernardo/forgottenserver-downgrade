@@ -59,19 +59,6 @@ local potions = {
 		description = "Only paladins may drink this potion.",
 		text = "You feel more accurate."
 	},
-	[38219] = { -- magic shield potion
-		condition = manaShield,
-		vocations = {
-			VOCATION_SORCERER,
-			VOCATION_DRUID,
-			VOCATION_MASTER_SORCERER,
-			VOCATION_ELDER_DRUID
-		},
-		level = 14,
-		effect = CONST_ME_ENERGYAREA,
-		description = "Only sorcerers and druids of level 14 or above may drink this potion.",
-		capacity = magicShieldCapacity
-	},
 	[7588] = { -- strong health potion
 		health = {250, 350},
 		vocations = {
@@ -150,39 +137,6 @@ local potions = {
 	[8704] = { -- small health potion
 		health = {60, 90},
 		flask = 7636
-	},
-	[26029] = { -- ultimate mana potion
-		mana = {425, 575},
-		vocations = {
-			VOCATION_SORCERER,
-			VOCATION_DRUID,
-			VOCATION_MASTER_SORCERER,
-			VOCATION_ELDER_DRUID
-		},
-		level = 130,
-		flask = 7635,
-		description = "Only druids and sorcerers of level 130 or above may drink this fluid."
-	},
-	[26030] = { -- ultimate spirit potion
-		health = {410, 580},
-		mana = {150, 250},
-		vocations = {
-			VOCATION_PALADIN,
-			VOCATION_ROYAL_PALADIN
-		},
-		level = 130,
-		flask = 7635,
-		description = "Only paladins of level 130 or above may drink this fluid."
-	},
-	[26031] = { -- supreme health potion
-		health = {875, 1125},
-		vocations = {
-			VOCATION_KNIGHT,
-			VOCATION_ELITE_KNIGHT
-		},
-		level = 200,
-		flask = 7635,
-		description = "Only knights of level 200 or above may drink this fluid."
 	}
 }
 
@@ -198,9 +152,6 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 	end
 
 	if potion.condition then
-		if potion.capacity then
-			potion.capacity(player)
-		end
 		player:addCondition(potion.condition)
 		player:say(potion.text, TALKTYPE_POTION)
 		player:getPosition():sendMagicEffect(potion.effect)

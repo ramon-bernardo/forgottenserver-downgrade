@@ -87,34 +87,7 @@ local foods = {
 	[12418] = {9, "Crunch."}, -- cauliflower
 	[12637] = {55, "Gulp."}, -- ectoplasmic sushi
 	[12638] = {18, "Yum."}, -- dragonfruit
-	[12639] = {2, "Munch."}, -- peas
-	[13297] = {20, "Crunch."}, -- haunch of boar
-	[15405] = {55, "Munch."}, -- sandfish
-	[15487] = {14, "Urgh."}, -- larvae
-	[15488] = {15, "Munch."}, -- deepling filet
-	[16014] = {60, "Mmmm."}, -- anniversary cake
-	[18397] = {33, "Munch."}, -- mushroom pie
-	[19737] = {10, "Urgh."}, -- insectoid eggs
-	[20100] = {15, "Smack."}, -- soft cheese
-	[20101] = {12, "Smack."}, -- rat cheese
-	[23514] = {15, "Munch."}, -- glooth sandwich
-	[23515] = {7, "Slurp."}, -- bowl of glooth soup
-	[23516] = {6, "Burp."}, -- bottle of glooth wine
-	[23517] = {25, "Chomp."}, -- glooth steak
-	[24841] = {12, "Yum."}, -- prickly pear
-	[24843] = {60, "Chomp."}, -- roasted meat
-	[26191] = {25, "Mmmm."}, -- energy bar
-	[26201] = {15, "Mmmm."}, -- energy drink
-	[27038] = {20, "Urgh."}, -- bug meat
-	[27039] = {10, "Gulp."}, -- cave turnip
-	[27052] = {60, "Mmmm."}, -- birthday cake
-	[27095] = {4, "Slurp."}, -- shell
-	[27604] = {10, "Slurp."}, -- bottle of Wine
-	[28348] = {15, "Mmmmm!"}, -- fresh fruit
-	[32854] = {40, "Mmmm."}, -- meringue cake
-	[32858] = {15, "Slurp."}, -- winterberry liquor
-	[34216] = {40, "Slurp."}, -- goanna meat
-	[34725] = {15, "Slurp."}, -- candy floss
+	[12639] = {2, "Munch."} -- peas
 }
 
 function onUse(player, item, fromPosition, target, toPosition, isHotkey)

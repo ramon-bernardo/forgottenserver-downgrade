@@ -487,9 +487,6 @@
 	</rune>
 	<rune group="attack" spellid="114" name="Icicle Rune" id="2271" allowfaruse="1" charges="5" level="28" magiclevel="4" cooldown="2000" groupcooldown="2000" needtarget="1" script="attack/icicle_rune.lua" />
 	<rune group="attack" spellid="7" name="Light Magic Missile Rune" id="2287" allowfaruse="1" charges="10" level="15" cooldown="2000" groupcooldown="2000" magiclevel="0" needtarget="1" blocktype="solid" script="attack/light_magic_missile_rune.lua" />
-	<rune group="attack" spellid="116" name="Light Stone Shower Rune" id="23722" allowfaruse="1" charges="4" level="1" magiclevel="0" cooldown="2000" groupcooldown="2000" script="attack/light_stone_shower_rune.lua" />
-	<rune group="attack" spellid="7" name="Lightest Magic Missile Rune" id="19392" allowfaruse="1" charges="10" level="1" cooldown="2000" groupcooldown="2000" magiclevel="0" needtarget="1" blocktype="solid" script="attack/lightest_magic_missile_rune.lua" />
-	<rune group="attack" spellid="7" name="Lightest Missile Rune" id="23723" allowfaruse="1" charges="10" level="1" cooldown="2000" groupcooldown="2000" magiclevel="0" needtarget="1" blocktype="solid" script="attack/lightest_missile_rune.lua" />
 	<rune group="attack" spellid="86" name="Magic Wall Rune" id="2293" allowfaruse="1" charges="3" level="32" magiclevel="9" cooldown="2000" groupcooldown="2000" blocktype="all" script="attack/magic_wall_rune.lua" />
 	<rune group="attack" spellid="91" name="Poison Bomb Rune" id="2286" allowfaruse="1" charges="2" level="25" magiclevel="4" cooldown="2000" groupcooldown="2000" blocktype="solid" script="attack/poison_bomb_rune.lua" />
 	<rune group="attack" spellid="26" name="Poison Field Rune" id="2285" allowfaruse="1" charges="3" level="14" magiclevel="0" cooldown="2000" groupcooldown="2000" blocktype="solid" script="attack/poison_field_rune.lua" />

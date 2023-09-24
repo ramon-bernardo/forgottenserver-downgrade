@@ -30,7 +30,6 @@ class LuaVariant;
 class Npc;
 class Player;
 class Thing;
-struct BestiaryInfo;
 struct LootBlock;
 struct Outfit;
 
@@ -316,7 +315,6 @@ public:
 	static Outfit getOutfitClass(lua_State* L, int32_t arg);
 	static InstantSpell* getInstantSpell(lua_State* L, int32_t arg);
 	static Reflect getReflect(lua_State* L, int32_t arg);
-	static BestiaryInfo getBestiaryInfo(lua_State* L, int32_t arg);
 
 	static Thing* getThing(lua_State* L, int32_t arg);
 	static Creature* getCreature(lua_State* L, int32_t arg);
@@ -357,7 +355,6 @@ public:
 	static void pushOutfit(lua_State* L, const Outfit* outfit);
 	static void pushLoot(lua_State* L, const std::vector<LootBlock>& lootList);
 	static void pushReflect(lua_State* L, const Reflect& reflect);
-	static void pushBestiaryInfo(lua_State* L, const BestiaryInfo& info);
 
 	//
 	static void setField(lua_State* L, const char* index, lua_Number value)
@@ -512,7 +509,6 @@ private:
 	static int luaGameGetPlayerCount(lua_State* L);
 	static int luaGameGetNpcCount(lua_State* L);
 	static int luaGameGetMonsterTypes(lua_State* L);
-	static int luaGameGetBestiary(lua_State* L);
 	static int luaGameGetCurrencyItems(lua_State* L);
 	static int luaGameGetItemTypeByClientId(lua_State* L);
 
@@ -1296,8 +1292,6 @@ private:
 	static int luaMonsterTypeYellSpeedTicks(lua_State* L);
 	static int luaMonsterTypeChangeTargetChance(lua_State* L);
 	static int luaMonsterTypeChangeTargetSpeed(lua_State* L);
-
-	static int luaMonsterTypeBestiaryInfo(lua_State* L);
 
 	// Loot
 	static int luaCreateLoot(lua_State* L);

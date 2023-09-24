@@ -391,7 +391,7 @@ enum item_t : uint16_t
 	// ITEM_WILDGROWTH_NOPVP = X, TODO: create item and check onStepInField system
 
 	ITEM_BAG = 1987,
-	ITEM_SHOPPING_BAG = 23782,
+	ITEM_BACKPACK = 1988,
 
 	ITEM_GOLD_COIN = 2148,
 	ITEM_PLATINUM_COIN = 2152,

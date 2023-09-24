@@ -1548,7 +1548,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(ITEM_GROUP_DEPRECATED);
 
 	registerEnum(ITEM_BAG);
-	registerEnum(ITEM_SHOPPING_BAG);
+	registerEnum(ITEM_BACKPACK);
 	registerEnum(ITEM_GOLD_COIN);
 	registerEnum(ITEM_PLATINUM_COIN);
 	registerEnum(ITEM_CRYSTAL_COIN);

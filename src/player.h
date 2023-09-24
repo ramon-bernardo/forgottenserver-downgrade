@@ -887,12 +887,6 @@ public:
 			client->sendAddMarker(pos, markType, desc);
 		}
 	}
-	void sendEnterWorld()
-	{
-		if (client) {
-			client->sendEnterWorld();
-		}
-	}
 	void sendNetworkMessage(const NetworkMessage& message)
 	{
 		if (client) {

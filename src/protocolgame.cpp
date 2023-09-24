@@ -2464,7 +2464,12 @@ void ProtocolGame::AddCreature(NetworkMessage& msg, const Creature* creature, bo
 		msg.add<uint16_t>(0x61);
 		msg.add<uint32_t>(remove);
 		msg.add<uint32_t>(creature->getID());
-		msg.addString(creature->isHealthHidden() ? "" : creature->getName());
+
+		if (creature->isHealthHidden()) {
+			msg.add<uint16_t>(0x00);
+		} else {
+			msg.addString(creature->getName());
+		}
 	}
 
 	if (creature->isHealthHidden()) {
@@ -2488,16 +2493,7 @@ void ProtocolGame::AddCreature(NetworkMessage& msg, const Creature* creature, bo
 	msg.addByte(player->isAccessPlayer() ? 0xFF : lightInfo.level);
 	msg.addByte(lightInfo.color);
 
-	msg.add<uint16_t>(creature->getStepSpeed() / 2);
-
-	msg.addByte(0x00); // creature debuffs, to do
-	/*
-	if (icon != CREATUREICON_NONE) {
-	        msg.addByte(icon);
-	        msg.addByte(1);
-	        msg.add<uint16_t>(0);
-	}
-	*/
+	msg.add<uint16_t>(creature->getStepSpeed());
 
 	msg.addByte(player->getSkullClient(creature));
 	msg.addByte(player->getPartyShield(otherPlayer));
@@ -2505,19 +2501,6 @@ void ProtocolGame::AddCreature(NetworkMessage& msg, const Creature* creature, bo
 	if (!known) {
 		msg.addByte(player->getGuildEmblem(otherPlayer));
 	}
-
-	// Summon emblem
-	if (creatureType == CREATURETYPE_SUMMON_OWN) {
-		msg.add<uint32_t>(masterId);
-	}
-
-	// Player vocation info
-	if (creatureType == CREATURETYPE_PLAYER) {
-		msg.addByte(otherPlayer ? otherPlayer->getVocation()->getClientId() : 0x00);
-	}
-
-	msg.addByte(0xFF); // MARK_UNMARKED
-	msg.addByte(0x00); // inspection type (bool?)
 
 	msg.addByte(player->canWalkthroughEx(creature) ? 0x00 : 0x01);
 }

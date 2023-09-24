@@ -41,10 +41,8 @@
 		<item id="2149" name="small emerald" chance="4213" />
 		<item id="2147" name="small ruby" chance="4213" />
 		<item id="2146" name="small sapphire" chance="4213" />
-		<item id="23537" name="mooh'tah plate" chance="1685" />
 		<item id="5911" name="red piece of cloth" chance="1124" />
 		<item id="2209" name="club ring" chance="843" />
-		<item id="23548" name="cowtana" chance="843" />
 		<item id="7401" name="minotaur trophy" chance="843" />
 		<item id="7452" name="spiked squelcher" chance="281" />
 	</loot>

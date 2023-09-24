@@ -57,12 +57,8 @@
 		<voice sentence="Terofar cast a greater death curse on you!" yell="1" />
 	</voices>
 	<loot>
-		<item id="22396" chance="100000" /><!-- cluster of solace -->
-		<item id="22598" chance="100000" /><!-- unrealized dream -->
-		<item id="22397" chance="100000" /><!-- dream matter -->
 		<item id="6500" chance="100000" /><!-- demonic essence -->
 		<item id="5954" chance="100000" /><!-- demon horn -->
-		<item id="22610" chance="3560" /><!-- dream warden mask -->
 		<item id="2148" countmax="100" chance="50000" /><!-- gold coin -->
 		<item id="2148" countmax="100" chance="50000" /><!-- gold coin -->
 		<item id="2152" countmax="50" chance="100000" /><!-- platinum coin -->

@@ -32,9 +32,6 @@
 		<item id="7590" name="great mana potion" chance="5333" />
 		<item id="9930" name="flask of rust remover" chance="4000" />
 		<item id="9690" name="gear wheel" chance="2667" />
-		<item id="23541" name="gearwheel chain" chance="2667" />
-		<item id="23538" name="heat core" chance="2667" />
-		<item id="23539" name="alloy legs" chance="1333" />
 		<item name="crystal pedestal" chance="1333" />
 		<item id="5880" name="iron ore" chance="1333" />
 		<item id="2645" name="steel boots" chance="1333" />

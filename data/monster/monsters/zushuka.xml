@@ -66,7 +66,6 @@
 	<loot>
 		<item id="2148" countmax="100" chance="42000" />	<!-- gold coin -->
 		<item id="2148" countmax="100" chance="42000" />	<!-- gold coin -->
-		<item id="21400" chance="92000" />				<!-- silver raid token -->
 		<item id="7290" chance="57000" />				<!-- shard -->
 		<item id="7449" chance="42000" />				<!-- crystal sword -->
 		<item id="8472" countmax="5" chance="42000" />	<!-- great spirit potion -->
@@ -94,8 +93,6 @@
 		<item id="2195" chance="7000" />					<!-- boots of haste -->
 		<item id="7902" chance="7000" />					<!-- glacier mask -->
 		<item id="5911" chance="7000" />					<!-- red piece of cloth -->
-		<item id="21699" chance="7000" />				<!-- trapped lightning -->
-		<item id="21700" chance="3000" />				<!-- icy culotte -->
 		<item id="7410" chance="3000" />				<!-- sceptre -->
 	</loot>
 </monster>

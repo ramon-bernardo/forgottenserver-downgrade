@@ -44,7 +44,6 @@
 		<item id="2544" name="arrow" chance="5069" countmax="5" />
 		<item id="2448" name="studded club" chance="5069" />
 		<item id="10606" name="bunch of troll hair" chance="3075" />
-		<item id="12471" name="trollroot" chance="909" />
 		<item id="2170" name="silver amulet" chance="127" />
 	</loot>
 </monster>

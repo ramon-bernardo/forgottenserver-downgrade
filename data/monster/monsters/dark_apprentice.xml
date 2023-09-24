@@ -57,7 +57,6 @@
 	</voices>
 	<loot>
 		<item id="2148" name="gold coin" chance="75041" countmax="45" />
-		<item id="36893" name="dead frog" chance="11917" />
 		<item id="2260" name="blank rune" chance="8034" countmax="3" />
 		<item id="7620" name="mana potion" chance="2995" />
 		<item id="7618" name="health potion" chance="2884" />

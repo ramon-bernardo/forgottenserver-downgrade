@@ -44,10 +44,8 @@
 	<loot>
 		<item id="2148" name="gold coin" chance="100000" countmax="100" />
 		<item id="2152" name="platinum coin" chance="100000" countmax="6" />
-		<item id="24630" name="golden lotus brooch" chance="20240" />
 		<item id="6558" name="flask of demonic blood" chance="19605" />
 		<item id="5944" name="soul orb" chance="18688" />
-		<item id="24631" name="peacock feather fan" chance="17842" />
 		<item id="6500" name="demonic essence" chance="16784" />
 		<item id="7591" name="great health potion" chance="12412" countmax="2" />
 		<item id="7368" name="assassin star" chance="10155" countmax="5" />
@@ -68,7 +66,6 @@
 		<item id="7404" name="assassin dagger" chance="705" />
 		<item id="9971" name="gold ingot" chance="423" />
 		<item id="2158" name="blue gem" chance="353" />
-		<item id="24637" name="oriental shoes" chance="353" />
 		<item id="8889" name="skullcracker armor" chance="282" />
 		<item id="8902" name="spellbook of mind control" chance="282" />
 		<item id="2124" name="crystal ring" chance="141" />

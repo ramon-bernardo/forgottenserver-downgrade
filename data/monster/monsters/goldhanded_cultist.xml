@@ -47,9 +47,6 @@
 	</voices>
 	<loot>
 		<item id="2148" name="gold coin" chance="50130" countmax="250" />
-		<item id="28345" name="golden brush" chance="22637" />
-		<item id="27617" name="tiger eye" chance="16392" />
-		<item id="24850" name="opal" chance="10581" />
 		<item id="2154" name="yellow gem" chance="5551" />
 		<item id="2155" name="green gem" chance="4857" />
 		<item id="2004" name="golden backpack" chance="2949" />

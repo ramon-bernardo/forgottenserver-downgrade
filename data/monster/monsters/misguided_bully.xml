@@ -36,7 +36,6 @@
 	<loot>
 		<item id="2148" name="gold coin" chance="81581" countmax="173" />
 		<item id="2666" name="meat" chance="45048" />
-		<item id="27952" name="rubbish amulet" chance="6560" />
 		<item id="9971" name="gold ingot" chance="4952" />
 		<item id="2158" name="blue gem" chance="652" />
 	</loot>

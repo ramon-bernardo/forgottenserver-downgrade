@@ -66,15 +66,11 @@
 		<voice sentence="After all those aeons I smell freedom at last!" />
 	</voices>
 	<loot>
-		<item id="22396" chance="100000" /><!-- cluster of solace -->
 		<item id="5954" chance="100000" /><!-- demon horn -->
 		<item id="6500" chance="100000" /><!-- demonic essence -->
-		<item id="22397" chance="13850" /><!-- dream matter -->
-		<item id="22610" chance="5380" /><!-- dream warden mask -->
 		<item id="2148" countmax="100" chance="50000" /><!-- gold coin -->
 		<item id="2148" countmax="100" chance="50000" /><!-- gold coin -->
 		<item id="2152" countmax="50" chance="100000" /><!-- platinum coin -->
-		<item id="22598" chance="100000" /><!-- unrealized dream -->
 		<item id="8903" chance="5130" /><!-- spellbook of lost souls -->
 		<item id="8901" chance="35900" /><!-- spellbook of warding -->
 		<item id="8902" chance="10260" /><!-- spellbook of mind control -->

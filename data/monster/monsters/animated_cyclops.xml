@@ -25,7 +25,6 @@
 	<loot>
 		<item id="2148" name="gold coin" chance="85294" countmax="45" />
 		<item id="2666" name="meat" chance="26471" />
-		<item id="26642" name="heavy old tome" chance="8824" />
 		<item id="2406" name="short sword" chance="2941" />
 	</loot>
 </monster>

@@ -47,7 +47,6 @@
 		<item id="2148" name="gold coin" chance="100000" countmax="150" />
 		<item id="2152" name="platinum coin" chance="66273" countmax="3" />
 		<item id="2671" name="ham" chance="58557" />
-		<item id="23575" name="cowbell" chance="19281" />
 		<item id="12428" name="minotaur horn" chance="19242" countmax="2" />
 		<item id="7590" name="great mana potion" chance="16651" />
 		<item id="10556" name="cultish robe" chance="15045" />

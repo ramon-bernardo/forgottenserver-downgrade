@@ -62,8 +62,6 @@
 		<item id="2148" name="gold coin" chance="69612" countmax="100" />
 		<item id="6558" name="flask of demonic blood" chance="20830" />
 		<item id="5944" name="soul orb" chance="14157" />
-		<item id="24630" name="golden lotus brooch" chance="12263" />
-		<item id="24631" name="peacock feather fan" chance="11211" />
 		<item id="6500" name="demonic essence" chance="10400" />
 		<item id="7590" name="great mana potion" chance="9107" countmax="2" />
 		<item id="2147" name="small ruby" chance="5981" countmax="3" />
@@ -81,7 +79,6 @@
 		<item id="7899" name="magma coat" chance="421" />
 		<item id="2158" name="blue gem" chance="301" />
 		<item id="6300" name="death ring" chance="271" />
-		<item id="24637" name="oriental shoes" chance="180" />
 		<item id="8902" name="spellbook of mind control" chance="60" />
 	</loot>
 </monster>

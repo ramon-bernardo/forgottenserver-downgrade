@@ -49,20 +49,15 @@
 	</voices>
 	<loot>
 		<item id="2148" name="gold coin" chance="60417" countmax="90" />
-		<item id="28347" name="wild flowers" chance="20530" />
-		<item id="28352" name="colourful snail shell" chance="14460" />
 		<item id="2803" name="powder herb" chance="5250" />
 		<item id="7590" name="great mana potion" chance="3117" />
 		<item id="2134" name="silver brooch" chance="2836" />
 		<item id="7761" name="small enchanted emerald" chance="2648" countmax="2" />
-		<item id="24850" name="opal" chance="1945" countmax="2" />
 		<item id="2143" name="white pearl" chance="1828" countmax="2" />
-		<item id="27047" name="coral brooch" chance="1664" />
 		<item id="2796" name="green mushroom" chance="1312" />
 		<item id="2423" name="clerical mace" chance="1172" />
 		<item id="2195" name="boots of haste" chance="867" />
 		<item id="7589" name="strong mana potion" chance="797" />
-		<item id="28354" name="butterfly ring" chance="727" />
 		<item id="8874" name="summer dress" chance="469" />
 		<item id="9927" name="flower wreath" chance="375" />
 		<item id="7387" name="diamond sceptre" chance="328" />

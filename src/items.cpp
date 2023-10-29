@@ -9,6 +9,8 @@
 #include "pugicast.h"
 #include "weapons.h"
 
+namespace {
+
 extern MoveEvents* g_moveEvents;
 extern Weapons* g_weapons;
 
@@ -196,8 +198,7 @@ const std::unordered_map<std::string, tileflags_t> TileStatesMap = {
 };
 
 const std::unordered_map<std::string, RaceType_t> RaceTypesMap = {
-    {"venom", RACE_VENOM}, {"blood", RACE_BLOOD},   {"undead", RACE_UNDEAD},
-    {"fire", RACE_FIRE},   {"energy", RACE_ENERGY},
+    {"venom", RACE_VENOM}, {"blood", RACE_BLOOD}, {"undead", RACE_UNDEAD}, {"fire", RACE_FIRE}, {"energy", RACE_ENERGY},
 };
 
 const std::unordered_map<std::string, WeaponType_t> WeaponTypesMap = {
@@ -226,6 +227,52 @@ const std::unordered_map<std::string, FluidTypes_t> FluidTypesMap = {
     {"tea", FLUID_TEA},
     {"mead", FLUID_MEAD},
 };
+
+const std::unordered_map<std::string_view, Direction> DirectionsMap = {
+    {"north", DIRECTION_NORTH},
+    {"n", DIRECTION_NORTH},
+    {"0", DIRECTION_NORTH},
+    {"east", DIRECTION_EAST},
+    {"e", DIRECTION_EAST},
+    {"1", DIRECTION_EAST},
+    {"south", DIRECTION_SOUTH},
+    {"s", DIRECTION_SOUTH},
+    {"2", DIRECTION_SOUTH},
+    {"west", DIRECTION_WEST},
+    {"w", DIRECTION_WEST},
+    {"3", DIRECTION_WEST},
+    {"southwest", DIRECTION_SOUTHWEST},
+    {"south west", DIRECTION_SOUTHWEST},
+    {"south-west", DIRECTION_SOUTHWEST},
+    {"sw", DIRECTION_SOUTHWEST},
+    {"4", DIRECTION_SOUTHWEST},
+    {"southeast", DIRECTION_SOUTHEAST},
+    {"south east", DIRECTION_SOUTHEAST},
+    {"south-east", DIRECTION_SOUTHEAST},
+    {"se", DIRECTION_SOUTHEAST},
+    {"5", DIRECTION_SOUTHEAST},
+    {"northwest", DIRECTION_NORTHWEST},
+    {"north west", DIRECTION_NORTHWEST},
+    {"north-west", DIRECTION_NORTHWEST},
+    {"nw", DIRECTION_NORTHWEST},
+    {"6", DIRECTION_NORTHWEST},
+    {"northeast", DIRECTION_NORTHEAST},
+    {"north east", DIRECTION_NORTHEAST},
+    {"north-east", DIRECTION_NORTHEAST},
+    {"ne", DIRECTION_NORTHEAST},
+    {"7", DIRECTION_NORTHEAST},
+};
+
+Direction getDirection(std::string_view string)
+{
+	if (auto it = DirectionsMap.find(string); it != DirectionsMap.end()) {
+		return it->second;
+	}
+	fmt::print("[Warning - getDirection] Invalid direction: {}\n", string);
+	return DIRECTION_NORTH;
+}
+
+} // namespace
 
 Items::Items()
 {

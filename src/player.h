@@ -154,7 +154,7 @@ public:
 
 	Inbox* getInbox() const { return inbox; }
 
-	uint32_t getClientIcons() const;
+	uint16_t getClientIcons() const;
 
 	const GuildWarVector& getGuildWarVector() const { return guildWarVector; }
 

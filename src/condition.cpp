@@ -312,7 +312,7 @@ bool Condition::isPersistent() const
 	return true;
 }
 
-uint32_t Condition::getIcons() const { return isBuff ? ICON_PARTY_BUFF : 0; }
+uint16_t Condition::getIcons() const { return isBuff ? ICON_PARTY_BUFF : 0; }
 
 bool Condition::updateCondition(const Condition* addCondition)
 {
@@ -350,9 +350,9 @@ void ConditionGeneric::addCondition(Creature*, const Condition* condition)
 	}
 }
 
-uint32_t ConditionGeneric::getIcons() const
+uint16_t ConditionGeneric::getIcons() const
 {
-	uint32_t icons = Condition::getIcons();
+	uint16_t icons = Condition::getIcons();
 
 	switch (conditionType) {
 		case CONDITION_MANASHIELD:
@@ -1383,9 +1383,9 @@ int32_t ConditionDamage::getTotalDamage() const
 	return std::abs(result);
 }
 
-uint32_t ConditionDamage::getIcons() const
+uint16_t ConditionDamage::getIcons() const
 {
-	uint32_t icons = Condition::getIcons();
+	uint16_t icons = Condition::getIcons();
 	switch (conditionType) {
 		case CONDITION_FIRE:
 			icons |= ICON_BURN;
@@ -1572,9 +1572,9 @@ void ConditionSpeed::addCondition(Creature* creature, const Condition* condition
 	}
 }
 
-uint32_t ConditionSpeed::getIcons() const
+uint16_t ConditionSpeed::getIcons() const
 {
-	uint32_t icons = Condition::getIcons();
+	uint16_t icons = Condition::getIcons();
 	switch (conditionType) {
 		case CONDITION_HASTE:
 			icons |= ICON_HASTE;
@@ -1852,7 +1852,7 @@ void ConditionDrunk::addCondition(Creature* creature, const Condition* condition
 
 void ConditionDrunk::endCondition(Creature* creature) { creature->setDrunkenness(0); }
 
-uint32_t ConditionDrunk::getIcons() const { return ICON_DRUNK; }
+uint16_t ConditionDrunk::getIcons() const { return ICON_DRUNK; }
 
 bool ConditionDrunk::setParam(ConditionParam_t param, int32_t value)
 {
@@ -1958,9 +1958,9 @@ bool ConditionManaShield::setParam(ConditionParam_t param, int32_t value)
 	}
 }
 
-uint32_t ConditionManaShield::getIcons() const
+uint16_t ConditionManaShield::getIcons() const
 {
-	uint32_t icons = Condition::getIcons();
+	uint16_t icons = Condition::getIcons();
 
 	switch (conditionType) {
 		case CONDITION_MANASHIELD_BREAKABLE:

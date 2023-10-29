@@ -9,10 +9,10 @@
 #include "pugicast.h"
 #include "weapons.h"
 
-namespace {
-
 extern MoveEvents* g_moveEvents;
 extern Weapons* g_weapons;
+
+namespace {
 
 const std::unordered_map<std::string, ItemParseAttributes_t> ItemParseAttributesMap = {
     {"type", ITEM_PARSE_TYPE},

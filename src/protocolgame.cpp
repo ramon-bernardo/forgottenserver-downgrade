@@ -1809,7 +1809,7 @@ void ProtocolGame::sendCreatureSay(const Creature* creature, SpeakClasses type, 
 	msg.add<uint32_t>(++statementId);
 
 	if (creature->isHealthHidden() || type == TALKTYPE_CHANNEL_RA) {
-		msg.addString("");
+		msg.add<uint16_t>(0x00);
 	} else if (type == TALKTYPE_RVR_ANSWER) {
 		msg.addString("Gamemaster");
 	} else {
@@ -1851,7 +1851,7 @@ void ProtocolGame::sendToChannel(const Creature* creature, SpeakClasses type, co
 		msg.add<uint32_t>(0x00);
 	} else {
 		if (creature->isHealthHidden() || type == TALKTYPE_CHANNEL_RA) {
-			msg.addString("");
+			msg.add<uint16_t>(0x00);
 		} else if (type == TALKTYPE_RVR_ANSWER) {
 			msg.addString("Gamemaster");
 		} else {

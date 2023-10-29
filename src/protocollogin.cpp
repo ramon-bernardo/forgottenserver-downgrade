@@ -45,7 +45,7 @@ void ProtocolLogin::getCharacterList(const std::string& accountName, const std::
 	for (uint8_t i = 0; i < size; i++) {
 		output->addString(account.characters[i]);
 		output->addString(g_config.getString(ConfigManager::SERVER_NAME));
-		output->add<uint32_t>(pugi::cast<uint32_t>(g_config.getString(ConfigManager::IP).c_str()));
+		output->add<uint32_t>(inet_addr(g_config.getString(ConfigManager::IP).c_str()));
 		output->add<uint16_t>(g_config.getNumber(ConfigManager::GAME_PORT));
 	}
 

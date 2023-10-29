@@ -245,9 +245,8 @@ int32_t normal_random(int32_t minNumber, int32_t maxNumber)
 		v = normalRand(getRandomGenerator());
 	} while (v < 0.0 || v > 1.0);
 
-	std::tie(minNumber, maxNumber) = std::minmax(minNumber, maxNumber);
-	const int32_t diff = maxNumber - minNumber;
-	return minNumber + std::lround(v * diff);
+	auto&& [a, b] = std::minmax(minNumber, maxNumber);
+	return a + std::lround(v * (b - a));
 }
 
 bool boolean_random(double probability /* = 0.5*/)
@@ -513,8 +512,8 @@ WeaponActionNames weaponActionNames = {
 };
 
 SkullNames skullNames = {
-    {"none", SKULL_NONE}, {"yellow", SKULL_YELLOW}, {"green", SKULL_GREEN},   {"white", SKULL_WHITE},
-    {"red", SKULL_RED},   {"black", SKULL_BLACK},
+    {"none", SKULL_NONE},   {"yellow", SKULL_YELLOW}, {"green", SKULL_GREEN},
+    {"white", SKULL_WHITE}, {"red", SKULL_RED},       {"black", SKULL_BLACK},
 };
 
 std::vector<uint16_t> depotBoxes = {ITEM_DEPOT_BOX_I,    ITEM_DEPOT_BOX_II,   ITEM_DEPOT_BOX_III, ITEM_DEPOT_BOX_IV,

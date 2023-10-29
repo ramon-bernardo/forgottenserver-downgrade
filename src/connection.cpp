@@ -111,12 +111,8 @@ void Connection::accept()
 			    Connection::handleTimeout(thisPtr, error);
 		    });
 
-		// Read size of the first packet
-		auto bufferLength = !receivedLastChar && receivedName && connectionState == CONNECTION_STATE_GAMEWORLD_AUTH
-		                        ? 1
-		                        : NetworkMessage::HEADER_LENGTH;
 		boost::asio::async_read(
-		    socket, boost::asio::buffer(msg.getBuffer(), bufferLength),
+		    socket, boost::asio::buffer(msg.getBuffer(), NetworkMessage::HEADER_LENGTH),
 		    [thisPtr = shared_from_this()](const boost::system::error_code& error, auto /*bytes_transferred*/) {
 			    thisPtr->parseHeader(error);
 		    });
@@ -146,29 +142,7 @@ void Connection::parseHeader(const boost::system::error_code& error)
 		return;
 	}
 
-	if (!receivedLastChar && connectionState == CONNECTION_STATE_GAMEWORLD_AUTH) {
-		uint8_t* msgBuffer = msg.getBuffer();
-
-		if (!receivedName && msgBuffer[1] == 0x00) {
-			receivedLastChar = true;
-		} else {
-			if (!receivedName) {
-				receivedName = true;
-
-				accept();
-				return;
-			}
-
-			if (msgBuffer[0] == 0x0A) {
-				receivedLastChar = true;
-			}
-
-			accept();
-			return;
-		}
-	}
-
-	if (receivedLastChar && connectionState == CONNECTION_STATE_GAMEWORLD_AUTH) {
+	if (connectionState == CONNECTION_STATE_GAMEWORLD_AUTH) {
 		connectionState = CONNECTION_STATE_GAME;
 	}
 

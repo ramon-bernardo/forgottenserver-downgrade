@@ -124,8 +124,6 @@ private:
 
 	ConnectionState_t connectionState = CONNECTION_STATE_PENDING;
 	bool receivedFirst = false;
-	bool receivedName = false;
-	bool receivedLastChar = false;
 };
 
 #endif // FS_CONNECTION_H

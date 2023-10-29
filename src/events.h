@@ -48,6 +48,7 @@ class Events
 		int32_t playerOnMoveCreature = -1;
 		int32_t playerOnReportRuleViolation = -1;
 		int32_t playerOnReportBug = -1;
+		int32_t playerOnRotateItem = -1;
 		int32_t playerOnViolationWindow = -1;
 		int32_t playerOnTurn = -1;
 		int32_t playerOnTradeRequest = -1;
@@ -105,6 +106,7 @@ public:
 	bool eventPlayerOnViolationWindow(Player* player, const std::string& targetName, uint8_t reason,
 	                                  ViolationAction_t action, const std::string& comment,
 	                                  const std::string& statement, uint16_t statementId, bool ipBanishment);
+	void eventPlayerOnRotateItem(Player* player, Item* item);
 	bool eventPlayerOnTurn(Player* player, Direction direction);
 	bool eventPlayerOnTradeRequest(Player* player, Player* target, Item* item);
 	bool eventPlayerOnTradeAccept(Player* player, Player* target, Item* item, Item* targetItem);

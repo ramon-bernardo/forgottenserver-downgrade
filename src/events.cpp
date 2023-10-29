@@ -98,6 +98,8 @@ bool Events::load()
 				info.playerOnViolationWindow = event;
 			} else if (methodName == "onReportBug") {
 				info.playerOnReportBug = event;
+			} else if (methodName == "onRotateItem") {
+				info.playerOnRotateItem = event;
 			} else if (methodName == "onTurn") {
 				info.playerOnTurn = event;
 			} else if (methodName == "onGainExperience") {
@@ -871,6 +873,33 @@ bool Events::eventPlayerOnViolationWindow(Player* player, const std::string& tar
 	LuaScriptInterface::pushBoolean(L, ipBanishment);
 
 	return scriptInterface.callFunction(8);
+}
+
+void Events::eventPlayerOnRotateItem(Player* player, Item* item)
+{
+	// Player:onRotateItem(item)
+	if (info.playerOnRotateItem == -1) {
+		return;
+	}
+
+	if (!scriptInterface.reserveScriptEnv()) {
+		std::cout << "[Error - Events::eventPlayerOnRotateItem] Call stack overflow" << std::endl;
+		return;
+	}
+
+	ScriptEnvironment* env = scriptInterface.getScriptEnv();
+	env->setScriptId(info.playerOnRotateItem, &scriptInterface);
+
+	lua_State* L = scriptInterface.getLuaState();
+	scriptInterface.pushFunction(info.playerOnRotateItem);
+
+	LuaScriptInterface::pushUserdata<Player>(L, player);
+	LuaScriptInterface::setMetatable(L, -1, "Player");
+
+	LuaScriptInterface::pushUserdata<Item>(L, item);
+	LuaScriptInterface::setItemMetatable(L, -1, item);
+
+	scriptInterface.callFunction(2);
 }
 
 bool Events::eventPlayerOnTurn(Player* player, Direction direction)

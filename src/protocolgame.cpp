@@ -1581,15 +1581,18 @@ void ProtocolGame::sendContainer(uint8_t cid, const Container* container, bool h
 	msg.addByte(container->capacity());
 	msg.addByte(hasParent ? 0x01 : 0x00);
 
-	uint8_t containerSize = std::min<size_t>(container->size(), std::numeric_limits<uint8_t>::max());
-	msg.add<uint16_t>(containerSize);
+	uint32_t containerSize = container->size();
+	uint8_t maxContainerSize = std::numeric_limits<uint8_t>::max();
+	msg.addByte(std::min<uint8_t>(containerSize, maxContainerSize));
 
-	uint8_t itemsToSend = std::min<uint32_t>(std::min<uint32_t>(container->capacity(), containerSize),
-	                                         std::numeric_limits<uint8_t>::max());
+	uint32_t i = 0;
+	uint8_t itemsToSend = std::min<uint8_t>(std::min<uint32_t>(container->capacity(), containerSize), maxContainerSize);
 
-	for (auto it = container->getItemList().begin(), end = it + itemsToSend; it != end; ++it) {
+	for (auto it = container->getItemList().begin(), end = it + itemsToSend; i < maxContainerSize && it != end;
+	     ++it, ++i) {
 		msg.addItem(*it);
 	}
+
 	writeToOutputBuffer(msg);
 }
 
@@ -1605,12 +1608,9 @@ void ProtocolGame::sendEmptyContainer(uint8_t cid)
 
 	msg.addByte(8);
 	msg.addByte(0x00);
+
 	msg.addByte(0x00);
-	msg.addByte(0x01);
-	msg.addByte(0x00);
-	msg.add<uint16_t>(0);
-	msg.add<uint16_t>(0);
-	msg.addByte(0x00);
+
 	writeToOutputBuffer(msg);
 }
 

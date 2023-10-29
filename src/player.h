@@ -35,14 +35,6 @@ enum fightMode_t : uint8_t
 	FIGHTMODE_DEFENSE = 3,
 };
 
-enum pvpMode_t : uint8_t
-{
-	PVP_MODE_DOVE = 0,
-	PVP_MODE_WHITE_HAND = 1,
-	PVP_MODE_YELLOW_HAND = 2,
-	PVP_MODE_RED_FIST = 3,
-};
-
 enum tradestate_t : uint8_t
 {
 	TRADE_NONE,
